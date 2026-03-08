@@ -273,15 +273,32 @@ function SidebarContent({items, visible, status, lastFetch, isMobile}) {
         </div>
       </SS>
       <SS label="Sources">
-        {[{k:"HN",label:"Hacker News",c:"#ff6314"},{k:"Reddit",label:"Reddit",c:"#ff4500"},{k:"arXiv",label:"arXiv CS",c:"#b31b1b"}].map(({k,label,c})=>(
-          <div key={k} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"5px 0"}}>
-            <div style={{display:"flex",alignItems:"center",gap:7}}>
-              <div style={{width:6,height:6,borderRadius:"50%",background:c,boxShadow:`0 0 4px ${c}`}}/>
-              <span style={{fontSize:10,color:"#e2e2f0"}}>{label}</span>
+        {[
+          {k:"HN",         label:"Hacker News",  c:"#ff6314"},
+          {k:"arXiv",      label:"arXiv CS",      c:"#b31b1b"},
+          {k:"Dev.to",     label:"Dev.to",        c:"#3b49df"},
+          {k:"GitHub",     label:"GitHub",        c:"#6e40c9"},
+          {k:"Lobste.rs",  label:"Lobste.rs",     c:"#ac130d"},
+          {k:"OpenAI",     label:"OpenAI Blog",   c:"#00a67e"},
+          {k:"HuggingFace",label:"HuggingFace",  c:"#ff9d00"},
+          {k:"VentureBeat",label:"VentureBeat",  c:"#1565c0"},
+          {k:"TechCrunch", label:"TechCrunch",   c:"#0a9e3f"},
+          {k:"TheVerge",   label:"The Verge",    c:"#e00c00"},
+          {k:"Wired",      label:"Wired",         c:"#888"},
+          {k:"MITReview",  label:"MIT Review",   c:"#8b0000"},
+        ].map(({k,label,c})=>{
+          const count = items.filter(i=>i.src===k).length;
+          if(count===0) return null;
+          return(
+            <div key={k} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"4px 0"}}>
+              <div style={{display:"flex",alignItems:"center",gap:7}}>
+                <div style={{width:6,height:6,borderRadius:"50%",background:c,boxShadow:`0 0 4px ${c}`}}/>
+                <span style={{fontSize:10,color:"#e2e2f0"}}>{label}</span>
+              </div>
+              <span style={{fontSize:9,color:"#5a5a7a",background:"#111118",padding:"1px 5px",borderRadius:2}}>{count}</span>
             </div>
-            <span style={{fontSize:9,color:"#5a5a7a",background:"#111118",padding:"1px 5px",borderRadius:2}}>{items.filter(i=>i.src===k).length}</span>
-          </div>
-        ))}
+          );
+        })}
       </SS>
       <SS label="Category">
         {Object.entries(TM).map(([k,m])=>{ const c=visible.filter(i=>i.type===k).length; return c>0&&(
