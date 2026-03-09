@@ -217,6 +217,7 @@ export default function Pulse() {
 
   useEffect(()=>{loadFeed(false);loadBookmarks();},[loadFeed,loadBookmarks]);
   useEffect(()=>{const id=setInterval(()=>loadFeed(true),90_000);return()=>clearInterval(id);},[loadFeed]);
+  useEffect(()=>{ document.title = pending.length>0?`Pulse (${pending.length})`:"Pulse"; },[pending]);
   useEffect(()=>{const id=setInterval(()=>setItems(p=>p.map(i=>({...i,timeLabel:timeAgo(i.time)}))),30_000);return()=>clearInterval(id);},[]);
 
   const loadPending=useCallback(()=>{
