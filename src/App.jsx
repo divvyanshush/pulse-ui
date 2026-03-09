@@ -235,35 +235,12 @@ export default function Pulse() {
     <div style={{display:"flex",flexDirection:"column",height:"100vh",width:"100vw",maxWidth:"100vw",
       background:C.bg,color:C.text,fontFamily:"'IBM Plex Mono',monospace",overflow:"hidden"}}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
-        @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        @keyframes slideRight{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
-        @keyframes slideLeft{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
-        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,255,136,.3)}50%{box-shadow:0 0 0 5px rgba(0,255,136,0)}}
-        @keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-        @keyframes toastIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes rowIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-        html,body{overflow:hidden;margin:0;padding:0;height:100%}
-        *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-        ::-webkit-scrollbar{width:3px}
-        ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:${isDark?"#1e1e38":"#cccccc"};border-radius:2px}
         .sk{background:${skGrad};background-size:400px 100%;animation:shimmer 1.6s ease infinite}
-        .row{transition:background .1s;cursor:pointer}
         .row:hover{background:${C.hover}!important}
-        .fbtn{border:none;cursor:pointer;font-family:'IBM Plex Mono',monospace;white-space:nowrap;outline:none;background:none;transition:all .12s}
-        .fbtn:focus{outline:none}
-        .ibtn{background:none;border:none;cursor:pointer;outline:none;transition:all .12s;font-family:'IBM Plex Mono',monospace}
-        .ibtn:focus{outline:none}
-        .bm{outline:none!important;border:none;cursor:pointer;background:none;padding:4px;line-height:0;flex-shrink:0;transition:opacity .12s}
-        .bm:focus{outline:none!important;box-shadow:none!important}
         .bm-off{color:${C.faint};opacity:0.55}
         .bm-off:hover{color:${C.muted};opacity:1}
         .bm-on{color:${C.text};opacity:1}
-        .bm:active{opacity:.2}
-        .open-link{transition:background .1s,border-color .1s;text-decoration:none}
         .open-link:hover{background:${C.hover}!important;border-color:${C.faint}!important}
         .topbtn{background:none;border:1px solid ${C.border};border-radius:4px;cursor:pointer;
           color:${C.muted};padding:7px;line-height:0;min-height:36px;min-width:36px;
