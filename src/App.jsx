@@ -640,7 +640,7 @@ export default function Pulse() {
           <div style={{width:380,minWidth:380,borderLeft:`1px solid ${C.border}`,
             background:C.surface,flexShrink:0,overflowY:"auto",animation:"slideRight .18s ease"}}>
             <Detail item={detail} onClose={()=>setDetail(null)} C={C} isDark={isDark}
-              isBookmarked={!!bookmarks[detail.id]} onBookmark={toggleBookmark}/>
+              isBookmarked={!!bookmarks[detail.id]} onBookmark={toggleBookmark} items={items} onItemClick={setDetail}/>
           </div>
         )}
 
@@ -649,7 +649,7 @@ export default function Pulse() {
           <div style={{position:"absolute",inset:0,background:C.bg,zIndex:30,
             overflowY:"auto",WebkitOverflowScrolling:"touch",animation:"slideRight .2s ease"}}>
             <Detail item={detail} onClose={()=>setDetail(null)} isMobile C={C} isDark={isDark}
-              isBookmarked={!!bookmarks[detail.id]} onBookmark={toggleBookmark}/>
+              isBookmarked={!!bookmarks[detail.id]} onBookmark={toggleBookmark} items={items} onItemClick={setDetail}/>
             {/* Extra scroll space for mobile safe area */}
             <div style={{height:48}}/>
           </div>
@@ -949,7 +949,7 @@ function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark, s
 }
 
 // ══════════════ DETAIL ══════════════
-function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBookmark}) {
+function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBookmark, items=[], onItemClick}) {
   const TML=getTM(isDark);
   const m=TML[item.type]||TML.product;
   const srcColor=SRC_COLORS[item.src]||"#666";
@@ -1088,6 +1088,40 @@ function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBookmark}) 
             <span id="copy-confirm" style={{fontSize:FS.xs,color:C.accent,opacity:0,transition:"opacity .3s"}}>COPIED ✓</span>
           </button>
         </div>
+
+        {/* Related articles */}
+        {(()=>{
+          const related = items.filter(i=>
+            i.id!==item.id && (
+              i.type===item.type ||
+              (item.title&&i.title&&item.title.split(" ").filter(w=>w.length>4).some(w=>i.title.toLowerCase().includes(w.toLowerCase())))
+            )
+          ).slice(0,3);
+          if(!related.length) return null;
+          return(
+            <div style={{marginTop:28}}>
+              <div style={{fontSize:FS.xs,color:C.muted,letterSpacing:"0.1em",marginBottom:12}}>RELATED</div>
+              {related.map(r=>{
+                const TML=getTM(isDark);
+                const m=TML[r.type]||TML.product;
+                return(
+                  <div key={r.id} onClick={()=>onItemClick&&onItemClick(r)}
+                    style={{padding:"10px 0",borderBottom:`1px solid ${C.border}`,cursor:"pointer"}}>
+                    <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:5}}>
+                      <span style={{fontSize:"0.6rem",padding:"2px 5px",borderRadius:2,
+                        background:m.a,color:m.t,border:`1px solid ${m.b}`,letterSpacing:"0.06em"}}>{m.label}</span>
+                      <span style={{fontSize:FS.xs,color:C.muted}}>{r.srcLabel||r.src}</span>
+                    </div>
+                    <div style={{fontSize:FS.sm,color:C.text,lineHeight:1.5,
+                      display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>
+                      {r.title}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
