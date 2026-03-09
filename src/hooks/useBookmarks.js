@@ -1,30 +1,39 @@
 import { useState, useCallback } from "react";
-import { API } from "../constants/theme.js";
+import { supabase } from "../lib/supabase.js";
 
-export function useBookmarks() {
+export function useBookmarks(user) {
   const [bookmarks, setBookmarks] = useState({});
 
   const loadBookmarks = useCallback(async()=>{
+    if(!user) return;
     try{
-      const res=await fetch(`${API}/bookmarks`);
-      const data=await res.json();
+      const { data, error } = await supabase
+        .from("bookmarks")
+        .select("*")
+        .eq("user_id", user.id);
+      if(error) throw error;
       const map={};
-      (data.bookmarks||[]).forEach(b=>{map[b.id]=b;});
+      (data||[]).forEach(b=>{ map[b.item_id]=b.item; });
       setBookmarks(map);
-    }catch(e){}
-  },[]);
+    }catch(e){ console.warn("loadBookmarks:", e.message); }
+  },[user]);
 
-  const toggleBookmark = useCallback((item,e)=>{
+  const toggleBookmark = useCallback(async(item, e)=>{
     e?.stopPropagation(); e?.preventDefault();
+    if(!user) return;
     const saved=!!bookmarks[item.id];
     if(saved){
       setBookmarks(b=>{const n={...b};delete n[item.id];return n;});
-      fetch(`${API}/bookmarks/${encodeURIComponent(item.id)}`,{method:"DELETE"}).catch(()=>{});
+      await supabase.from("bookmarks")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("item_id", item.id);
     }else{
       setBookmarks(b=>({...b,[item.id]:{...item,bookmarkedAt:Date.now()}}));
-      fetch(`${API}/bookmarks`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({item})}).catch(()=>{});
+      await supabase.from("bookmarks")
+        .upsert({ user_id:user.id, item_id:item.id, item:{...item,bookmarkedAt:Date.now()} });
     }
-  },[bookmarks]);
+  },[bookmarks, user]);
 
   return { bookmarks, loadBookmarks, toggleBookmark };
 }
