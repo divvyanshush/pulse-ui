@@ -87,9 +87,9 @@ function useWindowWidth() {
 export default function Pulse() {
   const [items,         setItems]         = useState([]);
   const [pending,       setPending]       = useState([]);
-  const [filter,        setFilter]        = useState("all");
+  const [filter,        setFilter]        = useState(()=>{ try{ return localStorage.getItem("pulse-filter")||"all"; }catch(e){ return "all"; } });
   const [srcFilter,     setSrcFilter]     = useState(null);
-  const [sortBy,        setSortBy]        = useState("latest");
+  const [sortBy,        setSortBy]        = useState(()=>{ try{ return localStorage.getItem("pulse-sort")||"latest"; }catch(e){ return "latest"; } });
   const [selectedIdx,   setSelectedIdx]   = useState(-1);
   const [query,         setQuery]         = useState("");
   const [detail,        setDetail]        = useState(null);
@@ -365,7 +365,7 @@ export default function Pulse() {
               const TML=getTM(isDark);
               const m=TML[f];const on=filter===f;const isBm=f==="bookmarks";
               return(
-                <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);}}
+                <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);try{if(f!=="bookmarks")localStorage.setItem("pulse-filter",f);}catch(e){}}}
                   style={{padding:"5px 10px",borderRadius:3,flexShrink:0,fontSize:FS.xs,letterSpacing:"0.08em",
                     background:on?(isBm||f==="all"?`rgba(${isDark?"216,216,240":"26,26,46"},.08)`:m?.a):"transparent",
                     color:on?(isBm||f==="all"?C.text:m?.t):C.muted,
@@ -459,7 +459,7 @@ export default function Pulse() {
             const TML=getTM(isDark);
             const m=TML[f];const on=filter===f;const isBm=f==="bookmarks";
             return(
-              <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);}}
+              <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);try{if(f!=="bookmarks")localStorage.setItem("pulse-filter",f);}catch(e){}}}
                 style={{padding:"6px 13px",borderRadius:20,flexShrink:0,
                   fontSize:FS.xs,letterSpacing:"0.07em",fontWeight:on?500:400,
                   background:on?(isBm||f==="all"?"rgba(128,128,160,.12)":m?.a):"rgba(128,128,128,.06)",
@@ -572,7 +572,7 @@ export default function Pulse() {
               </span>
               <div style={{display:"flex",gap:2,flexShrink:0}}>
                 {[["latest","NEW"],["trending","HOT"],["top","TOP"]].map(([k,label])=>(
-                  <button key={k} className="fbtn" onClick={()=>setSortBy(k)}
+                  <button key={k} className="fbtn" onClick={()=>{setSortBy(k);try{localStorage.setItem("pulse-sort",k);}catch(e){}}}
                     style={{padding:"3px 8px",borderRadius:3,fontSize:FS.xs,letterSpacing:"0.08em",
                       color:sortBy===k?C.text:C.muted,
                       background:sortBy===k?`rgba(${isDark?"216,216,240":"26,26,46"},.08)`:"transparent",
