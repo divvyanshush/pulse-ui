@@ -99,6 +99,7 @@ export default function Pulse() {
   const [errMsg,        setErrMsg]        = useState("");
   const [lastFetch,     setLastFetch]     = useState(null);
   const [bookmarks,     setBookmarks]     = useState({});
+  const [readIds,       setReadIds]       = useState(()=>{ try{ return new Set(JSON.parse(localStorage.getItem("pulse-read")||"[]")); }catch(e){ return new Set(); } });
   const [toast,         setToast]         = useState(null);
   const [notifPerm,     setNotifPerm]     = useState(typeof Notification!=="undefined"?Notification.permission:"unsupported");
   const [showNotifPanel,setShowNotifPanel]= useState(false);
@@ -578,9 +579,18 @@ export default function Pulse() {
 
             {sorted.map((item,i)=>(
               <Row key={item.id} item={item} i={i} isMobile={isMobile} C={C} isDark={isDark} selected={i===selectedIdx}
-                isBookmarked={!!bookmarks[item.id]}
+                isBookmarked={!!bookmarks[item.id]} isRead={readIds.has(item.id)}
                 onBookmark={toggleBookmark}
-                onClick={()=>setDetail(item)}/>
+                onClick={()=>{
+                setDetail(item);
+                setReadIds(prev=>{
+                  const next=new Set(prev);
+                  next.add(item.id);
+                  console.log("marked read:", item.id, "total read:", next.size);
+                  try{ localStorage.setItem("pulse-read", JSON.stringify([...next].slice(-500))); }catch(e){}
+                  return next;
+                });
+              }}/>
             ))}
             <div style={{height:isMobile?80:48}}/>
           </div>
@@ -848,14 +858,14 @@ function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount, onItemC
 }
 
 // ══════════════ ROW ══════════════
-function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark, selected}) {
+function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark, selected, isRead}) {
   const TML=getTM(isDark);
   const m=TML[item.type]||TML.product;
   const srcColor=SRC_COLORS[item.src]||"#666";
   return(
     <div className="row" onClick={onClick} data-selected={selected}
       style={{borderBottom:`1px solid ${C.border}`,padding:isMobile?"16px":"14px 16px",background:selected?C.hover:undefined,
-        animation:"rowIn .18s ease forwards",animationDelay:`${Math.min(i*.012,.28)}s`,opacity:0}}>
+        animation:"rowIn .18s ease forwards",animationDelay:`${Math.min(i*.012,.28)}s`,opacity:0,filter:isRead?"brightness(0.5)":"none"}}>
       <div style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:8}}>
         <span style={{fontSize:"0.62rem",fontWeight:600,letterSpacing:"0.1em",
           padding:"3px 7px",borderRadius:2,background:m.a,color:m.t,
