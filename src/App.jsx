@@ -89,6 +89,7 @@ export default function Pulse() {
   const [pending,       setPending]       = useState([]);
   const [filter,        setFilter]        = useState("all");
   const [srcFilter,     setSrcFilter]     = useState(null);
+  const [sortBy,        setSortBy]        = useState("latest");
   const [query,         setQuery]         = useState("");
   const [detail,        setDetail]        = useState(null);
   const [showSidebar,   setShowSidebar]   = useState(false);
@@ -226,6 +227,7 @@ export default function Pulse() {
     if(query){const q=query.toLowerCase();return i.title.toLowerCase().includes(q)||i.sum.toLowerCase().includes(q);}
     return true;
   });
+  const sorted = sortBy==="latest" ? visible : sortBy==="trending" ? [...visible].sort((a,b)=>(b.heat||0)-(a.heat||0)) : [...visible].sort((a,b)=>(b.score||0)-(a.score||0));
 
   // On mobile: article detail OR notif panel takes full screen
   const mobileDetailOpen  = isMobile && detail && !showNotifPanel;
@@ -483,6 +485,17 @@ export default function Pulse() {
                 {filter!=="all"&&<span style={{color:filter==="bookmarks"?C.sub:getTM(isDark)[filter]?.t||C.sub}}>
                   {" / "}{filter.toUpperCase()}</span>}
               </span>
+              <div style={{display:"flex",gap:2,flexShrink:0}}>
+                {[["latest","NEW"],["trending","HOT"],["top","TOP"]].map(([k,label])=>(
+                  <button key={k} className="fbtn" onClick={()=>setSortBy(k)}
+                    style={{padding:"3px 8px",borderRadius:3,fontSize:FS.xs,letterSpacing:"0.08em",
+                      color:sortBy===k?C.text:C.muted,
+                      background:sortBy===k?`rgba(${isDark?"216,216,240":"26,26,46"},.08)`:"transparent",
+                      border:sortBy===k?`1px solid ${C.faint}`:"1px solid transparent"}}>
+                    {label}
+                  </button>
+                ))}
+              </div>
               {pending.length>0&&(
                 <button onClick={loadPending} className="fbtn"
                   style={{padding:"4px 10px",background:"rgba(0,255,136,.08)",
@@ -518,7 +531,7 @@ export default function Pulse() {
               </div>
             )}
 
-            {visible.map((item,i)=>(
+            {sorted.map((item,i)=>(
               <Row key={item.id} item={item} i={i} isMobile={isMobile} C={C} isDark={isDark}
                 isBookmarked={!!bookmarks[item.id]}
                 onBookmark={toggleBookmark}
