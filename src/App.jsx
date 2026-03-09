@@ -90,6 +90,7 @@ export default function Pulse() {
   const [filter,        setFilter]        = useState("all");
   const [srcFilter,     setSrcFilter]     = useState(null);
   const [sortBy,        setSortBy]        = useState("latest");
+  const [selectedIdx,   setSelectedIdx]   = useState(-1);
   const [query,         setQuery]         = useState("");
   const [detail,        setDetail]        = useState(null);
   const [showSidebar,   setShowSidebar]   = useState(false);
@@ -221,6 +222,7 @@ export default function Pulse() {
     setPending([]);feedRef.current?.scrollTo({top:0,behavior:"smooth"});
   },[pending]);
 
+
   const bookmarkList=Object.values(bookmarks).sort((a,b)=>(b.bookmarkedAt||0)-(a.bookmarkedAt||0));
   const visible=(filter==="bookmarks"?bookmarkList:items).filter(i=>{if(srcFilter&&i.src!==srcFilter) return false;
     if(filter!=="all"&&filter!=="bookmarks"&&i.type!==filter) return false;
@@ -228,6 +230,48 @@ export default function Pulse() {
     return true;
   });
   const sorted = sortBy==="latest" ? visible : sortBy==="trending" ? [...visible].sort((a,b)=>(b.heat||0)-(a.heat||0)) : [...visible].sort((a,b)=>(b.score||0)-(a.score||0));
+
+  // ── Keyboard shortcuts ──
+  useEffect(()=>{
+    const handler = (e) => {
+      if(e.target.tagName==="INPUT") return;
+      switch(e.key){
+        case "j":
+        case "ArrowDown":
+          e.preventDefault();
+          setSelectedIdx(i=>Math.min(i+1, sorted.length-1));
+          break;
+        case "k":
+        case "ArrowUp":
+          e.preventDefault();
+          setSelectedIdx(i=>Math.max(i-1, 0));
+          break;
+        case "Enter":
+          if(selectedIdx>=0 && sorted[selectedIdx]) setDetail(sorted[selectedIdx]);
+          break;
+        case "Escape":
+          setDetail(null); setShowSrch(false); setQuery(""); setShowNotifPanel(false);
+          break;
+        case "b":
+          if(detail) toggleBookmark(detail);
+          break;
+        case "/":
+          e.preventDefault();
+          setShowSrch(true); setTimeout(()=>srchRef.current?.focus(),50);
+          break;
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return ()=>window.removeEventListener("keydown", handler);
+  },[sorted, selectedIdx, detail, toggleBookmark]);
+
+  useEffect(()=>{
+    if(selectedIdx>=0){
+      const el=feedRef.current?.querySelector(`[data-selected="true"]`);
+      el?.scrollIntoView({block:"nearest",behavior:"smooth"});
+    }
+  },[selectedIdx]);
+
 
   // On mobile: article detail OR notif panel takes full screen
   const mobileDetailOpen  = isMobile && detail && !showNotifPanel;
@@ -533,7 +577,7 @@ export default function Pulse() {
             )}
 
             {sorted.map((item,i)=>(
-              <Row key={item.id} item={item} i={i} isMobile={isMobile} C={C} isDark={isDark}
+              <Row key={item.id} item={item} i={i} isMobile={isMobile} C={C} isDark={isDark} selected={i===selectedIdx}
                 isBookmarked={!!bookmarks[item.id]}
                 onBookmark={toggleBookmark}
                 onClick={()=>setDetail(item)}/>
@@ -804,13 +848,13 @@ function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount, onItemC
 }
 
 // ══════════════ ROW ══════════════
-function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark}) {
+function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark, selected}) {
   const TML=getTM(isDark);
   const m=TML[item.type]||TML.product;
   const srcColor=SRC_COLORS[item.src]||"#666";
   return(
-    <div className="row" onClick={onClick}
-      style={{borderBottom:`1px solid ${C.border}`,padding:isMobile?"16px":"14px 16px",
+    <div className="row" onClick={onClick} data-selected={selected}
+      style={{borderBottom:`1px solid ${C.border}`,padding:isMobile?"16px":"14px 16px",background:selected?C.hover:undefined,
         animation:"rowIn .18s ease forwards",animationDelay:`${Math.min(i*.012,.28)}s`,opacity:0}}>
       <div style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:8}}>
         <span style={{fontSize:"0.62rem",fontWeight:600,letterSpacing:"0.1em",
