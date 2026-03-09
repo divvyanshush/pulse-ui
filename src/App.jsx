@@ -922,6 +922,12 @@ function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark, s
         display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>
         {item.sum}
       </div>
+      {item.type==="research"&&item.authors&&(
+        <div style={{fontSize:FS.xs,color:C.muted,marginBottom:6,
+          overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+          by {item.authors}
+        </div>
+      )}
       <div style={{display:"flex",alignItems:"center",gap:10,fontSize:FS.xs,overflow:"hidden"}}>
         <span style={{display:"flex",alignItems:"center",gap:5,flexShrink:0}}>
           <div style={{width:5,height:5,borderRadius:"50%",background:srcColor,flexShrink:0}}/>
