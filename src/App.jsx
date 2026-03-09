@@ -35,7 +35,7 @@ const SRC_COLORS = {
   HN:"#ff6314", arXiv:"#e05555", "Dev.to":"#5b6df8",
   GitHub:"#9b72e8", "Lobste.rs":"#d44040", OpenAI:"#19c37d",
   Anthropic:"#d4845a", HuggingFace:"#ffb020", VentureBeat:"#3d8fe0",
-  TechCrunch:"#2ab858", TheVerge:"#e84040", Wired:"#aaaaaa", MITReview:"#cc3333",
+  TechCrunch:"#2ab858", TheVerge:"#e84040", Wired:"#aaaaaa", MITReview:"#cc3333", SimonW:"#1a8cff", Interconnects:"#e06030", AINnews:"#cc2244", Microsoft:"#0078d4", GoogleResearch:"#4285f4", MetaAI:"#0668E1", TDS:"#1a8c6b", MarkTechPost:"#7b2ff7",
 };
 
 const FILTERS = ["all","model","research","drama","funding","product","policy","bookmarks"];
