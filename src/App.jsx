@@ -1008,7 +1008,7 @@ function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBookmark}) 
           <span style={{fontSize:FS.xs,color:C.muted,flexShrink:0}}>{item.heat||0}/100</span>
         </div>
 
-        <div style={{marginTop:24}}>
+        <div style={{marginTop:24,display:"flex",flexDirection:"column",gap:8}}>
           <a href={item.link} target="_blank" rel="noreferrer" className="open-link"
             style={{display:"flex",alignItems:"center",justifyContent:"space-between",
               padding:isMobile?"14px 16px":"12px 16px",
@@ -1017,6 +1017,18 @@ function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBookmark}) 
             <span>READ ON {(item.srcLabel||item.src).toUpperCase()}</span>
             <span style={{fontSize:FS.lg}}>↗</span>
           </a>
+          <button className="fbtn open-link" onClick={()=>{
+              navigator.clipboard.writeText(item.link);
+              const el=document.getElementById("copy-confirm");
+              if(el){el.style.opacity=1;setTimeout(()=>el.style.opacity=0,1500);}
+            }}
+            style={{display:"flex",alignItems:"center",justifyContent:"space-between",
+              padding:isMobile?"14px 16px":"12px 16px",width:"100%",
+              background:C.bg,border:`1px solid ${C.border}`,borderRadius:4,
+              fontSize:isMobile?FS.base:FS.sm,color:C.sub,letterSpacing:"0.08em",cursor:"pointer"}}>
+            <span>COPY LINK</span>
+            <span id="copy-confirm" style={{fontSize:FS.xs,color:C.accent,opacity:0,transition:"opacity .3s"}}>COPIED ✓</span>
+          </button>
         </div>
       </div>
     </div>
