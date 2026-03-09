@@ -552,7 +552,7 @@ export default function Pulse() {
           <div style={{width:320,minWidth:320,borderLeft:`1px solid ${C.border}`,
             background:C.surface,flexShrink:0,overflowY:"auto",animation:"slideRight .18s ease",
             display:"flex",flexDirection:"column"}}>
-            <NotifPanel C={C} alertLog={alertLog} setAlertLog={setAlertLog}
+            <NotifPanel C={C} isDark={isDark} alertLog={alertLog} setAlertLog={setAlertLog}
               notifPerm={notifPerm} requestNotifPermission={requestNotifPermission}
               onClose={()=>setShowNotifPanel(false)}/>
           </div>
@@ -563,7 +563,7 @@ export default function Pulse() {
           <div style={{position:"absolute",inset:0,background:C.bg,zIndex:30,
             overflowY:"auto",WebkitOverflowScrolling:"touch",animation:"slideRight .2s ease",
             display:"flex",flexDirection:"column"}}>
-            <NotifPanel C={C} alertLog={alertLog} setAlertLog={setAlertLog}
+            <NotifPanel C={C} isDark={isDark} alertLog={alertLog} setAlertLog={setAlertLog}
               notifPerm={notifPerm} requestNotifPermission={requestNotifPermission}
               onClose={()=>setShowNotifPanel(false)} isMobile/>
             <div style={{height:48}}/>
@@ -593,7 +593,7 @@ export default function Pulse() {
 }
 
 // ══════════════ NOTIFICATION PANEL ══════════════
-function NotifPanel({C, alertLog, setAlertLog, notifPerm, requestNotifPermission, onClose, isMobile}) {
+function NotifPanel({C, isDark, alertLog, setAlertLog, notifPerm, requestNotifPermission, onClose, isMobile}) {
   return (
     <>
       {/* Header */}
