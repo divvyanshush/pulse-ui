@@ -337,9 +337,10 @@ export default function Pulse() {
               background:C.bg,border:`1px solid ${C.faint}`,borderRadius:4,
               flex:isMobile?1:undefined,maxWidth:isMobile?"100%":220,minWidth:0}}>
               <input ref={srchRef} value={query} onChange={e=>setQuery(e.target.value)}
-                placeholder="search…" autoFocus
+                placeholder="titles, summaries, sources…" autoFocus
                 style={{background:"none",border:"none",outline:"none",color:C.text,
                   fontFamily:"inherit",fontSize:FS.sm,width:"100%",minWidth:0}}/>
+              {query&&<span style={{fontSize:FS.xs,color:C.muted,flexShrink:0,whiteSpace:"nowrap"}}>{sorted.length}</span>}
               <button className="ibtn" onClick={()=>{setShowSrch(false);setQuery("");}}
                 style={{color:C.muted,fontSize:FS.md,padding:0,flexShrink:0}}>✕</button>
             </div>
