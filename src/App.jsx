@@ -104,7 +104,7 @@ export default function Pulse() {
   const [notifPerm,     setNotifPerm]     = useState(typeof Notification!=="undefined"?Notification.permission:"unsupported");
   const [showNotifPanel,setShowNotifPanel]= useState(false);
   const [alertLog,      setAlertLog]      = useState([]);
-  const [isDark,        setIsDark]        = useState(true);
+  const [isDark,        setIsDark]        = useState(()=>{ try{ const v=localStorage.getItem("pulse-dark"); return v===null?true:v==="true"; }catch(e){ return true; } });
 
   const C = isDark ? DARK : LIGHT;
 
@@ -425,7 +425,7 @@ export default function Pulse() {
         )}
 
         {/* Theme toggle */}
-        <button className="topbtn" onClick={()=>setIsDark(d=>!d)} title={isDark?"Light mode":"Dark mode"}>
+        <button className="topbtn" onClick={()=>setIsDark(d=>{ const next=!d; try{ localStorage.setItem("pulse-dark",next); }catch(e){} return next; })} title={isDark?"Light mode":"Dark mode"}>
           {isDark ? (
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
               <circle cx="7" cy="7" r="3"/>
