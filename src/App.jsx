@@ -139,10 +139,10 @@ export default function Pulse() {
   },[]);
 
   // ── Toast ──
-  const showToast = useCallback((title,body,type="new")=>{
+  const showToast = useCallback((title,body,type="new",item=null)=>{
     if(toastTimer.current) clearTimeout(toastTimer.current);
-    setToast({title,body,type});
-    setAlertLog(p=>[{title,body,type,ts:Date.now()},...p].slice(0,20));
+    setToast({title,body,type,item});
+    setAlertLog(p=>[{title,body,type,ts:Date.now(),item},...p].slice(0,20));
     playChime(type);
     toastTimer.current=setTimeout(()=>setToast(null),5000);
   },[playChime]);
@@ -194,13 +194,13 @@ export default function Pulse() {
         if(novel.length){
           setPending(p=>[...novel,...p]);
           const top=novel.sort((a,b)=>(b.heat||0)-(a.heat||0))[0];
-          showToast(`${novel.length} new item${novel.length>1?"s":""}`,top.title,"new");
+          showToast(`${novel.length} new item${novel.length>1?"s":""}`,top.title,"new",top);
           pushNotif(`PULSE · ${novel.length} new`,top.title);
         }
         const trending=enriched.filter(i=>!prevIds.current.has(i.id)&&(i.heat||0)>=75);
         if(trending.length){
           const t=trending[0];
-          showToast("Trending now",t.title,"hot");
+          showToast("Trending now",t.title,"hot",t);
           pushNotif("PULSE · Trending",t.title);
         }
       }else{
@@ -474,7 +474,8 @@ export default function Pulse() {
         {/* Toast */}
         {toast && (
           <div style={{position:"absolute",top:12,left:"50%",transform:"translateX(-50%)",
-            zIndex:200,animation:"toastIn .2s ease",minWidth:280,maxWidth:"calc(100vw - 32px)",pointerEvents:"none"}}>
+            zIndex:200,animation:"toastIn .2s ease",minWidth:280,maxWidth:"calc(100vw - 32px)",cursor:toast.item?"pointer":"default"}}
+            onClick={()=>{if(toast.item){setDetail(toast.item);setToast(null);}}}>
             <div style={{background:C.surface,
               border:`1px solid ${toast.type==="hot"?"rgba(255,77,109,.35)":"rgba(0,255,136,.25)"}`,
               borderRadius:6,padding:"11px 14px",display:"flex",alignItems:"flex-start",gap:10,
@@ -623,7 +624,7 @@ export default function Pulse() {
             display:"flex",flexDirection:"column"}}>
             <NotifPanel C={C} isDark={isDark} alertLog={alertLog} setAlertLog={setAlertLog}
               notifPerm={notifPerm} requestNotifPermission={requestNotifPermission}
-              onClose={()=>setShowNotifPanel(false)}/>
+              onClose={()=>setShowNotifPanel(false)} onItemClick={setDetail}/>
           </div>
         )}
 
@@ -634,7 +635,7 @@ export default function Pulse() {
             display:"flex",flexDirection:"column"}}>
             <NotifPanel C={C} isDark={isDark} alertLog={alertLog} setAlertLog={setAlertLog}
               notifPerm={notifPerm} requestNotifPermission={requestNotifPermission}
-              onClose={()=>setShowNotifPanel(false)} isMobile/>
+              onClose={()=>setShowNotifPanel(false)} isMobile onItemClick={setDetail}/>
             <div style={{height:48}}/>
           </div>
         )}
@@ -662,7 +663,7 @@ export default function Pulse() {
 }
 
 // ══════════════ NOTIFICATION PANEL ══════════════
-function NotifPanel({C, isDark, alertLog, setAlertLog, notifPerm, requestNotifPermission, onClose, isMobile}) {
+function NotifPanel({C, isDark, alertLog, setAlertLog, notifPerm, requestNotifPermission, onClose, isMobile, onItemClick}) {
   return (
     <>
       {/* Header */}
@@ -723,8 +724,10 @@ function NotifPanel({C, isDark, alertLog, setAlertLog, notifPerm, requestNotifPe
             </div>
           </div>
         ) : alertLog.map((a,i)=>(
-          <div key={i} style={{padding:"13px 18px",borderBottom:`1px solid ${C.border}`,
-            display:"flex",alignItems:"flex-start",gap:10}}>
+          <div key={i} onClick={()=>{if(a.item&&onItemClick){onItemClick(a.item);onClose();}}} style={{padding:"13px 18px",borderBottom:`1px solid ${C.border}`,
+            display:"flex",alignItems:"flex-start",gap:10,cursor:a.item?"pointer":"default",transition:"background .1s"}}
+            onMouseEnter={e=>{if(a.item)e.currentTarget.style.background=C.hover;}}
+            onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
             <div style={{width:6,height:6,borderRadius:"50%",flexShrink:0,marginTop:5,
               background:a.type==="hot"?"#ff4d6d":C.accent}}/>
             <div style={{flex:1,minWidth:0}}>
