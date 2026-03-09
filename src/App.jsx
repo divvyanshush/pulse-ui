@@ -887,6 +887,7 @@ function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark, s
           <span style={{color:srcColor,fontWeight:500}}>{item.srcLabel||item.src}</span>
         </span>
         <span style={{color:C.muted,flexShrink:0}}>{item.timeLabel}</span>
+        <span style={{color:C.muted,flexShrink:0}}>{Math.max(1,Math.round(((item.title||"")+" "+(item.sum||"")).split(" ").length/200))} min</span>
         {item.score>0&&<span style={{color:C.muted,flexShrink:0}}>↑{item.score}</span>}
         {item.comments>0&&<span style={{color:C.muted,flexShrink:0}}>{item.comments}c</span>}
         <div style={{marginLeft:"auto",display:"flex",alignItems:"flex-end",gap:2,flexShrink:0}}>
