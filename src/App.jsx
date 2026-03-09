@@ -88,6 +88,7 @@ export default function Pulse() {
   const [items,         setItems]         = useState([]);
   const [pending,       setPending]       = useState([]);
   const [filter,        setFilter]        = useState("all");
+  const [srcFilter,     setSrcFilter]     = useState(null);
   const [query,         setQuery]         = useState("");
   const [detail,        setDetail]        = useState(null);
   const [showSidebar,   setShowSidebar]   = useState(false);
@@ -220,7 +221,7 @@ export default function Pulse() {
   },[pending]);
 
   const bookmarkList=Object.values(bookmarks).sort((a,b)=>(b.bookmarkedAt||0)-(a.bookmarkedAt||0));
-  const visible=(filter==="bookmarks"?bookmarkList:items).filter(i=>{
+  const visible=(filter==="bookmarks"?bookmarkList:items).filter(i=>{if(srcFilter&&i.src!==srcFilter) return false;
     if(filter!=="all"&&filter!=="bookmarks"&&i.type!==filter) return false;
     if(query){const q=query.toLowerCase();return i.title.toLowerCase().includes(q)||i.sum.toLowerCase().includes(q);}
     return true;
@@ -313,7 +314,7 @@ export default function Pulse() {
               const TML=getTM(isDark);
               const m=TML[f];const on=filter===f;const isBm=f==="bookmarks";
               return(
-                <button key={f} className="fbtn" onClick={()=>setFilter(f)}
+                <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);}}
                   style={{padding:"5px 10px",borderRadius:3,flexShrink:0,fontSize:FS.xs,letterSpacing:"0.08em",
                     background:on?(isBm||f==="all"?`rgba(${isDark?"216,216,240":"26,26,46"},.08)`:m?.a):"transparent",
                     color:on?(isBm||f==="all"?C.text:m?.t):C.muted,
@@ -406,7 +407,7 @@ export default function Pulse() {
             const TML=getTM(isDark);
             const m=TML[f];const on=filter===f;const isBm=f==="bookmarks";
             return(
-              <button key={f} className="fbtn" onClick={()=>setFilter(f)}
+              <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);}}
                 style={{padding:"6px 13px",borderRadius:20,flexShrink:0,
                   fontSize:FS.xs,letterSpacing:"0.07em",fontWeight:on?500:400,
                   background:on?(isBm||f==="all"?"rgba(128,128,160,.12)":m?.a):"rgba(128,128,128,.06)",
@@ -457,7 +458,7 @@ export default function Pulse() {
               background:C.surface,borderRight:`1px solid ${C.border}`,
               zIndex:70,overflowY:"auto",animation:"slideLeft .18s ease"}}>
               <Sidebar C={C} isDark={isDark} items={items} visible={visible}
-                status={status} lastFetch={lastFetch} bmCount={bmCount}/>
+                status={status} lastFetch={lastFetch} bmCount={bmCount} onItemClick={setDetail} srcFilter={srcFilter} setSrcFilter={setSrcFilter}/>
             </div>
           </>
         )}
@@ -467,7 +468,7 @@ export default function Pulse() {
           <div style={{width:190,minWidth:190,borderRight:`1px solid ${C.border}`,
             background:C.surface,flexShrink:0,overflowY:"auto"}}>
             <Sidebar C={C} isDark={isDark} items={items} visible={visible}
-              status={status} lastFetch={lastFetch} bmCount={bmCount}/>
+              status={status} lastFetch={lastFetch} bmCount={bmCount} onItemClick={setDetail} srcFilter={srcFilter} setSrcFilter={setSrcFilter}/>
           </div>
         )}
 
@@ -691,7 +692,7 @@ function NotifPanel({C, isDark, alertLog, setAlertLog, notifPerm, requestNotifPe
 }
 
 // ══════════════ SIDEBAR ══════════════
-function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount}) {
+function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount, onItemClick, srcFilter, setSrcFilter}) {
   const TML=getTM(isDark);
   const topItems=[...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,3);
   const statusColor=status==="ok"?C.accent:status==="err"?"#c01e3c":C.warn;
@@ -721,8 +722,8 @@ function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount}) {
           {topItems.map((item,i)=>{
             const m=TML[item.type]||TML.product;
             return(
-              <div key={item.id} style={{marginBottom:i<2?12:0,paddingBottom:i<2?12:0,
-                borderBottom:i<2?`1px solid ${C.border}`:"none"}}>
+              <div key={item.id} onClick={()=>onItemClick(item)} style={{marginBottom:i<2?12:0,paddingBottom:i<2?12:0,
+                borderBottom:i<2?`1px solid ${C.border}`:"none",cursor:"pointer"}}>
                 <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:5}}>
                   <span style={{fontSize:"0.6rem",padding:"2px 5px",borderRadius:2,
                     background:m.a,color:m.t,border:`1px solid ${m.b}`,
@@ -740,16 +741,27 @@ function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount}) {
       )}
 
       <SB label="Sources" C={C}>
+        {srcFilter&&(
+          <button className="fbtn" onClick={()=>setSrcFilter(null)}
+            style={{fontSize:FS.xs,color:C.accent,letterSpacing:"0.08em",padding:"0 0 8px 0"}}>
+            ✕ CLEAR FILTER
+          </button>
+        )}
         {Object.entries(SRC_COLORS).map(([k,c])=>{
           const count=items.filter(i=>i.src===k).length;
           if(!count) return null;
+          const active=srcFilter===k;
           return(
-            <div key={k} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"4px 0"}}>
+            <div key={k} onClick={()=>setSrcFilter(active?null:k)}
+              style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"5px 4px",
+                borderRadius:3,cursor:"pointer",
+                background:active?`rgba(${isDark?"255,255,255":"0,0,0"},.06)`:"transparent",
+                border:active?`1px solid ${C.faint}`:"1px solid transparent"}}>
               <div style={{display:"flex",alignItems:"center",gap:7}}>
                 <div style={{width:5,height:5,borderRadius:"50%",background:c,flexShrink:0}}/>
-                <span style={{fontSize:FS.xs,color:C.sub}}>{k}</span>
+                <span style={{fontSize:FS.xs,color:active?C.text:C.sub,fontWeight:active?500:400}}>{k}</span>
               </div>
-              <span style={{fontSize:FS.xs,color:C.muted}}>{count}</span>
+              <span style={{fontSize:FS.xs,color:active?C.sub:C.muted}}>{count}</span>
             </div>
           );
         })}
