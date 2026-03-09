@@ -227,9 +227,10 @@ export default function Pulse() {
 
 
   const bookmarkList=Object.values(bookmarks).sort((a,b)=>(b.bookmarkedAt||0)-(a.bookmarkedAt||0));
-  const visible=(filter==="bookmarks"?bookmarkList:items).filter(i=>{if(srcFilter&&i.src!==srcFilter) return false;
+  const visible=(filter==="bookmarks"?bookmarkList:items).filter(i=>{
+    if(srcFilter&&i.src!==srcFilter) return false;
+    if(query){const q=query.toLowerCase(); return i.title.toLowerCase().includes(q)||i.sum.toLowerCase().includes(q)||(i.authors||"").toLowerCase().includes(q)||(i.src||"").toLowerCase().includes(q)||(i.srcLabel||"").toLowerCase().includes(q)||(i.type||"").toLowerCase().includes(q);}
     if(filter!=="all"&&filter!=="bookmarks"&&i.type!==filter) return false;
-    if(query){const q=query.toLowerCase();return i.title.toLowerCase().includes(q)||i.sum.toLowerCase().includes(q);}
     return true;
   });
   const sorted = sortBy==="latest" ? visible : sortBy==="trending" ? [...visible].sort((a,b)=>(b.heat||0)-(a.heat||0)) : [...visible].sort((a,b)=>(b.score||0)-(a.score||0));
@@ -625,7 +626,6 @@ export default function Pulse() {
                 setReadIds(prev=>{
                   const next=new Set(prev);
                   next.add(item.id);
-                  console.log("marked read:", item.id, "total read:", next.size);
                   try{ localStorage.setItem("pulse-read", JSON.stringify([...next].slice(-500))); }catch(e){}
                   return next;
                 });
