@@ -104,6 +104,7 @@ export default function Pulse() {
   const [notifPerm,     setNotifPerm]     = useState(typeof Notification!=="undefined"?Notification.permission:"unsupported");
   const [showNotifPanel,setShowNotifPanel]= useState(false);
   const [alertLog,      setAlertLog]      = useState([]);
+  const [showHelp,      setShowHelp]      = useState(false);
   const [isDark,        setIsDark]        = useState(()=>{ try{ const v=localStorage.getItem("pulse-dark"); return v===null?true:v==="true"; }catch(e){ return true; } });
 
   const C = isDark ? DARK : LIGHT;
@@ -236,6 +237,7 @@ export default function Pulse() {
   useEffect(()=>{
     const handler = (e) => {
       if(e.target.tagName==="INPUT") return;
+      if(e.key==="?" && !e.ctrlKey && !e.metaKey){ e.preventDefault(); setShowHelp(h=>!h); return; }
       switch(e.key){
         case "j":
         case "ArrowDown":
@@ -251,7 +253,7 @@ export default function Pulse() {
           if(selectedIdx>=0 && sorted[selectedIdx]) setDetail(sorted[selectedIdx]);
           break;
         case "Escape":
-          setDetail(null); setShowSrch(false); setQuery(""); setShowNotifPanel(false);
+          setDetail(null); setShowSrch(false); setQuery(""); setShowNotifPanel(false); setShowHelp(false);
           break;
         case "b":
           if(detail) toggleBookmark(detail);
@@ -260,6 +262,7 @@ export default function Pulse() {
           e.preventDefault();
           setShowSrch(true); setTimeout(()=>srchRef.current?.focus(),50);
           break;
+
       }
     };
     window.addEventListener("keydown", handler);
@@ -472,7 +475,41 @@ export default function Pulse() {
       <div style={{display:"flex",flex:1,overflow:"hidden",position:"relative",minHeight:0}}>
 
         {/* Toast */}
-        {toast && (
+        {showHelp && (
+        <div onClick={()=>setShowHelp(false)} style={{position:"fixed",inset:0,zIndex:300,
+          background:"rgba(0,0,0,.6)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <div onClick={e=>e.stopPropagation()} style={{background:C.surface,border:`1px solid ${C.border}`,
+            borderRadius:6,padding:"24px 28px",minWidth:280,maxWidth:360}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:18}}>
+              <span style={{fontSize:FS.sm,letterSpacing:"0.1em",color:C.text,fontWeight:600}}>KEYBOARD SHORTCUTS</span>
+              <button className="ibtn" onClick={()=>setShowHelp(false)} style={{color:C.muted}}>✕</button>
+            </div>
+            {[
+              ["J / ↓","Next item"],
+              ["K / ↑","Previous item"],
+              ["Enter","Open selected"],
+              ["Escape","Close panel"],
+              ["B","Bookmark current"],
+              ["/","Open search"],
+              ["?","Toggle this help"],
+            ].map(([key,desc])=>(
+              <div key={key} style={{display:"flex",alignItems:"center",justifyContent:"space-between",
+                padding:"7px 0",borderBottom:`1px solid ${C.border}`}}>
+                <span style={{fontSize:FS.xs,color:C.muted}}>{desc}</span>
+                <kbd style={{fontSize:FS.xs,color:C.text,background:C.hover,
+                  border:`1px solid ${C.faint}`,borderRadius:3,padding:"2px 7px",
+                  fontFamily:"inherit",letterSpacing:"0.06em"}}>{key}</kbd>
+              </div>
+            ))}
+            <div style={{marginTop:14,fontSize:FS.xs,color:C.muted,textAlign:"center"}}>
+              press <kbd style={{fontSize:FS.xs,color:C.text,background:C.hover,
+                border:`1px solid ${C.faint}`,borderRadius:3,padding:"2px 6px",fontFamily:"inherit"}}>?</kbd> anytime to toggle
+            </div>
+          </div>
+        </div>
+      )}
+
+      {toast && (
           <div style={{position:"absolute",top:12,left:"50%",transform:"translateX(-50%)",
             zIndex:200,animation:"toastIn .2s ease",minWidth:280,maxWidth:"calc(100vw - 32px)",cursor:toast.item?"pointer":"default"}}
             onClick={()=>{if(toast.item){setDetail(toast.item);setToast(null);}}}>
