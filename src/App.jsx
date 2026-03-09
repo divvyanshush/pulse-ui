@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { API, timeAgo, FS, DARK, LIGHT, TM_DARK, TM_LIGHT, getTM, SRC_COLORS, FILTERS } from "./constants/theme.js";
 import { useNotifs } from "./hooks/useNotifs.js";
+import { useAuth } from "./hooks/useAuth.js";
+import { Auth } from "./components/Auth.jsx";
 import { SkeletonRow, BmSvg, DL, SB } from "./components/Shared.jsx";
 import { Row } from "./components/Row.jsx";
 import { Detail } from "./components/Detail.jsx";
@@ -50,6 +52,12 @@ export default function Pulse() {
   const [isDark,        setIsDark]        = useState(()=>{ try{ const v=localStorage.getItem("pulse-dark"); return v===null?true:v==="true"; }catch(e){ return true; } });
 
   const C = isDark ? DARK : LIGHT;
+  const { user, loading: authLoading, signUp, signIn, signOut } = useAuth();
+
+  const handleAuth = async (mode, email, password) => {
+    if(mode==="signup") return signUp(email, password);
+    return signIn(email, password);
+  };
 
   const feedRef    = useRef(null);
   const srchRef    = useRef(null);
@@ -220,6 +228,9 @@ export default function Pulse() {
     }
   },[selectedIdx]);
 
+
+  if(authLoading) return <div style={{minHeight:"100vh",background:C.bg}}/>;
+  if(!user) return <Auth onAuth={handleAuth} C={C} isDark={isDark}/>;
 
   // On mobile: article detail OR notif panel takes full screen
   const mobileDetailOpen  = isMobile && detail && !showNotifPanel;
