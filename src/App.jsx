@@ -868,7 +868,7 @@ function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBookmark, s
   return(
     <div className="row" onClick={onClick} data-selected={selected}
       style={{borderBottom:`1px solid ${C.border}`,padding:isMobile?"16px":"14px 16px",background:selected?C.hover:undefined,
-        animation:"rowIn .18s ease forwards",animationDelay:`${Math.min(i*.012,.28)}s`,opacity:0,filter:isRead?"brightness(0.5)":"none"}}>
+        animation:"rowIn .18s ease forwards",animationDelay:`${Math.min(i*.012,.28)}s`,opacity:0,filter:isRead?(isDark?"brightness(0.4)":"brightness(1.1) opacity(0.45)"):"none"}}>
       <div style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:8}}>
         <span style={{fontSize:"0.62rem",fontWeight:600,letterSpacing:"0.1em",
           padding:"3px 7px",borderRadius:2,background:m.a,color:m.t,
