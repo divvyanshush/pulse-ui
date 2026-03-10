@@ -60,8 +60,9 @@
     }
     .glow-2 {
       width:400px; height:400px;
-      background: #7b61ff;
+      background: var(--accent);
       top:200px; right:-100px;
+      opacity:0.03;
     }
 
     /* ─── NAV ─── */
@@ -138,10 +139,7 @@
     }
     .hero-h1 em {
       font-style:normal;
-      background:linear-gradient(135deg, var(--accent) 0%, #7b61ff 100%);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
+      color:var(--accent);
     }
 
     .hero-p {
@@ -464,7 +462,7 @@
 
     <h1 class="hero-h1">
       Every AI signal<br/>
-      that <em>matters today</em>
+      that <em>matters</em>
     </h1>
 
     <p class="hero-p">
@@ -602,6 +600,53 @@
     <div class="sources-grid" id="sources-grid"></div>
   </div>
 
+
+  <!-- TRENDING REPOS -->
+  <div class="features-wrap" id="repos">
+    <div class="label">TRENDING GITHUB REPOS</div>
+    <div style="border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--surface);">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border2);background:var(--surface2);
+        display:flex;align-items:center;gap:8px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--sub)">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        <span style="font-size:10px;color:var(--muted);letter-spacing:0.12em;">AI REPOS TRENDING TODAY</span>
+        <span style="font-size:9px;color:var(--muted);margin-left:auto;">Updated every 10 min</span>
+      </div>
+      <div id="trending-repos" style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <!-- Populated by JS -->
+        <div style="padding:16px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);">
+          <div style="width:60%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
+          <div style="width:85%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
+          <div style="width:30%;height:9px;background:var(--border2);border-radius:2px;"></div>
+        </div>
+        <div style="padding:16px;border-bottom:1px solid var(--border);">
+          <div style="width:55%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
+          <div style="width:80%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
+          <div style="width:35%;height:9px;background:var(--border2);border-radius:2px;"></div>
+        </div>
+        <div style="padding:16px;border-right:1px solid var(--border);">
+          <div style="width:65%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
+          <div style="width:75%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
+          <div style="width:28%;height:9px;background:var(--border2);border-radius:2px;"></div>
+        </div>
+        <div style="padding:16px;">
+          <div style="width:50%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
+          <div style="width:90%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
+          <div style="width:32%;height:9px;background:var(--border2);border-radius:2px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <div class="features-wrap">
+    <div class="label">BUILT FOR DEVELOPERS WHO USE</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+      <div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Hacker News</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">arXiv</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">GitHub</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Dev.to</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Hugging Face</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Anthropic</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">OpenAI</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Google Research</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">MIT Tech Review</div>
+    </div>
+  </div>
+
   <!-- FINAL CTA -->
   <div class="final-cta">
     <div class="cta-card">
@@ -728,6 +773,46 @@
     }
 
     load();
+
+    // Load trending repos
+    async function loadRepos() {
+      try {
+        const res = await fetch(`${API}/trending-repos`);
+        const { repos } = await res.json();
+        if(!repos || !repos.length) return;
+        const top4 = repos.slice(0,4);
+        function fmtNum(n) {
+          if(n>=1000) return (n/1000).toFixed(1)+"k";
+          return n;
+        }
+        document.getElementById("trending-repos").innerHTML = top4.map((r,i)=>{
+          const isRight = i%2===1;
+          const isTop = i<2;
+          return `<div style="padding:16px;
+            border-bottom:${isTop?"1px solid var(--border)":"none"};
+            border-right:${!isRight?"1px solid var(--border)":"none"};
+            cursor:pointer;transition:background .15s;"
+            onmouseenter="this.style.background='var(--surface2)'"
+            onmouseleave="this.style.background='transparent'"
+            onclick="window.open('${r.url||"#"}','_blank')">
+            <div style="font-size:12px;font-weight:600;color:var(--text);
+              margin-bottom:5px;letter-spacing:-0.01em;">
+              ${r.name||r.full_name||""}
+            </div>
+            <div style="font-size:11px;color:var(--sub);margin-bottom:8px;
+              font-family:var(--sans);font-weight:300;line-height:1.5;
+              display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+              ${r.description||"No description"}
+            </div>
+            <div style="display:flex;gap:10px;font-size:10px;color:var(--muted);">
+              <span>${fmtNum(r.stars||0)} ★</span>
+              ${r.language?`<span>· ${r.language}</span>`:""}
+            </div>
+          </div>`;
+        }).join("");
+      } catch(e) {}
+    }
+    loadRepos();
 
     // Load trending repos
     async function loadRepos() {
