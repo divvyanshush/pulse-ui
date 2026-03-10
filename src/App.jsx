@@ -12,6 +12,7 @@ import { useBookmarks } from "./hooks/useBookmarks.js";
 import { useSavedSearches } from "./hooks/useSavedSearches.js";
 import { usePreferences } from "./hooks/usePreferences.js";
 import { useFeed } from "./hooks/useFeed.js";
+import { Briefing } from "./components/Briefing.jsx";
 
 
 
@@ -642,6 +643,9 @@ export default function Pulse() {
         {/* ── FEED ── */}
         {!mobileDetailOpen && !mobileNotifOpen && (
           <div ref={feedRef} style={{flex:1,overflowY:"auto",overflowX:"hidden",minWidth:0,minHeight:0}}>
+            {filter==="all" && !query && !srcFilter && (
+              <Briefing C={C} isDark={isDark} onItemClick={setDetail}/>
+            )}
             {/* Feed header */}
             <div style={{position:"sticky",top:0,background:C.bg,borderBottom:`1px solid ${C.border}`,
               padding:"7px 16px",display:"flex",alignItems:"center",gap:8,zIndex:10}}>
