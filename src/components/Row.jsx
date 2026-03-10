@@ -30,6 +30,18 @@ export function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBook
           by {item.authors}
         </div>
       )}
+      {item.tags&&item.tags.length>0&&(
+        <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:8}}>
+          {item.tags.map(tag=>(
+            <span key={tag} style={{fontSize:"0.6rem",padding:"2px 6px",borderRadius:2,
+              background:isDark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.05)",
+              color:C.sub,border:`1px solid ${C.border}`,letterSpacing:"0.06em",
+              fontWeight:500,whiteSpace:"nowrap"}}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
       <div style={{display:"flex",alignItems:"center",gap:10,fontSize:FS.xs,overflow:"hidden"}}>
         <span style={{display:"flex",alignItems:"center",gap:5,flexShrink:0}}>
           <div style={{width:5,height:5,borderRadius:"50%",background:srcColor,flexShrink:0}}/>

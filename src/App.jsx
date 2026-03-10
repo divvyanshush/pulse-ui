@@ -466,7 +466,7 @@ export default function Pulse() {
               background:C.surface,borderRight:`1px solid ${C.border}`,
               zIndex:70,overflowY:"auto",animation:"slideLeft .18s ease"}}>
               <Sidebar C={C} isDark={isDark} items={items} visible={visible}
-                status={status} lastFetch={lastFetch} bmCount={bmCount} onItemClick={setDetail} srcFilter={srcFilter} setSrcFilter={setSrcFilter}/>
+                status={status} lastFetch={lastFetch} bmCount={bmCount} onItemClick={setDetail} srcFilter={srcFilter} setSrcFilter={setSrcFilter} onRepoClick={setDetail}/>
             </div>
           </>
         )}
@@ -476,7 +476,7 @@ export default function Pulse() {
           <div style={{width:190,minWidth:190,borderRight:`1px solid ${C.border}`,
             background:C.surface,flexShrink:0,overflowY:"auto"}}>
             <Sidebar C={C} isDark={isDark} items={items} visible={visible}
-              status={status} lastFetch={lastFetch} bmCount={bmCount} onItemClick={setDetail} srcFilter={srcFilter} setSrcFilter={setSrcFilter}/>
+              status={status} lastFetch={lastFetch} bmCount={bmCount} onItemClick={setDetail} srcFilter={srcFilter} setSrcFilter={setSrcFilter} onRepoClick={setDetail}/>
           </div>
         )}
 

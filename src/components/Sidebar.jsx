@@ -1,7 +1,8 @@
 import { getTM, SRC_COLORS, FS, timeAgo } from "../constants/theme.js";
+import { TrendingRepos } from "./TrendingRepos.jsx";
 import { SB } from "./Shared.jsx";
 
-export function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount, onItemClick, srcFilter, setSrcFilter}) {
+export function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount, onItemClick, srcFilter, setSrcFilter, onRepoClick}) {
   const TML=getTM(isDark);
   const topItems=[...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,3);
   const statusColor=status==="ok"?C.accent:status==="err"?"#c01e3c":C.warn;
@@ -90,6 +91,7 @@ export function Sidebar({C, isDark, items, visible, status, lastFetch, bmCount, 
           );
         })}
       </SB>
+      <TrendingRepos C={C} isDark={isDark} onRepoClick={onRepoClick}/>
     </>
   );
 }
