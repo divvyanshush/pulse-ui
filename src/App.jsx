@@ -137,6 +137,21 @@ export default function Pulse() {
           showToast("Trending now",t.title,"hot",t);
           pushNotif("PULSE · Trending",t.title);
         }
+        // Check saved searches against new items
+        if(novel.length && savedSearches.length){
+          savedSearches.forEach(ss=>{
+            const q=ss.query.toLowerCase();
+            const match=novel.find(i=>
+              (i.title||"").toLowerCase().includes(q)||
+              (i.sum||"").toLowerCase().includes(q)||
+              (i.src||"").toLowerCase().includes(q)
+            );
+            if(match){
+              showToast(`Alert: "${ss.query}"`,match.title,"new",match);
+              pushNotif(`PULSE · Alert: "${ss.query}"`,match.title);
+            }
+          });
+        }
       }else{
         setItems(enriched);
       }
