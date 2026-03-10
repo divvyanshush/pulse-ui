@@ -201,15 +201,17 @@ export default function Pulse() {
 
   useEffect(()=>{
     loadFeed(false);
-    loadBookmarks();
-    loadSavedSearches();
-    loadPreferences().then(prefs=>{
-      if(!prefs) return;
-      if(prefs.dark_mode!==null) setIsDark(prefs.dark_mode);
-      if(prefs.filter) setFilter(prefs.filter);
-      if(prefs.sort_by) setSortBy(prefs.sort_by);
-    });
-  },[loadFeed,loadBookmarks,loadPreferences]);
+    if(user){
+      loadBookmarks();
+      loadSavedSearches();
+      loadPreferences().then(prefs=>{
+        if(!prefs) return;
+        if(prefs.dark_mode!==null) setIsDark(prefs.dark_mode);
+        if(prefs.filter) setFilter(prefs.filter);
+        if(prefs.sort_by) setSortBy(prefs.sort_by);
+      });
+    }
+  },[loadFeed,loadBookmarks,loadPreferences,user]);
   useEffect(()=>{const id=setInterval(()=>loadFeed(true),90_000);return()=>clearInterval(id);},[loadFeed]);
   useEffect(()=>{ document.title = pending.length>0?`Pulse (${pending.length})`:"Pulse"; },[pending]);
   useEffect(()=>{const id=setInterval(()=>setItems(p=>p.map(i=>({...i,timeLabel:timeAgo(i.time)}))),30_000);return()=>clearInterval(id);},[]);
@@ -270,7 +272,7 @@ export default function Pulse() {
           setDetail(null); setShowSrch(false); setQuery(""); setShowNotifPanel(false); setShowHelp(false);
           break;
         case "b":
-          if(detail) toggleBookmark(detail);
+          if(detail){ if(!user){ setShowAuth(true); return; } toggleBookmark(detail); }
           break;
         case "/":
           e.preventDefault();
@@ -291,8 +293,10 @@ export default function Pulse() {
   },[selectedIdx]);
 
 
+  // Auth modal state - shown when user tries to use a protected feature
+  const [showAuth, setShowAuth] = useState(false);
+  const requireAuth = (fn) => { if(!user){ setShowAuth(true); return; } fn(); };
   if(authLoading) return <div style={{minHeight:"100vh",background:C.bg}}/>;
-  if(!user) return <Auth onAuth={handleAuth} C={C} isDark={isDark}/>;
 
   // On mobile: article detail OR notif panel takes full screen
   const mobileDetailOpen  = isMobile && detail && !showNotifPanel;
@@ -476,7 +480,15 @@ export default function Pulse() {
         </button>
 
         {/* User avatar */}
-        <div data-usermenu style={{position:"relative"}}>
+        {!user && (
+          <button onClick={()=>setShowAuth(true)}
+            style={{padding:"6px 14px",background:C.accent,border:"none",borderRadius:3,
+              color:"#000",fontFamily:"IBM Plex Mono,monospace",fontSize:"0.62rem",
+              fontWeight:700,letterSpacing:"0.12em",cursor:"pointer",flexShrink:0}}>
+            SIGN IN
+          </button>
+        )}
+        {user && <div data-usermenu style={{position:"relative"}}>
           <button className="topbtn" onClick={()=>setShowUserMenu(m=>!m)}
             style={{width:30,height:30,borderRadius:"50%",padding:0,
               display:"flex",alignItems:"center",justifyContent:"center",
@@ -515,7 +527,7 @@ export default function Pulse() {
               </div>
             </div>
           )}
-        </div>
+        </div>}
       </div>
 
       {/* ══════════════ MOBILE FILTER BAR ══════════════ */}
@@ -709,7 +721,7 @@ export default function Pulse() {
             {displayed.map((item,i)=>(
               <Row key={item.id} item={item} i={i} isMobile={isMobile} C={C} isDark={isDark} selected={i===selectedIdx}
                 isBookmarked={!!bookmarks[item.id]} isRead={readIds.has(item.id)}
-                onBookmark={toggleBookmark}
+                onBookmark={(item,e)=>{ e?.stopPropagation(); if(!user){ setShowAuth(true); return; } toggleBookmark(item); }}
                 onClick={()=>{
                 setDetail(item);
                 setReadIds(prev=>{
@@ -783,7 +795,7 @@ export default function Pulse() {
           <div style={{width:380,minWidth:380,borderLeft:`1px solid ${C.border}`,
             background:C.surface,flexShrink:0,overflowY:"auto",animation:"slideRight .18s ease"}}>
             <Detail item={detail} onClose={()=>setDetail(null)} C={C} isDark={isDark}
-              isBookmarked={!!bookmarks[detail.id]} onBookmark={toggleBookmark} items={items} onItemClick={setDetail}/>
+              isBookmarked={!!bookmarks[detail.id]} onBookmark={(item,e)=>{ e?.stopPropagation(); if(!user){ setShowAuth(true); return; } toggleBookmark(item); }} items={items} onItemClick={setDetail}/>
           </div>
         )}
 
@@ -792,7 +804,7 @@ export default function Pulse() {
           <div style={{position:"absolute",inset:0,background:C.bg,zIndex:30,
             overflowY:"auto",WebkitOverflowScrolling:"touch",animation:"slideRight .2s ease"}}>
             <Detail item={detail} onClose={()=>setDetail(null)} isMobile C={C} isDark={isDark}
-              isBookmarked={!!bookmarks[detail.id]} onBookmark={toggleBookmark} items={items} onItemClick={setDetail}/>
+              isBookmarked={!!bookmarks[detail.id]} onBookmark={(item,e)=>{ e?.stopPropagation(); if(!user){ setShowAuth(true); return; } toggleBookmark(item); }} items={items} onItemClick={setDetail}/>
             {/* Extra scroll space for mobile safe area */}
             <div style={{height:48}}/>
           </div>
@@ -837,6 +849,22 @@ export default function Pulse() {
           <span style={{marginLeft:"auto"}}>
             {items.length} items · {lastFetch?timeAgo(Math.floor(lastFetch/1000))+" ago":"—"}
           </span>
+        </div>
+      )}
+    {showAuth && (
+        <div style={{position:"fixed",inset:0,zIndex:1000,
+          background:"rgba(0,0,0,0.75)",backdropFilter:"blur(4px)",
+          display:"flex",alignItems:"center",justifyContent:"center",padding:16}}
+          onClick={()=>setShowAuth(false)}>
+          <div onClick={e=>e.stopPropagation()}
+            style={{width:"100%",maxWidth:400,borderRadius:8,overflow:"hidden",
+              boxShadow:"0 24px 64px rgba(0,0,0,0.5)"}}>
+            <Auth onAuth={async(mode,email,password)=>{
+              const err=await handleAuth(mode,email,password);
+              if(!err) setShowAuth(false);
+              return err;
+            }} C={C} isDark={isDark}/>
+          </div>
         </div>
       )}
     </div>
