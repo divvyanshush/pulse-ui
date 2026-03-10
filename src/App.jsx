@@ -9,6 +9,7 @@ import { Detail } from "./components/Detail.jsx";
 import { NotifPanel } from "./components/NotifPanel.jsx";
 import { Sidebar } from "./components/Sidebar.jsx";
 import { useBookmarks } from "./hooks/useBookmarks.js";
+import { useSavedSearches } from "./hooks/useSavedSearches.js";
 import { usePreferences } from "./hooks/usePreferences.js";
 import { useFeed } from "./hooks/useFeed.js";
 
@@ -112,6 +113,7 @@ export default function Pulse() {
   },[]);
 
   const { bookmarks, loadBookmarks, toggleBookmark } = useBookmarks(user);
+  const { savedSearches, loadSavedSearches, saveSearch, deleteSearch } = useSavedSearches(user);
   const { loadPreferences, savePreferences } = usePreferences(user);
 
   const loadFeed = useCallback(async(isRefresh=false)=>{
@@ -149,6 +151,7 @@ export default function Pulse() {
   useEffect(()=>{
     loadFeed(false);
     loadBookmarks();
+    loadSavedSearches();
     loadPreferences().then(prefs=>{
       if(!prefs) return;
       if(prefs.dark_mode!==null) setIsDark(prefs.dark_mode);
@@ -303,16 +306,49 @@ export default function Pulse() {
         {/* Search */}
         {!mobileDetailOpen && !mobileNotifOpen && (
           showSrch ? (
-            <div style={{display:"flex",alignItems:"center",gap:6,padding:"0 10px",height:34,
-              background:C.bg,border:`1px solid ${C.faint}`,borderRadius:4,
-              flex:isMobile?1:undefined,maxWidth:isMobile?"100%":220,minWidth:0}}>
-              <input ref={srchRef} value={query} onChange={e=>setQuery(e.target.value)}
-                placeholder="titles, summaries, sources…" autoFocus
-                style={{background:"none",border:"none",outline:"none",color:C.text,
-                  fontFamily:"inherit",fontSize:FS.sm,width:"100%",minWidth:0}}/>
-              {query&&<span style={{fontSize:FS.xs,color:C.muted,flexShrink:0,whiteSpace:"nowrap"}}>{sorted.length}</span>}
-              <button className="ibtn" onClick={()=>{setShowSrch(false);setQuery("");}}
-                style={{color:C.muted,fontSize:FS.md,padding:0,flexShrink:0}}>✕</button>
+            <div style={{position:"relative",flex:isMobile?1:undefined,maxWidth:isMobile?"100%":220,minWidth:0}}>
+              <div style={{display:"flex",alignItems:"center",gap:6,padding:"0 10px",height:34,
+                background:C.bg,border:`1px solid ${C.faint}`,borderRadius:4}}>
+                <input ref={srchRef} value={query} onChange={e=>setQuery(e.target.value)}
+                  placeholder="search…" autoFocus
+                  style={{background:"none",border:"none",outline:"none",color:C.text,
+                    fontFamily:"inherit",fontSize:FS.sm,width:"100%",minWidth:0}}/>
+                {query&&<span style={{fontSize:FS.xs,color:C.muted,flexShrink:0,whiteSpace:"nowrap"}}>{sorted.length}</span>}
+                <button className="ibtn" onClick={()=>{setShowSrch(false);setQuery("");}}
+                  style={{color:C.muted,fontSize:FS.md,padding:0,flexShrink:0}}>✕</button>
+              </div>
+              {/* Saved searches dropdown */}
+              {!query && savedSearches.length>0 && (
+                <div style={{position:"absolute",top:"calc(100% + 4px)",left:0,right:0,zIndex:100,
+                  background:C.surface,border:`1px solid ${C.border}`,borderRadius:4,
+                  boxShadow:"0 8px 24px rgba(0,0,0,0.3)",overflow:"hidden"}}>
+                  <div style={{padding:"6px 10px 4px",fontSize:"0.6rem",color:C.muted,letterSpacing:"0.1em"}}>SAVED SEARCHES</div>
+                  {savedSearches.map(s=>(
+                    <div key={s.id} onClick={()=>setQuery(s.query)}
+                      style={{display:"flex",alignItems:"center",padding:"7px 10px",cursor:"pointer",gap:8}}
+                      onMouseEnter={e=>e.currentTarget.style.background=C.hover}
+                      onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                      <span style={{fontSize:FS.xs,color:C.sub,flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>🔍 {s.query}</span>
+                      <button onClick={e=>{e.stopPropagation();deleteSearch(s.id);}}
+                        style={{background:"none",border:"none",color:C.muted,cursor:"pointer",fontSize:"0.7rem",padding:"0 2px",flexShrink:0}}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Save current search button */}
+              {query.trim() && !savedSearches.some(s=>s.query.toLowerCase()===query.toLowerCase()) && (
+                <div style={{position:"absolute",top:"calc(100% + 4px)",left:0,right:0,zIndex:100,
+                  background:C.surface,border:`1px solid ${C.border}`,borderRadius:4,
+                  boxShadow:"0 8px 24px rgba(0,0,0,0.3)"}}>
+                  <div onClick={()=>saveSearch(query)}
+                    style={{padding:"8px 10px",cursor:"pointer",fontSize:FS.xs,
+                      color:C.accent,letterSpacing:"0.08em",display:"flex",alignItems:"center",gap:6}}
+                    onMouseEnter={e=>e.currentTarget.style.background=C.hover}
+                    onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                    + SAVE "{query}"
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <button className="topbtn" onClick={()=>{setShowSrch(true);setTimeout(()=>srchRef.current?.focus(),50);}}>
