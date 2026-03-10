@@ -52,6 +52,7 @@ export default function Pulse() {
   const [showHelp,      setShowHelp]      = useState(false);
   const [showUserMenu,  setShowUserMenu]  = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(()=>{ try{ return !localStorage.getItem("pulse-onboarded"); }catch(e){ return true; } });
+  const [displayCount,   setDisplayCount]   = useState(30);
   const [isDark,        setIsDark]        = useState(()=>{ try{ const v=localStorage.getItem("pulse-dark"); return v===null?true:v==="true"; }catch(e){ return true; } });
 
   const C = isDark ? DARK : LIGHT;
@@ -63,6 +64,7 @@ export default function Pulse() {
   };
 
   const feedRef    = useRef(null);
+  const loaderRef  = useRef(null);
   const srchRef    = useRef(null);
   const prevIds    = useRef(new Set());
   const toastTimer = useRef(null);
@@ -70,6 +72,23 @@ export default function Pulse() {
   const isMobile   = width < 768;
 
   // Close all panels when switching
+  // Infinite scroll - attach after render
+  useEffect(()=>{
+    const attach = () => {
+      const el = feedRef.current;
+      if(!el) return;
+      const onScroll = () => {
+        if(el.scrollTop + el.clientHeight >= el.scrollHeight - 200) {
+          setDisplayCount(c => c + 30);
+        }
+      };
+      el.addEventListener("scroll", onScroll, { passive: true });
+      return () => el.removeEventListener("scroll", onScroll);
+    };
+    const cleanup = attach();
+    return cleanup;
+  }, [items.length]);
+
   // Close user menu on outside click
   useEffect(()=>{
     if(!showUserMenu) return;
@@ -220,6 +239,8 @@ export default function Pulse() {
     return true;
   });
   const sorted = sortBy==="latest" ? visible : sortBy==="trending" ? [...visible].sort((a,b)=>(b.heat||0)-(a.heat||0)) : [...visible].sort((a,b)=>(b.score||0)-(a.score||0));
+  const displayed = sorted.slice(0, displayCount);
+  useEffect(()=>setDisplayCount(30),[filter, sortBy, query, srcFilter]);
 
   // ── Keyboard shortcuts ──
   useEffect(()=>{
@@ -680,7 +701,7 @@ export default function Pulse() {
               </div>
             )}
 
-            {sorted.map((item,i)=>(
+            {displayed.map((item,i)=>(
               <Row key={item.id} item={item} i={i} isMobile={isMobile} C={C} isDark={isDark} selected={i===selectedIdx}
                 isBookmarked={!!bookmarks[item.id]} isRead={readIds.has(item.id)}
                 onBookmark={toggleBookmark}
@@ -694,6 +715,14 @@ export default function Pulse() {
                 });
               }}/>
             ))}
+            {displayCount < sorted.length && (
+              <div style={{height:40,display:"flex",alignItems:"center",
+                justifyContent:"center"}}>
+                <div style={{fontSize:FS.xs,color:C.muted,letterSpacing:"0.08em"}}>
+                  LOADING...
+                </div>
+              </div>
+            )}
             <div style={{height:isMobile?80:48}}/>
           </div>
         )}
