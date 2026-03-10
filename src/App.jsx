@@ -9,6 +9,7 @@ import { Detail } from "./components/Detail.jsx";
 import { NotifPanel } from "./components/NotifPanel.jsx";
 import { Sidebar } from "./components/Sidebar.jsx";
 import { useBookmarks } from "./hooks/useBookmarks.js";
+import { usePreferences } from "./hooks/usePreferences.js";
 import { useFeed } from "./hooks/useFeed.js";
 
 
@@ -111,6 +112,7 @@ export default function Pulse() {
   },[]);
 
   const { bookmarks, loadBookmarks, toggleBookmark } = useBookmarks(user);
+  const { loadPreferences, savePreferences } = usePreferences(user);
 
   const loadFeed = useCallback(async(isRefresh=false)=>{
     setStatus("loading");
@@ -144,7 +146,16 @@ export default function Pulse() {
     }
   },[showToast,pushNotif]);
 
-  useEffect(()=>{loadFeed(false);loadBookmarks();},[loadFeed,loadBookmarks]);
+  useEffect(()=>{
+    loadFeed(false);
+    loadBookmarks();
+    loadPreferences().then(prefs=>{
+      if(!prefs) return;
+      if(prefs.dark_mode!==null) setIsDark(prefs.dark_mode);
+      if(prefs.filter) setFilter(prefs.filter);
+      if(prefs.sort_by) setSortBy(prefs.sort_by);
+    });
+  },[loadFeed,loadBookmarks,loadPreferences]);
   useEffect(()=>{const id=setInterval(()=>loadFeed(true),90_000);return()=>clearInterval(id);},[loadFeed]);
   useEffect(()=>{ document.title = pending.length>0?`Pulse (${pending.length})`:"Pulse"; },[pending]);
   useEffect(()=>{const id=setInterval(()=>setItems(p=>p.map(i=>({...i,timeLabel:timeAgo(i.time)}))),30_000);return()=>clearInterval(id);},[]);
@@ -275,7 +286,7 @@ export default function Pulse() {
               const TML=getTM(isDark);
               const m=TML[f];const on=filter===f;const isBm=f==="bookmarks";
               return(
-                <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);try{if(f!=="bookmarks")localStorage.setItem("pulse-filter",f);}catch(e){}}}
+                <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);try{if(f!=="bookmarks")localStorage.setItem("pulse-filter",f);}catch(e){} if(f!=="bookmarks")savePreferences({filter:f});}}
                   style={{padding:"5px 10px",borderRadius:3,flexShrink:0,fontSize:FS.xs,letterSpacing:"0.08em",
                     background:on?(isBm||f==="all"?`rgba(${isDark?"216,216,240":"26,26,46"},.08)`:m?.a):"transparent",
                     color:on?(isBm||f==="all"?C.text:m?.t):C.muted,
@@ -339,7 +350,7 @@ export default function Pulse() {
         )}
 
         {/* Theme toggle */}
-        <button className="topbtn" onClick={()=>setIsDark(d=>{ const next=!d; try{ localStorage.setItem("pulse-dark",next); }catch(e){} return next; })} title={isDark?"Light mode":"Dark mode"}>
+        <button className="topbtn" onClick={()=>setIsDark(d=>{ const next=!d; try{ localStorage.setItem("pulse-dark",next); }catch(e){} savePreferences({dark_mode:next}); return next; })} title={isDark?"Light mode":"Dark mode"}>
           {isDark ? (
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
               <circle cx="7" cy="7" r="3"/>
@@ -369,7 +380,7 @@ export default function Pulse() {
             const TML=getTM(isDark);
             const m=TML[f];const on=filter===f;const isBm=f==="bookmarks";
             return(
-              <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);try{if(f!=="bookmarks")localStorage.setItem("pulse-filter",f);}catch(e){}}}
+              <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);try{if(f!=="bookmarks")localStorage.setItem("pulse-filter",f);}catch(e){} if(f!=="bookmarks")savePreferences({filter:f});}}
                 style={{padding:"6px 13px",borderRadius:20,flexShrink:0,
                   fontSize:FS.xs,letterSpacing:"0.07em",fontWeight:on?500:400,
                   background:on?(isBm||f==="all"?"rgba(128,128,160,.12)":m?.a):"rgba(128,128,128,.06)",
@@ -482,7 +493,7 @@ export default function Pulse() {
               </span>
               <div style={{display:"flex",gap:2,flexShrink:0}}>
                 {[["latest","NEW"],["trending","HOT"],["top","TOP"]].map(([k,label])=>(
-                  <button key={k} className="fbtn" onClick={()=>{setSortBy(k);try{localStorage.setItem("pulse-sort",k);}catch(e){}}}
+                  <button key={k} className="fbtn" onClick={()=>{setSortBy(k);try{localStorage.setItem("pulse-sort",k);}catch(e){} savePreferences({sort_by:k});}}
                     style={{padding:"3px 8px",borderRadius:3,fontSize:FS.xs,letterSpacing:"0.08em",
                       color:sortBy===k?C.text:C.muted,
                       background:sortBy===k?`rgba(${isDark?"216,216,240":"26,26,46"},.08)`:"transparent",
