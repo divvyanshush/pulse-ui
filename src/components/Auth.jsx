@@ -198,7 +198,12 @@ export function Auth({ onAuth, C, isDark }) {
               </div>
 
               <div style={{textAlign:"center",marginTop:20,fontSize:"0.6rem",color:C.muted,lineHeight:1.6}}>
-                By continuing you agree to our terms of service
+                By continuing you agree to our{" "}
+                <a href="/terms.html" target="_blank"
+                  style={{color:C.sub,textDecoration:"underline"}}>Terms</a>
+                {" "}and{" "}
+                <a href="/privacy.html" target="_blank"
+                  style={{color:C.sub,textDecoration:"underline"}}>Privacy Policy</a>
               </div>
             </div>
           )}
