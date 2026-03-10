@@ -4,503 +4,623 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pulse — AI signals for developers</title>
-  <meta name="description" content="Research, repos, tools and news from 15+ sources. Curated in real time for AI developers."/>
+  <meta name="description" content="Research papers, trending repos, model releases and industry news. Aggregated from 15+ sources, ranked by signal."/>
   <meta property="og:title" content="Pulse — AI signals for developers"/>
   <meta property="og:description" content="Research, repos, tools and news from 15+ sources. Curated in real time."/>
   <meta property="og:type" content="website"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:       #040408;
-      --surface:  #07070e;
-      --border:   #111128;
-      --faint:    #1a1a35;
-      --text:     #e8e8f4;
-      --sub:      #9090b8;
-      --muted:    #50506e;
-      --accent:   #00e5ff;
-      --accentdim:rgba(0,229,255,0.08);
-      --accentbdr:rgba(0,229,255,0.2);
-      --red:      #ff4d6d;
-      --mono:     "IBM Plex Mono", monospace;
-      --sans:     "IBM Plex Sans", sans-serif;
+      --bg:        #030306;
+      --surface:   #06060c;
+      --surface2:  #09090f;
+      --border:    #0f0f24;
+      --border2:   #161630;
+      --text:      #eeeef8;
+      --sub:       #8888b0;
+      --muted:     #44445a;
+      --accent:    #00e5ff;
+      --accent2:   rgba(0,229,255,0.06);
+      --accent3:   rgba(0,229,255,0.18);
+      --mono:      "IBM Plex Mono", monospace;
+      --sans:      "IBM Plex Sans", sans-serif;
     }
+
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior:smooth; font-size:16px; }
+
     body {
       background: var(--bg);
       color: var(--text);
       font-family: var(--mono);
-      font-size: 14px;
-      line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Noise overlay ── */
-    body::before {
-      content:"";
-      position:fixed;
-      inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events:none;
-      z-index:0;
-      opacity:0.4;
+    a { text-decoration:none; color:inherit; }
+
+    /* ─── GRAIN ─── */
+    body::after {
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:999;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35;
     }
 
-    /* ── Nav ── */
+    /* ─── GLOW ─── */
+    .glow {
+      position:absolute; border-radius:50%; pointer-events:none;
+      filter: blur(120px); opacity:0.07;
+    }
+    .glow-1 {
+      width:600px; height:600px;
+      background: var(--accent);
+      top:-200px; left:50%; transform:translateX(-50%);
+    }
+    .glow-2 {
+      width:400px; height:400px;
+      background: #7b61ff;
+      top:200px; right:-100px;
+    }
+
+    /* ─── NAV ─── */
     nav {
-      position: fixed; top:0; left:0; right:0; z-index:100;
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      height:54px; padding:0 40px;
       display:flex; align-items:center; justify-content:space-between;
-      padding: 0 32px; height: 56px;
-      background: rgba(4,4,8,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      background:rgba(3,3,6,0.8);
+      backdrop-filter:blur(20px) saturate(180%);
+      border-bottom:1px solid var(--border);
     }
     .nav-logo {
-      display:flex; align-items:center; gap:8px;
-      font-size:13px; font-weight:700; letter-spacing:0.25em; color:var(--text);
+      display:flex; align-items:center; gap:9px;
+      font-size:12px; font-weight:700; letter-spacing:0.28em;
     }
-    .nav-dot { width:5px; height:5px; border-radius:50%; background:var(--accent); }
-    .nav-links { display:flex; align-items:center; gap:24px; }
-    .nav-links a {
-      font-size:11px; color:var(--muted); letter-spacing:0.1em;
-      text-decoration:none; transition:color .15s;
-    }
-    .nav-links a:hover { color:var(--sub); }
-    .nav-cta {
-      padding:7px 16px;
+    .live-dot {
+      width:6px; height:6px; border-radius:50%;
       background:var(--accent);
-      color:#000; font-family:var(--mono);
-      font-size:11px; font-weight:700;
-      letter-spacing:0.12em;
-      border:none; border-radius:3px;
-      cursor:pointer; text-decoration:none;
-      transition:opacity .15s;
+      box-shadow:0 0 0 0 rgba(0,229,255,0.4);
+      animation:pulse-ring 2.5s ease infinite;
     }
-    .nav-cta:hover { opacity:0.85; }
+    @keyframes pulse-ring {
+      0%   { box-shadow:0 0 0 0 rgba(0,229,255,0.4); }
+      70%  { box-shadow:0 0 0 8px rgba(0,229,255,0); }
+      100% { box-shadow:0 0 0 0 rgba(0,229,255,0); }
+    }
+    .nav-center {
+      display:flex; align-items:center; gap:32px;
+    }
+    .nav-center a {
+      font-size:11px; color:var(--muted); letter-spacing:0.1em;
+      transition:color .2s;
+    }
+    .nav-center a:hover { color:var(--sub); }
+    .nav-btn {
+      padding:7px 18px;
+      background:var(--accent); color:#000;
+      font-family:var(--mono); font-size:10px;
+      font-weight:700; letter-spacing:0.14em;
+      border:none; border-radius:3px; cursor:pointer;
+      transition:all .2s;
+    }
+    .nav-btn:hover { opacity:0.85; transform:translateY(-1px); }
 
-    /* ── Hero ── */
+    /* ─── HERO ─── */
     .hero {
-      min-height: 100vh;
+      min-height:100vh;
       display:flex; flex-direction:column;
       align-items:center; justify-content:center;
-      padding: 120px 24px 80px;
-      position:relative; text-align:center;
+      padding:120px 24px 80px;
+      text-align:center;
+      position:relative; overflow:hidden;
     }
-    .hero-tag {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:5px 12px; border:1px solid var(--border);
-      border-radius:2px; font-size:10px; color:var(--muted);
-      letter-spacing:0.14em; margin-bottom:32px;
-      animation: fadeUp .6s ease forwards;
-    }
-    .hero-tag-dot {
-      width:4px; height:4px; border-radius:50%;
-      background:var(--accent); animation: blink 2s ease infinite;
-    }
-    @keyframes blink {
-      0%,100%{opacity:1} 50%{opacity:0.3}
-    }
-    h1 {
-      font-family: var(--mono);
-      font-size: clamp(32px, 6vw, 72px);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      max-width: 820px;
-      margin-bottom: 24px;
-      animation: fadeUp .6s .1s ease both;
-    }
-    h1 span { color: var(--accent); }
-    .hero-sub {
-      font-family: var(--sans);
-      font-size: clamp(14px, 2vw, 18px);
-      color: var(--sub);
-      max-width: 520px;
-      line-height: 1.7;
-      margin-bottom: 40px;
-      font-weight: 300;
-      animation: fadeUp .6s .2s ease both;
-    }
-    .hero-actions {
-      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-      justify-content:center;
-      animation: fadeUp .6s .3s ease both;
-    }
-    .btn-primary {
-      padding:12px 28px;
-      background:var(--accent); color:#000;
-      font-family:var(--mono); font-size:12px;
-      font-weight:700; letter-spacing:0.12em;
-      border:none; border-radius:3px;
-      cursor:pointer; text-decoration:none;
-      transition:opacity .15s, transform .15s;
-    }
-    .btn-primary:hover { opacity:0.85; transform:translateY(-1px); }
-    .btn-secondary {
-      padding:12px 28px;
-      background:transparent; color:var(--sub);
-      font-family:var(--mono); font-size:12px;
-      font-weight:500; letter-spacing:0.12em;
-      border:1px solid var(--border); border-radius:3px;
-      cursor:pointer; text-decoration:none;
-      transition:all .15s;
-    }
-    .btn-secondary:hover { border-color:var(--faint); color:var(--text); }
 
-    .hero-stats {
-      display:flex; align-items:center; gap:24px;
-      margin-top:56px; padding-top:40px;
-      border-top:1px solid var(--border);
-      animation: fadeUp .6s .4s ease both;
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:5px 14px;
+      border:1px solid var(--border2);
+      border-radius:100px;
+      font-size:10px; letter-spacing:0.16em; color:var(--muted);
+      margin-bottom:36px;
+      animation:fadeUp .7s ease both;
+      background:var(--surface);
     }
-    .stat { text-align:center; }
-    .stat-num {
-      font-size:28px; font-weight:700;
-      color:var(--text); line-height:1; display:block;
+    .hero-eyebrow span { color:var(--accent); }
+
+    .hero-h1 {
+      font-size:clamp(40px,7vw,88px);
+      font-weight:700; line-height:1.05;
+      letter-spacing:-0.03em;
+      max-width:900px;
+      margin-bottom:28px;
+      animation:fadeUp .7s .1s ease both;
     }
-    .stat-label {
-      font-size:10px; color:var(--muted);
-      letter-spacing:0.12em; margin-top:4px; display:block;
+    .hero-h1 em {
+      font-style:normal;
+      background:linear-gradient(135deg, var(--accent) 0%, #7b61ff 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
     }
-    .stat-div { width:1px; height:32px; background:var(--border); }
+
+    .hero-p {
+      font-family:var(--sans);
+      font-size:clamp(15px,2vw,19px);
+      color:var(--sub); font-weight:300;
+      max-width:500px; line-height:1.75;
+      margin-bottom:44px;
+      animation:fadeUp .7s .2s ease both;
+    }
+
+    .hero-cta {
+      display:flex; gap:12px; flex-wrap:wrap;
+      justify-content:center; align-items:center;
+      animation:fadeUp .7s .3s ease both;
+      margin-bottom:72px;
+    }
+    .btn-lg {
+      padding:14px 32px;
+      background:var(--accent); color:#000;
+      font-family:var(--mono); font-size:11px;
+      font-weight:700; letter-spacing:0.14em;
+      border:none; border-radius:3px; cursor:pointer;
+      display:inline-flex; align-items:center; gap:8px;
+      transition:all .2s;
+    }
+    .btn-lg:hover { opacity:0.85; transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,229,255,0.2); }
+    .btn-ghost {
+      padding:14px 32px;
+      background:transparent; color:var(--sub);
+      font-family:var(--mono); font-size:11px;
+      font-weight:500; letter-spacing:0.14em;
+      border:1px solid var(--border2); border-radius:3px;
+      cursor:pointer; transition:all .2s;
+    }
+    .btn-ghost:hover { border-color:var(--muted); color:var(--text); }
+
+    /* ─── STATS BAR ─── */
+    .stats-bar {
+      display:flex; gap:0;
+      border:1px solid var(--border2); border-radius:6px;
+      overflow:hidden; background:var(--surface);
+      animation:fadeUp .7s .4s ease both;
+    }
+    .stat-item {
+      padding:16px 32px; text-align:center;
+      border-right:1px solid var(--border2);
+    }
+    .stat-item:last-child { border-right:none; }
+    .stat-n {
+      font-size:24px; font-weight:700; color:var(--text);
+      line-height:1; display:block; margin-bottom:4px;
+    }
+    .stat-n.accent { color:var(--accent); }
+    .stat-l {
+      font-size:9px; color:var(--muted);
+      letter-spacing:0.14em; display:block;
+    }
 
     @keyframes fadeUp {
-      from { opacity:0; transform:translateY(16px); }
+      from { opacity:0; transform:translateY(20px); }
       to   { opacity:1; transform:translateY(0); }
     }
 
-    /* ── Feed preview ── */
-    .section {
-      max-width: 900px; margin:0 auto;
-      padding: 80px 24px;
+    /* ─── FEED PREVIEW ─── */
+    .preview-wrap {
+      padding:100px 24px;
+      max-width:860px; margin:0 auto;
       position:relative; z-index:1;
     }
-    .section-label {
-      font-size:10px; color:var(--muted);
-      letter-spacing:0.16em; margin-bottom:24px;
-      display:flex; align-items:center; gap:8px;
+    .label {
+      font-size:9px; letter-spacing:0.2em; color:var(--muted);
+      margin-bottom:20px; display:flex; align-items:center; gap:12px;
     }
-    .section-label::after {
-      content:""; flex:1; height:1px; background:var(--border);
+    .label::before, .label::after {
+      content:""; flex:1; height:1px; background:var(--border2);
     }
 
-    .feed-preview {
-      border:1px solid var(--border);
-      border-radius:6px; overflow:hidden;
+    .app-frame {
+      border:1px solid var(--border2);
+      border-radius:8px; overflow:hidden;
       background:var(--surface);
+      box-shadow:0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
+      position:relative;
     }
-    .feed-header {
-      padding:12px 16px;
-      border-bottom:1px solid var(--border);
-      display:flex; align-items:center; gap:8px;
-      background:var(--bg);
-    }
-    .feed-header-dot { width:4px; height:4px; border-radius:50%; background:var(--accent); }
-    .feed-header-text { font-size:10px; color:var(--muted); letter-spacing:0.12em; }
-    .feed-header-count { font-size:10px; color:var(--accent); margin-left:auto; }
-
-    .feed-item {
-      padding:16px;
-      border-bottom:1px solid var(--border);
-      transition:background .15s; cursor:pointer;
-    }
-    .feed-item:last-child { border-bottom:none; }
-    .feed-item:hover { background:var(--faint); }
-    .feed-item-top {
-      display:flex; align-items:flex-start; gap:10px; margin-bottom:8px;
-    }
-    .badge {
-      font-size:9px; font-weight:600; letter-spacing:0.12em;
-      padding:2px 6px; border-radius:2px; white-space:nowrap;
-      flex-shrink:0; margin-top:2px;
-    }
-    .badge-model    { background:rgba(0,229,255,.08);  color:#00e5ff; border:1px solid rgba(0,229,255,.2); }
-    .badge-research { background:rgba(255,255,255,.04); color:#7eb8ff; border:1px solid rgba(255,255,255,.1); }
-    .badge-product  { background:rgba(255,255,255,.04); color:#a78bfa; border:1px solid rgba(255,255,255,.1); }
-    .feed-title {
-      font-size:13px; font-weight:600; color:var(--text);
-      line-height:1.45; letter-spacing:-0.01em;
-    }
-    .feed-sum {
-      font-size:12px; color:var(--sub); line-height:1.6;
-      margin-bottom:10px;
-      display:-webkit-box; -webkit-line-clamp:2;
-      -webkit-box-orient:vertical; overflow:hidden;
-    }
-    .feed-meta {
-      display:flex; align-items:center; gap:8px;
-      font-size:10px; color:var(--muted);
-    }
-    .feed-src-dot { width:3px; height:3px; border-radius:50%; }
-
-    .feed-loading {
-      padding:16px;
-    }
-    .sk {
-      background: linear-gradient(90deg,#0c0c18 25%,#14142a 50%,#0c0c18 75%);
-      background-size:200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius:2px;
-    }
-    @keyframes shimmer {
-      0%{background-position:200% 0}
-      100%{background-position:-200% 0}
-    }
-
-    /* ── Features ── */
-    .features {
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
-      gap:1px; background:var(--border);
-      border:1px solid var(--border); border-radius:6px; overflow:hidden;
-    }
-    .feature {
-      background:var(--surface);
-      padding:28px 24px;
-      transition:background .15s;
-    }
-    .feature:hover { background:var(--faint); }
-    .feature-num {
-      font-size:10px; color:var(--accent);
-      letter-spacing:0.12em; margin-bottom:14px;
-      font-weight:600;
-    }
-    .feature-title {
-      font-size:13px; font-weight:600; color:var(--text);
-      margin-bottom:8px; letter-spacing:-0.01em;
-    }
-    .feature-desc {
-      font-size:11px; color:var(--muted);
-      font-family:var(--sans); line-height:1.7; font-weight:400;
-    }
-
-    /* ── Sources ── */
-    .sources {
-      display:flex; flex-wrap:wrap; gap:8px;
-    }
-    .source-pill {
-      padding:6px 12px;
-      border:1px solid var(--border); border-radius:3px;
-      font-size:11px; color:var(--muted);
-      letter-spacing:0.08em;
-      transition:all .15s; cursor:default;
-      display:flex; align-items:center; gap:6px;
-    }
-    .source-pill:hover { border-color:var(--faint); color:var(--sub); }
-    .source-dot { width:4px; height:4px; border-radius:50%; }
-
-    /* ── CTA section ── */
-    .cta-section {
-      text-align:center;
-      padding:80px 24px 120px;
-      position:relative; z-index:1;
-    }
-    .cta-box {
-      max-width:560px; margin:0 auto;
-      border:1px solid var(--border); border-radius:6px;
-      padding:48px 40px;
-      background:var(--surface);
-      position:relative; overflow:hidden;
-    }
-    .cta-box::before {
+    .app-frame::before {
       content:"";
       position:absolute; top:0; left:50%; transform:translateX(-50%);
-      width:200px; height:1px;
+      width:300px; height:1px;
       background:linear-gradient(90deg,transparent,var(--accent),transparent);
     }
-    .cta-title {
-      font-size:22px; font-weight:700;
-      color:var(--text); margin-bottom:12px;
-      letter-spacing:-0.01em;
+
+    .app-topbar {
+      height:46px; padding:0 16px;
+      border-bottom:1px solid var(--border2);
+      background:var(--surface2);
+      display:flex; align-items:center; gap:10px;
     }
-    .cta-sub {
-      font-size:13px; color:var(--sub);
-      font-family:var(--sans); font-weight:300;
-      margin-bottom:32px; line-height:1.7;
+    .tb-dot { width:5px; height:5px; border-radius:50%; background:var(--accent); }
+    .tb-logo { font-size:11px; font-weight:700; letter-spacing:0.22em; }
+    .tb-pill {
+      padding:3px 8px; border-radius:2px;
+      font-size:9px; letter-spacing:0.1em; color:var(--muted);
+      border:1px solid var(--border2); background:transparent;
     }
-    .cta-free {
-      font-size:10px; color:var(--muted);
-      letter-spacing:0.1em; margin-top:16px;
+    .tb-pill.active {
+      color:var(--accent);
+      border-color:rgba(0,229,255,0.25);
+      background:rgba(0,229,255,0.06);
+    }
+    .tb-right { margin-left:auto; display:flex; gap:6px; align-items:center; }
+    .tb-icon {
+      width:26px; height:26px; border-radius:3px;
+      background:var(--surface); border:1px solid var(--border2);
+      display:flex; align-items:center; justify-content:center;
     }
 
-    /* ── Footer ── */
+    .app-body { display:flex; min-height:320px; }
+    .app-sidebar {
+      width:160px; flex-shrink:0;
+      border-right:1px solid var(--border2);
+      padding:12px;
+    }
+    .sidebar-section { margin-bottom:16px; }
+    .sidebar-label {
+      font-size:8px; color:var(--muted); letter-spacing:0.16em;
+      margin-bottom:8px;
+    }
+    .sidebar-item {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:4px 6px; border-radius:3px; margin-bottom:2px;
+      font-size:10px; color:var(--sub);
+    }
+    .sidebar-item.active {
+      background:var(--accent2); color:var(--accent);
+    }
+    .sidebar-dot { width:4px; height:4px; border-radius:50%; margin-right:6px; }
+
+    .app-feed { flex:1; }
+    .feed-row {
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      cursor:pointer; transition:background .15s;
+    }
+    .feed-row:hover { background:var(--surface2); }
+    .feed-row:last-child { border-bottom:none; }
+    .row-top { display:flex; gap:8px; margin-bottom:6px; align-items:flex-start; }
+    .row-badge {
+      font-size:8px; font-weight:600; letter-spacing:0.1em;
+      padding:2px 5px; border-radius:2px; flex-shrink:0; margin-top:1px;
+    }
+    .rb-model    { background:rgba(0,229,255,.08);  color:#00e5ff; border:1px solid rgba(0,229,255,.2); }
+    .rb-research { background:rgba(255,255,255,.04); color:#7eb8ff; border:1px solid rgba(255,255,255,.1); }
+    .rb-product  { background:rgba(255,255,255,.04); color:#a78bfa; border:1px solid rgba(255,255,255,.1); }
+    .rb-drama    { background:rgba(255,255,255,.04); color:#fb7185; border:1px solid rgba(255,255,255,.1); }
+    .row-title { font-size:12px; font-weight:600; color:var(--text); line-height:1.4; }
+    .row-sum {
+      font-size:11px; color:var(--sub); line-height:1.55; margin-bottom:7px;
+      font-family:var(--sans); font-weight:300;
+      display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;
+    }
+    .row-meta { display:flex; gap:6px; font-size:9px; color:var(--muted); align-items:center; }
+    .row-src-dot { width:3px; height:3px; border-radius:50%; }
+
+    /* ─── FEATURES ─── */
+    .features-wrap {
+      padding:100px 24px;
+      max-width:860px; margin:0 auto;
+    }
+    .features-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:1px; background:var(--border2);
+      border:1px solid var(--border2); border-radius:8px;
+      overflow:hidden;
+    }
+    .feat {
+      background:var(--surface);
+      padding:36px 32px;
+      transition:background .2s;
+      position:relative; overflow:hidden;
+    }
+    .feat::before {
+      content:""; position:absolute;
+      top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg,transparent,var(--border2),transparent);
+    }
+    .feat:hover { background:var(--surface2); }
+    .feat-num {
+      font-size:9px; color:var(--accent); letter-spacing:0.16em;
+      font-weight:600; margin-bottom:16px;
+    }
+    .feat-title {
+      font-size:16px; font-weight:600; color:var(--text);
+      margin-bottom:10px; letter-spacing:-0.02em;
+    }
+    .feat-desc {
+      font-family:var(--sans); font-size:13px;
+      color:var(--sub); line-height:1.75; font-weight:300;
+    }
+
+    /* ─── SOURCES ─── */
+    .sources-wrap {
+      padding:80px 24px;
+      max-width:860px; margin:0 auto;
+      text-align:center;
+    }
+    .sources-grid {
+      display:flex; flex-wrap:wrap;
+      gap:8px; justify-content:center;
+      margin-top:24px;
+    }
+    .src-chip {
+      padding:7px 14px;
+      border:1px solid var(--border2); border-radius:100px;
+      font-size:11px; color:var(--sub); letter-spacing:0.06em;
+      display:flex; align-items:center; gap:6px;
+      transition:all .2s; background:var(--surface);
+    }
+    .src-chip:hover { border-color:var(--muted); color:var(--text); }
+    .src-dot { width:5px; height:5px; border-radius:50%; }
+
+    /* ─── FINAL CTA ─── */
+    .final-cta {
+      padding:80px 24px 120px;
+      max-width:640px; margin:0 auto;
+      text-align:center; position:relative; z-index:1;
+    }
+    .cta-card {
+      border:1px solid var(--border2); border-radius:8px;
+      padding:56px 48px; background:var(--surface);
+      position:relative; overflow:hidden;
+    }
+    .cta-card::before {
+      content:""; position:absolute;
+      top:0; left:50%; transform:translateX(-50%);
+      width:240px; height:1px;
+      background:linear-gradient(90deg,transparent,var(--accent),transparent);
+    }
+    .cta-card::after {
+      content:""; position:absolute;
+      top:-80px; left:50%; transform:translateX(-50%);
+      width:400px; height:200px;
+      background:var(--accent); filter:blur(100px); opacity:0.04;
+      pointer-events:none;
+    }
+    .cta-h2 {
+      font-size:28px; font-weight:700; color:var(--text);
+      letter-spacing:-0.02em; margin-bottom:12px;
+    }
+    .cta-p {
+      font-family:var(--sans); font-size:15px;
+      color:var(--sub); font-weight:300;
+      line-height:1.7; margin-bottom:36px;
+    }
+    .cta-note {
+      font-size:9px; color:var(--muted);
+      letter-spacing:0.14em; margin-top:16px;
+    }
+
+    /* ─── FOOTER ─── */
     footer {
       border-top:1px solid var(--border);
-      padding:24px 32px;
-      display:flex; align-items:center; justify-content:space-between;
-      flex-wrap:wrap; gap:12px;
+      padding:24px 40px;
+      display:flex; align-items:center;
+      justify-content:space-between; flex-wrap:wrap; gap:12px;
       position:relative; z-index:1;
     }
     .footer-logo {
-      display:flex; align-items:center; gap:7px;
-      font-size:12px; font-weight:700;
-      letter-spacing:0.2em; color:var(--muted);
+      display:flex; align-items:center; gap:8px;
+      font-size:11px; font-weight:700; letter-spacing:0.22em; color:var(--muted);
     }
     .footer-links { display:flex; gap:20px; }
     .footer-links a {
-      font-size:11px; color:var(--muted);
-      text-decoration:none; letter-spacing:0.08em;
+      font-size:10px; color:var(--muted); letter-spacing:0.1em;
       transition:color .15s;
     }
     .footer-links a:hover { color:var(--sub); }
+    .footer-copy { font-size:10px; color:var(--muted); letter-spacing:0.08em; }
 
-    /* ── Responsive ── */
-    @media(max-width:600px) {
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:640px) {
       nav { padding:0 16px; }
-      .nav-links { display:none; }
-      h1 { font-size:28px; }
-      .hero-stats { gap:16px; }
-      .cta-box { padding:32px 20px; }
+      .nav-center { display:none; }
+      .hero-h1 { font-size:36px; }
+      .stats-bar { flex-wrap:wrap; }
+      .stat-item { flex:1; min-width:100px; border-right:none; border-bottom:1px solid var(--border2); }
+      .stat-item:last-child { border-bottom:none; }
+      .features-grid { grid-template-columns:1fr; }
+      .cta-card { padding:32px 20px; }
       footer { flex-direction:column; text-align:center; }
+      .app-sidebar { display:none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Nav -->
+  <!-- NAV -->
   <nav>
     <div class="nav-logo">
-      <div class="nav-dot"></div>
+      <div class="live-dot"></div>
       PULSE
     </div>
-    <div class="nav-links">
+    <div class="nav-center">
+      <a href="#preview">Preview</a>
       <a href="#features">Features</a>
       <a href="#sources">Sources</a>
-      <a href="/privacy.html">Privacy</a>
     </div>
-    <a href="/app" class="nav-cta">GET ACCESS →</a>
+    <a href="/app" class="nav-btn">GET ACCESS →</a>
   </nav>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-tag">
-      <div class="hero-tag-dot"></div>
-      LIVE · AI INTELLIGENCE FEED
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <div class="hero-eyebrow">
+      <div class="live-dot" style="width:5px;height:5px;"></div>
+      <span id="live-count">—</span> ITEMS LIVE RIGHT NOW
     </div>
-    <h1>The AI signal feed<br/>built for <span>developers</span></h1>
-    <p class="hero-sub">
-      Research papers, trending repos, model releases, and industry news —
-      aggregated from 15+ sources and ranked by relevance. Updated every 90 seconds.
+
+    <h1 class="hero-h1">
+      Every AI signal<br/>
+      that <em>matters today</em>
+    </h1>
+
+    <p class="hero-p">
+      Research papers, model releases, trending repos and industry news —
+      aggregated from 15+ sources and ranked by signal strength.
     </p>
-    <div class="hero-actions">
-      <a href="/app" class="btn-primary">START READING FREE →</a>
-      <a href="#preview" class="btn-secondary">SEE LIVE FEED</a>
+
+    <div class="hero-cta">
+      <a href="/app" class="btn-lg">
+        START READING FREE
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#preview" class="btn-ghost">SEE LIVE FEED</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-num" id="item-count">—</span>
-        <span class="stat-label">LIVE ITEMS</span>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-n accent" id="stat-items">—</span>
+        <span class="stat-l">LIVE ITEMS</span>
       </div>
-      <div class="stat-div"></div>
-      <div class="stat">
-        <span class="stat-num">15+</span>
-        <span class="stat-label">SOURCES</span>
+      <div class="stat-item">
+        <span class="stat-n">15+</span>
+        <span class="stat-l">SOURCES</span>
       </div>
-      <div class="stat-div"></div>
-      <div class="stat">
-        <span class="stat-num">90s</span>
-        <span class="stat-label">REFRESH RATE</span>
+      <div class="stat-item">
+        <span class="stat-n">90s</span>
+        <span class="stat-l">REFRESH RATE</span>
       </div>
-      <div class="stat-div"></div>
-      <div class="stat">
-        <span class="stat-num">Free</span>
-        <span class="stat-label">TO START</span>
+      <div class="stat-item">
+        <span class="stat-n">Free</span>
+        <span class="stat-l">TO START</span>
       </div>
     </div>
   </section>
 
-  <!-- Live feed preview -->
-  <div class="section" id="preview">
-    <div class="section-label">LIVE FEED PREVIEW</div>
-    <div class="feed-preview">
-      <div class="feed-header">
-        <div class="feed-header-dot"></div>
-        <span class="feed-header-text">PULSE · REAL TIME</span>
-        <span class="feed-header-count" id="feed-count">Loading...</span>
-      </div>
-      <div id="feed-items">
-        <!-- Skeleton -->
-        <div class="feed-loading">
-          <div style="display:flex;gap:10px;margin-bottom:8px;">
-            <div class="sk" style="width:52px;height:14px;"></div>
-            <div class="sk" style="flex:1;height:14px;"></div>
+  <!-- FEED PREVIEW -->
+  <div class="preview-wrap" id="preview">
+    <div class="label">LIVE FEED PREVIEW</div>
+    <div class="app-frame">
+      <!-- Topbar -->
+      <div class="app-topbar">
+        <div class="tb-dot"></div>
+        <span class="tb-logo">PULSE</span>
+        <div style="width:1px;height:16px;background:var(--border2);margin:0 4px;"></div>
+        <span class="tb-pill active">ALL</span>
+        <span class="tb-pill">MODEL</span>
+        <span class="tb-pill">RESEARCH</span>
+        <span class="tb-pill">PRODUCT</span>
+        <div class="tb-right">
+          <div class="tb-icon">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="var(--muted)" stroke-width="1.5"><circle cx="5" cy="5" r="3.5"/><path d="M8 8l2.5 2.5"/></svg>
           </div>
-          <div class="sk" style="width:85%;height:11px;margin-bottom:6px;"></div>
-          <div class="sk" style="width:60%;height:11px;"></div>
-        </div>
-        <div class="feed-loading" style="border-top:1px solid var(--border)">
-          <div style="display:flex;gap:10px;margin-bottom:8px;">
-            <div class="sk" style="width:64px;height:14px;"></div>
-            <div class="sk" style="flex:1;height:14px;"></div>
+          <div class="tb-icon">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M1 1h10v8H1z"/><path d="M4 11h4"/><path d="M6 9v2"/></svg>
           </div>
-          <div class="sk" style="width:90%;height:11px;margin-bottom:6px;"></div>
-          <div class="sk" style="width:70%;height:11px;"></div>
-        </div>
-        <div class="feed-loading" style="border-top:1px solid var(--border)">
-          <div style="display:flex;gap:10px;margin-bottom:8px;">
-            <div class="sk" style="width:58px;height:14px;"></div>
-            <div class="sk" style="flex:1;height:14px;"></div>
-          </div>
-          <div class="sk" style="width:75%;height:11px;margin-bottom:6px;"></div>
-          <div class="sk" style="width:55%;height:11px;"></div>
         </div>
       </div>
+      <!-- Body -->
+      <div class="app-body">
+        <!-- Sidebar -->
+        <div class="app-sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-label">HOT RIGHT NOW</div>
+            <div id="sidebar-items"></div>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-label">SOURCES</div>
+            <div id="sidebar-sources"></div>
+          </div>
+        </div>
+        <!-- Feed -->
+        <div class="app-feed" id="feed-rows">
+          <!-- Skeletons -->
+          <div class="feed-row">
+            <div class="row-top">
+              <div style="width:48px;height:13px;background:var(--border2);border-radius:2px;flex-shrink:0;"></div>
+              <div style="flex:1;height:13px;background:var(--border2);border-radius:2px;"></div>
+            </div>
+            <div style="width:80%;height:10px;background:var(--border2);border-radius:2px;margin-bottom:7px;"></div>
+            <div style="width:40%;height:8px;background:var(--border2);border-radius:2px;"></div>
+          </div>
+          <div class="feed-row">
+            <div class="row-top">
+              <div style="width:60px;height:13px;background:var(--border2);border-radius:2px;flex-shrink:0;"></div>
+              <div style="flex:1;height:13px;background:var(--border2);border-radius:2px;"></div>
+            </div>
+            <div style="width:70%;height:10px;background:var(--border2);border-radius:2px;margin-bottom:7px;"></div>
+            <div style="width:45%;height:8px;background:var(--border2);border-radius:2px;"></div>
+          </div>
+          <div class="feed-row">
+            <div class="row-top">
+              <div style="width:52px;height:13px;background:var(--border2);border-radius:2px;flex-shrink:0;"></div>
+              <div style="flex:1;height:13px;background:var(--border2);border-radius:2px;"></div>
+            </div>
+            <div style="width:85%;height:10px;background:var(--border2);border-radius:2px;margin-bottom:7px;"></div>
+            <div style="width:35%;height:8px;background:var(--border2);border-radius:2px;"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Features -->
-  <div class="section" id="features">
-    <div class="section-label">WHY PULSE</div>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-num">01</div>
-        <div class="feature-title">Signal over noise</div>
-        <div class="feature-desc">Heat scores rank items by engagement velocity, not just recency. See what's actually resonating.</div>
+  <!-- FEATURES -->
+  <div class="features-wrap" id="features">
+    <div class="label">WHY DEVELOPERS USE PULSE</div>
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-num">01 / SIGNAL</div>
+        <div class="feat-title">Heat score ranking</div>
+        <div class="feat-desc">Items are ranked by engagement velocity — not just recency. See what's actually resonating with the developer community right now.</div>
       </div>
-      <div class="feature">
-        <div class="feature-num">02</div>
-        <div class="feature-title">AI summaries</div>
-        <div class="feature-desc">Every article gets a deep AI-generated insight so you know if it's worth your time before clicking.</div>
+      <div class="feat">
+        <div class="feat-num">02 / INSIGHT</div>
+        <div class="feat-title">AI summaries on demand</div>
+        <div class="feat-desc">Every article gets a deep AI-generated insight. Know if something is worth your time before you click through to the original source.</div>
       </div>
-      <div class="feature">
-        <div class="feature-num">03</div>
-        <div class="feature-title">Saved searches & alerts</div>
-        <div class="feature-desc">Save any search query. Get notified when new items match — track topics, companies, or technologies.</div>
+      <div class="feat">
+        <div class="feat-num">03 / ALERTS</div>
+        <div class="feat-title">Saved searches & alerts</div>
+        <div class="feat-desc">Save any query — get notified the moment new items match. Track topics, companies, models, or technologies without manual checking.</div>
       </div>
-      <div class="feature">
-        <div class="feature-num">04</div>
-        <div class="feature-title">Email digest</div>
-        <div class="feature-desc">Request your top 8 items by heat score delivered to your inbox. Read Pulse on your schedule.</div>
+      <div class="feat">
+        <div class="feat-num">04 / DIGEST</div>
+        <div class="feat-title">Daily email briefing</div>
+        <div class="feat-desc">Request your top items by heat score delivered to your inbox. Stay informed on your schedule, not the internet's schedule.</div>
       </div>
     </div>
   </div>
 
-  <!-- Sources -->
-  <div class="section" id="sources">
-    <div class="section-label">SOURCES</div>
-    <div class="sources" id="sources-list">
-      <!-- Populated by JS -->
+  <!-- SOURCES -->
+  <div class="sources-wrap" id="sources">
+    <div class="label">AGGREGATED FROM</div>
+    <div class="sources-grid" id="sources-grid"></div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <div class="cta-card">
+      <div class="cta-h2">Stay ahead of AI</div>
+      <p class="cta-p">Join developers who use Pulse every morning to cut through noise and find what actually matters.</p>
+      <a href="/app" class="btn-lg" style="display:inline-flex;">
+        CREATE FREE ACCOUNT
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <div class="cta-note">FREE · NO CREDIT CARD · 30 SECONDS TO SET UP</div>
     </div>
   </div>
 
-  <!-- CTA -->
-  <div class="cta-section">
-    <div class="cta-box">
-      <div class="cta-title">Start reading smarter</div>
-      <p class="cta-sub">Join developers who use Pulse to stay ahead of AI — without the noise.</p>
-      <a href="/app" class="btn-primary" style="display:inline-block">CREATE FREE ACCOUNT →</a>
-      <div class="cta-free">FREE · NO CREDIT CARD · TAKES 30 SECONDS</div>
-    </div>
-  </div>
-
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-logo">
-      <div class="nav-dot"></div>
+      <div class="live-dot" style="animation:none;"></div>
       PULSE
     </div>
     <div class="footer-links">
@@ -508,33 +628,28 @@
       <a href="/terms.html">Terms</a>
       <a href="/app">App</a>
     </div>
-    <div style="font-size:11px;color:var(--muted);letter-spacing:0.08em;">
-      © 2025 Pulse
-    </div>
+    <div class="footer-copy">© 2025 Pulse</div>
   </footer>
 
   <script>
     const API = "https://pulse-backend-production-cd92.up.railway.app";
-
     const SRC_COLORS = {
-      HN:"#ff6314", arXiv:"#e05555", "Dev.to":"#5b6df8",
-      GitHub:"#9b72e8", "Lobste.rs":"#d44040", OpenAI:"#19c37d",
-      Anthropic:"#d4845a", HuggingFace:"#ffb020", VentureBeat:"#3d8fe0",
-      TechCrunch:"#2ab858", TheVerge:"#e84040", Wired:"#aaaaaa",
-      MITReview:"#cc3333", SimonW:"#1a8cff", Interconnects:"#e06030",
-      AINnews:"#cc2244", Microsoft:"#0078d4", GoogleResearch:"#4285f4",
-      MetaAI:"#0668E1", TDS:"#1a8c6b", MarkTechPost:"#7b2ff7",
-      TechTalks:"#2d6a9f", TheSequence:"#e05c00", AIWeekly:"#0a8a5c",
-      LastWeekInAI:"#c0392b", ImportAI:"#8e44ad",
+      HN:"#ff6314",arXiv:"#e05555","Dev.to":"#5b6df8",GitHub:"#9b72e8",
+      "Lobste.rs":"#d44040",OpenAI:"#19c37d",Anthropic:"#d4845a",
+      HuggingFace:"#ffb020",VentureBeat:"#3d8fe0",TechCrunch:"#2ab858",
+      TheVerge:"#e84040",Wired:"#aaaaaa",MITReview:"#cc3333",SimonW:"#1a8cff",
+      Interconnects:"#e06030",AINnews:"#cc2244",Microsoft:"#0078d4",
+      GoogleResearch:"#4285f4",MetaAI:"#0668E1",TDS:"#1a8c6b",
+      MarkTechPost:"#7b2ff7",TechTalks:"#2d6a9f",TheSequence:"#e05c00",
+      AIWeekly:"#0a8a5c",LastWeekInAI:"#c0392b",ImportAI:"#8e44ad",
     };
-
-    const BADGE = {
-      model:    {cls:"badge-model",    label:"MODEL"},
-      research: {cls:"badge-research", label:"RESEARCH"},
-      drama:    {cls:"badge-research", label:"DRAMA"},
-      funding:  {cls:"badge-research", label:"FUNDING"},
-      product:  {cls:"badge-product",  label:"PRODUCT"},
-      policy:   {cls:"badge-research", label:"POLICY"},
+    const BADGE_MAP = {
+      model:"rb-model",research:"rb-research",product:"rb-product",
+      drama:"rb-drama",funding:"rb-research",policy:"rb-research",
+    };
+    const LABEL_MAP = {
+      model:"MODEL",research:"RESEARCH",product:"PRODUCT",
+      drama:"DRAMA",funding:"FUNDING",policy:"POLICY",
     };
 
     function timeAgo(ts) {
@@ -545,64 +660,131 @@
       return Math.floor(s/86400)+"d";
     }
 
-    async function loadFeed() {
+    async function load() {
       try {
         const res = await fetch(`${API}/feed`);
-        const data = await res.json();
-        const items = data.items || [];
+        const { items } = await res.json();
 
-        // Update stats
-        document.getElementById("item-count").textContent = items.length;
-        document.getElementById("feed-count").textContent = items.length + " ITEMS LIVE";
+        // Stats
+        document.getElementById("live-count").textContent = items.length;
+        document.getElementById("stat-items").textContent = items.length;
 
-        // Top 5 by heat
-        const top = [...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,5);
-
-        const container = document.getElementById("feed-items");
-        container.innerHTML = top.map(item => {
-          const b = BADGE[item.type] || BADGE.product;
-          const sc = SRC_COLORS[item.src] || "#666";
-          const readMin = Math.max(1, Math.round(((item.title||"")+" "+(item.sum||"")).split(" ").length/200));
-          return `
-            <div class="feed-item" onclick="window.location='/app'">
-              <div class="feed-item-top">
-                <span class="badge ${b.cls}">${b.label}</span>
-                <span class="feed-title">${item.title||""}</span>
-              </div>
-              ${item.sum ? `<div class="feed-sum">${item.sum}</div>` : ""}
-              <div class="feed-meta">
-                <div class="feed-src-dot" style="background:${sc}"></div>
-                <span style="color:${sc};font-weight:500">${item.src}</span>
-                <span>·</span>
-                <span>${timeAgo(item.time)}</span>
-                <span>·</span>
-                <span>${readMin}m read</span>
-              </div>
+        // Feed rows - top 5 by heat
+        const top5 = [...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,5);
+        document.getElementById("feed-rows").innerHTML = top5.map(item => {
+          const cls = BADGE_MAP[item.type] || "rb-research";
+          const lbl = LABEL_MAP[item.type] || "NEWS";
+          const sc  = SRC_COLORS[item.src] || "#666";
+          const rm  = Math.max(1,Math.round(((item.title||"")+" "+(item.sum||"")).split(" ").length/200));
+          return `<div class="feed-row" onclick="location.href='/app'">
+            <div class="row-top">
+              <span class="row-badge ${cls}">${lbl}</span>
+              <span class="row-title">${item.title||""}</span>
             </div>
-          `;
+            ${item.sum?`<div class="row-sum">${item.sum}</div>`:""}
+            <div class="row-meta">
+              <div class="row-src-dot" style="background:${sc}"></div>
+              <span style="color:${sc};font-weight:500">${item.src}</span>
+              <span>·</span><span>${timeAgo(item.time)}</span>
+              <span>·</span><span>${rm}m read</span>
+            </div>
+          </div>`;
         }).join("");
 
-        // Sources
+        // Sidebar hot items
+        const hot3 = [...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,3);
+        document.getElementById("sidebar-items").innerHTML = hot3.map(item=>`
+          <div class="sidebar-item" style="font-size:9px;color:var(--sub);margin-bottom:6px;line-height:1.4;cursor:pointer;" onclick="location.href='/app'">
+            ${item.title.slice(0,40)}${item.title.length>40?"...":""}
+          </div>`).join("");
+
+        // Sidebar sources
         const srcCounts = {};
-        items.forEach(i => { srcCounts[i.src] = (srcCounts[i.src]||0)+1; });
-        const sourcesList = document.getElementById("sources-list");
-        sourcesList.innerHTML = Object.entries(srcCounts)
+        items.forEach(i=>{ srcCounts[i.src]=(srcCounts[i.src]||0)+1; });
+        const top6src = Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
+        document.getElementById("sidebar-sources").innerHTML = top6src.map(([src,cnt])=>`
+          <div class="sidebar-item">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <div class="sidebar-dot" style="background:${SRC_COLORS[src]||'#666'}"></div>
+              ${src}
+            </div>
+            <span style="color:var(--muted)">${cnt}</span>
+          </div>`).join("");
+
+        // Sources grid
+        document.getElementById("sources-grid").innerHTML = Object.entries(srcCounts)
           .sort((a,b)=>b[1]-a[1])
-          .map(([src, count]) => {
-            const c = SRC_COLORS[src] || "#666";
-            return `<div class="source-pill">
-              <div class="source-dot" style="background:${c}"></div>
-              ${src} <span style="color:var(--muted);margin-left:2px">${count}</span>
-            </div>`;
-          }).join("");
+          .map(([src,cnt])=>`
+            <div class="src-chip">
+              <div class="src-dot" style="background:${SRC_COLORS[src]||'#666'}"></div>
+              ${src}
+              <span style="color:var(--muted);font-size:9px">${cnt}</span>
+            </div>`).join("");
 
       } catch(e) {
-        document.getElementById("feed-count").textContent = "LIVE";
-        document.getElementById("item-count").textContent = "200+";
+        document.getElementById("live-count").textContent = "200+";
+        document.getElementById("stat-items").textContent = "200+";
       }
     }
 
-    loadFeed();
+    load();
+
+    // Load trending repos
+    async function loadRepos() {
+      try {
+        const res = await fetch(`${API}/trending-repos`);
+        const { repos } = await res.json();
+        if(!repos || !repos.length) return;
+        const top4 = repos.slice(0,4);
+        function fmtNum(n) {
+          if(n>=1000) return (n/1000).toFixed(1)+"k";
+          return n;
+        }
+        document.getElementById("trending-repos").innerHTML = top4.map((r,i)=>{
+          const isRight = i%2===1;
+          const isTop = i<2;
+          return `<div style="padding:16px;
+            border-bottom:${isTop?"1px solid var(--border)":"none"};
+            border-right:${!isRight?"1px solid var(--border)":"none"};
+            cursor:pointer;transition:background .15s;"
+            onmouseenter="this.style.background='var(--surface2)'"
+            onmouseleave="this.style.background='transparent'"
+            onclick="window.open('${r.url||"#"}','_blank')">
+            <div style="font-size:12px;font-weight:600;color:var(--text);
+              margin-bottom:5px;letter-spacing:-0.01em;">
+              ${r.name||r.full_name||""}
+            </div>
+            <div style="font-size:11px;color:var(--sub);margin-bottom:8px;
+              font-family:var(--sans);font-weight:300;line-height:1.5;
+              display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+              ${r.description||"No description"}
+            </div>
+            <div style="display:flex;gap:10px;font-size:10px;color:var(--muted);">
+              <span>${fmtNum(r.stars||0)} ★</span>
+              ${r.language?`<span>· ${r.language}</span>`:""}
+            </div>
+          </div>`;
+        }).join("");
+      } catch(e) {}
+    }
+    loadRepos();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting) {
+          e.target.style.opacity = "1";
+          e.target.style.transform = "translateY(0)";
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feat, .src-chip').forEach(el => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(16px)";
+      el.style.transition = "opacity .5s ease, transform .5s ease";
+      observer.observe(el);
+    });
   </script>
 </body>
 </html>
