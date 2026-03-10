@@ -49,10 +49,18 @@ export function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBook
       {item.sum&&(
         <div style={{
           fontSize:FS.sm,color:C.sub,lineHeight:1.65,
-          marginBottom:10,paddingLeft:0,
+          marginBottom:item.why?6:10,paddingLeft:0,
           display:"-webkit-box",WebkitLineClamp:2,
           WebkitBoxOrient:"vertical",overflow:"hidden",
         }}>{item.sum}</div>
+      )}
+
+      {/* Why this matters */}
+      {item.why&&(
+        <div style={{
+          fontSize:"0.6rem",color:C.accent,lineHeight:1.5,
+          marginBottom:10,fontStyle:"italic",opacity:0.8,
+        }}>↳ {item.why}</div>
       )}
 
       {/* Authors (research only) */}
