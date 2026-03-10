@@ -50,6 +50,7 @@ export default function Pulse() {
   const [showNotifPanel,setShowNotifPanel]= useState(false);
   const [alertLog,      setAlertLog]      = useState([]);
   const [showHelp,      setShowHelp]      = useState(false);
+  const [showUserMenu,  setShowUserMenu]  = useState(false);
   const [isDark,        setIsDark]        = useState(()=>{ try{ const v=localStorage.getItem("pulse-dark"); return v===null?true:v==="true"; }catch(e){ return true; } });
 
   const C = isDark ? DARK : LIGHT;
@@ -416,21 +417,6 @@ export default function Pulse() {
           </button>
         )}
 
-        {/* Digest button */}
-        <button className="topbtn" onClick={sendDigest} title={`Send digest to ${user?.email}`}>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="1" y="3" width="12" height="9" rx="1.5"/>
-            <polyline points="1,3 7,8.5 13,3"/>
-          </svg>
-        </button>
-        {/* Sign out */}
-        <button className="topbtn" onClick={signOut} title="Sign out">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 2H2.5A1.5 1.5 0 001 3.5v7A1.5 1.5 0 002.5 12H5"/>
-            <polyline points="9,4 13,7 9,10"/>
-            <line x1="13" y1="7" x2="5" y2="7"/>
-          </svg>
-        </button>
         {/* Theme toggle */}
         <button className="topbtn" onClick={()=>setIsDark(d=>{ const next=!d; try{ localStorage.setItem("pulse-dark",next); }catch(e){} savePreferences({dark_mode:next}); return next; })} title={isDark?"Light mode":"Dark mode"}>
           {isDark ? (
@@ -451,6 +437,48 @@ export default function Pulse() {
             </svg>
           )}
         </button>
+
+        {/* User avatar */}
+        <div style={{position:"relative"}}>
+          <button className="topbtn" onClick={()=>setShowUserMenu(m=>!m)}
+            style={{width:30,height:30,borderRadius:"50%",padding:0,
+              display:"flex",alignItems:"center",justifyContent:"center",
+              border:`1px solid ${C.border}`,color:C.muted}}>
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+              <circle cx="7" cy="4.5" r="2.5"/>
+              <path d="M1.5 13c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>
+            </svg>
+          </button>
+          {showUserMenu && (
+            <div style={{position:"absolute",top:"calc(100% + 6px)",right:0,zIndex:200,
+              background:C.surface,border:`1px solid ${C.border}`,borderRadius:6,
+              boxShadow:"0 8px 24px rgba(0,0,0,0.3)",minWidth:190,overflow:"hidden"}}>
+              <div style={{padding:"12px 14px",borderBottom:`1px solid ${C.border}`}}>
+                <div style={{fontSize:FS.xs,color:C.text,fontWeight:500,marginBottom:2,
+                  overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+                  {user?.email}
+                </div>
+                <div style={{fontSize:"0.6rem",color:C.muted,letterSpacing:"0.06em"}}>SIGNED IN</div>
+              </div>
+              <div onClick={()=>{setShowUserMenu(false);sendDigest();}}
+                style={{padding:"10px 14px",cursor:"pointer",fontSize:FS.xs,color:C.sub,
+                  display:"flex",alignItems:"center",gap:8,background:"transparent"}}
+                onMouseEnter={e=>e.currentTarget.style.background=C.hover}
+                onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><rect x="1" y="3" width="12" height="9" rx="1.5"/><polyline points="1,3 7,8.5 13,3"/></svg>
+                Send digest to email
+              </div>
+              <div onClick={()=>{setShowUserMenu(false);signOut();}}
+                style={{padding:"10px 14px",cursor:"pointer",fontSize:FS.xs,color:"#ff4d6d",
+                  display:"flex",alignItems:"center",gap:8,borderTop:`1px solid ${C.border}`,background:"transparent"}}
+                onMouseEnter={e=>e.currentTarget.style.background=C.hover}
+                onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M5 2H2.5A1.5 1.5 0 001 3.5v7A1.5 1.5 0 002.5 12H5"/><polyline points="9,4 13,7 9,10"/><line x1="13" y1="7" x2="5" y2="7"/></svg>
+                Sign out
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ══════════════ MOBILE FILTER BAR ══════════════ */}
@@ -616,6 +644,28 @@ export default function Pulse() {
                   <BmSvg filled={false} size={28} color={C.muted}/>
                 </div>
                 <div style={{fontSize:FS.sm,color:C.muted,letterSpacing:"0.1em"}}>NO SAVED ITEMS</div>
+              </div>
+            )}
+
+            {sorted.length===0 && status!=="loading" && filter!=="bookmarks" && (
+              <div style={{padding:"72px 20px",textAlign:"center"}}>
+                <div style={{fontSize:"1.8rem",marginBottom:14,opacity:.3}}>
+                  {query ? "🔍" : "📡"}
+                </div>
+                <div style={{fontSize:FS.sm,color:C.muted,letterSpacing:"0.1em",marginBottom:8}}>
+                  {query ? `NO RESULTS FOR "${query.toUpperCase()}"` : "NO ITEMS"}
+                </div>
+                <div style={{fontSize:FS.xs,color:C.muted,lineHeight:1.7}}>
+                  {query ? "Try a different search term or clear filters" : "Pull to refresh or wait for next update"}
+                </div>
+                {query && (
+                  <button onClick={()=>setQuery("")} className="fbtn"
+                    style={{marginTop:16,padding:"8px 16px",background:"rgba(0,255,136,.06)",
+                      border:"1px solid rgba(0,255,136,.2)",borderRadius:4,
+                      color:C.accent,fontSize:FS.xs,letterSpacing:"0.08em"}}>
+                    CLEAR SEARCH
+                  </button>
+                )}
               </div>
             )}
 
