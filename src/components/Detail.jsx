@@ -59,7 +59,7 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
             <div style={{width:5,height:5,borderRadius:"50%",background:srcColor,flexShrink:0}}/>
             <span style={{color:srcColor,fontWeight:500}}>{item.srcLabel||item.src}</span>
           </span>
-          <span style={{color:C.muted}}>{item.timeLabel} ago</span>
+          <span style={{color:C.muted}}>{item.timeLabel}</span>
           {item.score>0&&<span style={{color:C.muted}}>↑{item.score}</span>}
           {item.comments>0&&<span style={{color:C.muted}}>{item.comments} replies</span>}
         </div>
@@ -68,7 +68,7 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
       <div style={{padding:"0 16px 32px"}}>
         <DL C={C}>
           <span style={{display:"flex",alignItems:"center",gap:7}}>
-            <span style={{color:C.accent,fontSize:FS.sm}}>✦</span>
+            <svg width="10" height="10" viewBox="0 0 10 10" fill={C.accent}><polygon points="5,0 6,4 10,5 6,6 5,10 4,6 0,5 4,4"/></svg>
             <span>AI INSIGHT</span>
             {!aiLoading&&(
               <button className="ibtn" onClick={fetchSummary}
@@ -78,8 +78,8 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
             )}
           </span>
         </DL>
-        <div style={{background:`rgba(0,255,136,${isDark?".03":".06"})`,
-          border:"1px solid rgba(0,255,136,.12)",borderRadius:4,padding:"14px 16px",minHeight:66}}>
+        <div style={{background:C.accentDim,
+          border:`1px solid ${C.accentBorder}`,borderRadius:4,padding:"14px 16px",minHeight:66}}>
           {aiLoading&&(
             <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
               <div style={{width:10,height:10,border:`1.5px solid ${C.border}`,
@@ -95,7 +95,7 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
           {!aiLoading&&aiError&&<div style={{fontSize:FS.xs,color:"#ff4d6d"}}>{aiError}</div>}
           {!aiLoading&&aiSummary&&(
             <p style={{fontSize:isMobile?FS.base:FS.sm,lineHeight:1.85,
-              color:isDark?"#96e8b8":"#1a6640",margin:0,wordBreak:"break-word"}}>{aiSummary}</p>
+              color:C.text,margin:0,wordBreak:"break-word"}}>{aiSummary}</p>
           )}
         </div>
 
