@@ -9,14 +9,17 @@ export function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBook
 
   return(
     <div className="row" onClick={onClick} data-selected={selected}
+      onMouseEnter={e=>{ if(!selected) e.currentTarget.style.background=C.hover; }}
+      onMouseLeave={e=>{ if(!selected) e.currentTarget.style.background="transparent"; }}
       style={{
         borderBottom:`1px solid ${C.border}`,
         padding:isMobile?"18px 16px":"16px 18px",
-        background:selected?C.hover:undefined,
+        background:selected?C.hover:"transparent",
         animation:"rowIn .18s ease forwards",
         animationDelay:`${Math.min(i*.012,.28)}s`,
         opacity:0,
         filter:isRead?(isDark?"brightness(0.35)":"brightness(1.1) opacity(0.4)"):"none",
+        transition:"background .1s",cursor:"pointer",
       }}>
 
       {/* Top row: type badge + title + bookmark */}

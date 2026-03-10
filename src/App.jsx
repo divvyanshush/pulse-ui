@@ -455,7 +455,7 @@ export default function Pulse() {
         )}
 
         {/* Theme toggle */}
-        <button className="topbtn" onClick={()=>setIsDark(d=>{ const next=!d; try{ localStorage.setItem("pulse-dark",next); }catch(e){} savePreferences({dark_mode:next}); return next; })} title={isDark?"Light mode":"Dark mode"}>
+        <button className="topbtn" onClick={()=>setIsDark(d=>{ const next=!d; try{ localStorage.setItem("pulse-dark",next); }catch(e){} savePreferences({dark_mode:next}); return next; })} title={isDark?"Light mode":"Dark mode"} aria-label={isDark?"Switch to light mode":"Switch to dark mode"}>
           {isDark ? (
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
               <circle cx="7" cy="7" r="3"/>
@@ -721,11 +721,22 @@ export default function Pulse() {
               }}/>
             ))}
             {displayCount < sorted.length && (
-              <div style={{height:40,display:"flex",alignItems:"center",
-                justifyContent:"center"}}>
-                <div style={{fontSize:FS.xs,color:C.muted,letterSpacing:"0.08em"}}>
-                  LOADING...
-                </div>
+              <div style={{padding:"8px 0"}}>
+                {[1,2,3].map(n=>(
+                  <div key={n} style={{padding:"16px 18px",borderBottom:`1px solid ${C.border}`}}>
+                    <div style={{display:"flex",gap:10,marginBottom:10}}>
+                      <div className="sk" style={{width:52,height:14,borderRadius:2,flexShrink:0}}/>
+                      <div className="sk" style={{flex:1,height:14,borderRadius:2}}/>
+                    </div>
+                    <div className="sk" style={{width:"85%",height:11,borderRadius:2,marginBottom:6}}/>
+                    <div className="sk" style={{width:"65%",height:11,borderRadius:2,marginBottom:10}}/>
+                    <div style={{display:"flex",gap:8}}>
+                      <div className="sk" style={{width:40,height:9,borderRadius:2}}/>
+                      <div className="sk" style={{width:30,height:9,borderRadius:2}}/>
+                      <div className="sk" style={{width:35,height:9,borderRadius:2}}/>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
             <div style={{height:isMobile?80:48}}/>
