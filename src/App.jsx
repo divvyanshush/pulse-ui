@@ -184,6 +184,22 @@ export default function Pulse() {
   },[pending]);
 
 
+
+  const sendDigest = useCallback(async()=>{
+    if(!user?.email) return;
+    try{
+      const top = [...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,8);
+      const res = await fetch(`${API}/send-digest`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({ email:user.email, items:top })
+      });
+      const data = await res.json();
+      if(data.ok) showToast("Digest sent!",`Top stories sent to ${user.email}`,"new",null);
+      else showToast("Failed",data.error||"Could not send digest","err",null);
+    }catch(e){ showToast("Failed",e.message,"err",null); }
+  },[user, items, showToast]);
+
   const bookmarkList=Object.values(bookmarks).sort((a,b)=>(b.bookmarkedAt||0)-(a.bookmarkedAt||0));
   const visible=(filter==="bookmarks"?bookmarkList:items).filter(i=>{
     if(srcFilter&&i.src!==srcFilter) return false;
@@ -400,6 +416,21 @@ export default function Pulse() {
           </button>
         )}
 
+        {/* Digest button */}
+        <button className="topbtn" onClick={sendDigest} title={`Send digest to ${user?.email}`}>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="1" y="3" width="12" height="9" rx="1.5"/>
+            <polyline points="1,3 7,8.5 13,3"/>
+          </svg>
+        </button>
+        {/* Sign out */}
+        <button className="topbtn" onClick={signOut} title="Sign out">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 2H2.5A1.5 1.5 0 001 3.5v7A1.5 1.5 0 002.5 12H5"/>
+            <polyline points="9,4 13,7 9,10"/>
+            <line x1="13" y1="7" x2="5" y2="7"/>
+          </svg>
+        </button>
         {/* Theme toggle */}
         <button className="topbtn" onClick={()=>setIsDark(d=>{ const next=!d; try{ localStorage.setItem("pulse-dark",next); }catch(e){} savePreferences({dark_mode:next}); return next; })} title={isDark?"Light mode":"Dark mode"}>
           {isDark ? (
