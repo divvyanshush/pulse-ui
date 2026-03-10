@@ -51,6 +51,7 @@ export default function Pulse() {
   const [alertLog,      setAlertLog]      = useState([]);
   const [showHelp,      setShowHelp]      = useState(false);
   const [showUserMenu,  setShowUserMenu]  = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(()=>{ try{ return !localStorage.getItem("pulse-onboarded"); }catch(e){ return true; } });
   const [isDark,        setIsDark]        = useState(()=>{ try{ const v=localStorage.getItem("pulse-dark"); return v===null?true:v==="true"; }catch(e){ return true; } });
 
   const C = isDark ? DARK : LIGHT;
@@ -69,6 +70,16 @@ export default function Pulse() {
   const isMobile   = width < 768;
 
   // Close all panels when switching
+  // Close user menu on outside click
+  useEffect(()=>{
+    if(!showUserMenu) return;
+    const handler = (e) => {
+      if(!e.target.closest("[data-usermenu]")) setShowUserMenu(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [showUserMenu]);
+
   const closeAll = useCallback(()=>{
     setDetail(null); setShowSidebar(false); setShowNotifPanel(false);
   },[]);
@@ -439,7 +450,7 @@ export default function Pulse() {
         </button>
 
         {/* User avatar */}
-        <div style={{position:"relative"}}>
+        <div data-usermenu style={{position:"relative"}}>
           <button className="topbtn" onClick={()=>setShowUserMenu(m=>!m)}
             style={{width:30,height:30,borderRadius:"50%",padding:0,
               display:"flex",alignItems:"center",justifyContent:"center",
@@ -687,7 +698,41 @@ export default function Pulse() {
           </div>
         )}
 
-        {/* ── Desktop detail panel ── */}
+        {/* ── Onboarding overlay ── */}
+      {showOnboarding && (
+        <div onClick={()=>{setShowOnboarding(false);try{localStorage.setItem("pulse-onboarded","1");}catch(e){}}}
+          style={{position:"fixed",inset:0,zIndex:400,background:"rgba(0,0,0,.75)",
+            display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
+          <div onClick={e=>e.stopPropagation()} style={{background:C.surface,border:`1px solid ${C.border}`,
+            borderRadius:8,padding:"28px 28px 24px",maxWidth:360,width:"100%"}}>
+            <div style={{fontSize:"1.1rem",fontWeight:700,color:C.text,letterSpacing:"0.15em",marginBottom:6}}>WELCOME TO PULSE</div>
+            <div style={{fontSize:FS.xs,color:C.muted,letterSpacing:"0.08em",marginBottom:20}}>AI SIGNALS FOR DEVELOPERS</div>
+            {[
+              ["📡","Real-time feed","AI news from 15+ sources — HN, arXiv, GitHub, company blogs"],
+              ["🔥","Heat score","4 bars = trending now. Sort by HOT to see what's buzzing"],
+              ["🔍","Smart search","Search titles, summaries, sources. Save searches for alerts"],
+              ["⭐","Trending repos","GitHub repos gaining stars fast — in the left sidebar"],
+              ["🤖","AI summaries","Click any article for a deep AI-generated summary"],
+            ].map(([icon,title,desc])=>(
+              <div key={title} style={{display:"flex",gap:12,marginBottom:14,alignItems:"flex-start"}}>
+                <span style={{fontSize:"1.1rem",flexShrink:0}}>{icon}</span>
+                <div>
+                  <div style={{fontSize:FS.xs,color:C.text,fontWeight:500,marginBottom:2,letterSpacing:"0.06em"}}>{title}</div>
+                  <div style={{fontSize:"0.65rem",color:C.muted,lineHeight:1.6}}>{desc}</div>
+                </div>
+              </div>
+            ))}
+            <button onClick={()=>{setShowOnboarding(false);try{localStorage.setItem("pulse-onboarded","1");}catch(e){}}}
+              style={{width:"100%",padding:"12px",background:C.accent,border:"none",borderRadius:4,
+                color:isDark?"#000":"#fff",fontFamily:"IBM Plex Mono,monospace",fontSize:FS.sm,
+                fontWeight:600,letterSpacing:"0.1em",cursor:"pointer",marginTop:4}}>
+              GET STARTED →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Desktop detail panel ── */}
         {detail && !isMobile && (
           <div style={{width:380,minWidth:380,borderLeft:`1px solid ${C.border}`,
             background:C.surface,flexShrink:0,overflowY:"auto",animation:"slideRight .18s ease"}}>
