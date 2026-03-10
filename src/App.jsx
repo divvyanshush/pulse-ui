@@ -325,8 +325,8 @@ export default function Pulse() {
       `}</style>
 
       {/* ══════════════ TOPBAR ══════════════ */}
-      <div style={{display:"flex",alignItems:"center",height:50,minHeight:50,padding:"0 12px",
-        borderBottom:`1px solid ${C.border}`,background:C.surface,gap:8,flexShrink:0,width:"100%"}}>
+      <div style={{display:"flex",alignItems:"center",height:52,minHeight:52,padding:"0 16px",
+        borderBottom:`1px solid ${C.border}`,background:C.surface,gap:10,flexShrink:0,width:"100%"}}>
 
         {/* Back / Hamburger */}
         {mobileDetailOpen || mobileNotifOpen ? (
@@ -344,10 +344,10 @@ export default function Pulse() {
         ) : null}
 
         {/* Logo */}
-        <div style={{display:"flex",alignItems:"center",gap:7,flexShrink:0}}>
-          <div style={{width:6,height:6,borderRadius:"50%",background:C.accent,
-            boxShadow:isDark?`0 0 8px ${C.accent}`:"none",animation:"blink 2s ease infinite",flexShrink:0}}/>
-          <span style={{fontSize:FS.sm,fontWeight:600,letterSpacing:"0.22em",color:C.text}}>PULSE</span>
+        <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0,
+          paddingRight:isMobile?0:12,borderRight:isMobile?"none":`1px solid ${C.border}`}}>
+          <div style={{width:5,height:5,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
+          <span style={{fontSize:FS.sm,fontWeight:700,letterSpacing:"0.25em",color:C.text}}>PULSE</span>
         </div>
 
         {/* Desktop filters */}
@@ -397,7 +397,7 @@ export default function Pulse() {
                       style={{display:"flex",alignItems:"center",padding:"7px 10px",cursor:"pointer",gap:8}}
                       onMouseEnter={e=>e.currentTarget.style.background=C.hover}
                       onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
-                      <span style={{fontSize:FS.xs,color:C.sub,flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>🔍 {s.query}</span>
+                      <span style={{fontSize:FS.xs,color:C.sub,flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.query}</span>
                       <button onClick={e=>{e.stopPropagation();deleteSearch(s.id);}}
                         style={{background:"none",border:"none",color:C.muted,cursor:"pointer",fontSize:"0.7rem",padding:"0 2px",flexShrink:0}}>✕</button>
                     </div>
@@ -449,7 +449,7 @@ export default function Pulse() {
             </svg>
             {alertLog.length>0 && (
               <div style={{position:"absolute",top:5,right:5,width:6,height:6,borderRadius:"50%",
-                background:C.accent,boxShadow:isDark?`0 0 6px ${C.accent}`:"none",border:`1.5px solid ${C.surface}`}}/>
+                background:C.accent,border:`1.5px solid ${C.surface}`}}/>
             )}
           </button>
         )}
@@ -503,7 +503,7 @@ export default function Pulse() {
                 onMouseEnter={e=>e.currentTarget.style.background=C.hover}
                 onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
                 <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><rect x="1" y="3" width="12" height="9" rx="1.5"/><polyline points="1,3 7,8.5 13,3"/></svg>
-                Send digest to email
+                Send digest
               </div>
               <div onClick={()=>{setShowUserMenu(false);signOut();}}
                 style={{padding:"10px 14px",cursor:"pointer",fontSize:FS.xs,color:"#ff4d6d",
@@ -588,10 +588,10 @@ export default function Pulse() {
               boxShadow:"0 8px 32px rgba(0,0,0,.5)"}}>
               <div style={{width:6,height:6,borderRadius:"50%",flexShrink:0,marginTop:5,
                 background:toast.type==="hot"?"#ff4d6d":C.accent,
-                boxShadow:`0 0 7px ${toast.type==="hot"?"#ff4d6d":C.accent}`,
+                boxShadow:"0 4px 16px rgba(0,0,0,0.4)",
                 animation:"blink 1.4s ease infinite"}}/>
               <div style={{flex:1,minWidth:0}}>
-                <div style={{fontSize:FS.xs,color:toast.type==="hot"?"#ff4d6d":C.accent,
+                <div style={{fontSize:FS.xs,color:isDark?"#000":"#fff",
                   letterSpacing:"0.1em",marginBottom:3,fontWeight:600}}>
                   {toast.title.toUpperCase()}
                 </div>
@@ -687,7 +687,7 @@ export default function Pulse() {
             {sorted.length===0 && status!=="loading" && filter!=="bookmarks" && (
               <div style={{padding:"72px 20px",textAlign:"center"}}>
                 <div style={{fontSize:"1.8rem",marginBottom:14,opacity:.3}}>
-                  {query ? "🔍" : "📡"}
+                  {query ? "/ /" : "—"}
                 </div>
                 <div style={{fontSize:FS.sm,color:C.muted,letterSpacing:"0.1em",marginBottom:8}}>
                   {query ? `NO RESULTS FOR "${query.toUpperCase()}"` : "NO ITEMS"}
@@ -742,14 +742,15 @@ export default function Pulse() {
             <div style={{fontSize:"1.1rem",fontWeight:700,color:C.text,letterSpacing:"0.15em",marginBottom:6}}>WELCOME TO PULSE</div>
             <div style={{fontSize:FS.xs,color:C.muted,letterSpacing:"0.08em",marginBottom:20}}>AI SIGNALS FOR DEVELOPERS</div>
             {[
-              ["📡","Real-time feed","AI news from 15+ sources — HN, arXiv, GitHub, company blogs"],
-              ["🔥","Heat score","4 bars = trending now. Sort by HOT to see what's buzzing"],
-              ["🔍","Smart search","Search titles, summaries, sources. Save searches for alerts"],
-              ["⭐","Trending repos","GitHub repos gaining stars fast — in the left sidebar"],
-              ["🤖","AI summaries","Click any article for a deep AI-generated summary"],
+              ["01","Real-time feed","AI news from 15+ sources — HN, arXiv, GitHub, company blogs"],
+              ["02","Heat score","4 bars = trending now. Sort by HOT to see what's buzzing"],
+              ["03","Smart search","Search titles, summaries, sources. Save searches for alerts"],
+              ["04","Trending repos","GitHub repos gaining stars fast — in the left sidebar"],
+              ["05","AI summaries","Click any article for a deep AI-generated summary"],
             ].map(([icon,title,desc])=>(
               <div key={title} style={{display:"flex",gap:12,marginBottom:14,alignItems:"flex-start"}}>
-                <span style={{fontSize:"1.1rem",flexShrink:0}}>{icon}</span>
+                <span style={{fontSize:FS.xs,fontWeight:700,color:C.accent,flexShrink:0,
+                width:20,letterSpacing:"0.05em"}}>{icon}</span>
                 <div>
                   <div style={{fontSize:FS.xs,color:C.text,fontWeight:500,marginBottom:2,letterSpacing:"0.06em"}}>{title}</div>
                   <div style={{fontSize:"0.65rem",color:C.muted,lineHeight:1.6}}>{desc}</div>

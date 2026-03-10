@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FS, API } from "../constants/theme.js";
 
-export function TrendingRepos({ C, isDark, onRepoClick }) {
+export function TrendingRepos({ C, isDark, onRepoClick, embedded=false }) {
   const [repos,   setRepos]   = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,11 +47,11 @@ export function TrendingRepos({ C, isDark, onRepoClick }) {
   if(!repos.length) return null;
 
   return (
-    <div style={{marginBottom:24}}>
-      <div style={{fontSize:FS.xs,color:C.muted,letterSpacing:"0.1em",
+    <div style={{marginBottom:embedded?0:24}}>
+      {!embedded&&<div style={{fontSize:FS.xs,color:C.muted,letterSpacing:"0.1em",
         marginBottom:10,fontWeight:600}}>
         TRENDING REPOS
-      </div>
+      </div>}
       {repos.map(repo=>(
         <div key={repo.id} className="row"
           onClick={()=>onRepoClick(toItem(repo))}
@@ -62,8 +62,8 @@ export function TrendingRepos({ C, isDark, onRepoClick }) {
               overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}}>
               {repo.name.split("/")[1]}
             </span>
-            <span style={{fontSize:FS.xs,color:"#ffd700",flexShrink:0,fontWeight:600}}>
-              ⭐ {fmt(repo.stars)}
+            <span style={{fontSize:FS.xs,color:C.sub,flexShrink:0,fontWeight:500}}>
+              {fmt(repo.stars)} ★
             </span>
           </div>
           {repo.description&&(

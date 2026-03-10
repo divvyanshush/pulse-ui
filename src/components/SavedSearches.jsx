@@ -34,7 +34,7 @@ export function SavedSearches({ C, isDark, savedSearches, onSearch, onDelete, on
           onClick={()=>onSearch(s.query)}>
           <span style={{fontSize:FS.xs,color:C.sub,flex:1,
             overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
-            🔍 {s.query}
+            {s.query}
           </span>
           <button onClick={e=>{e.stopPropagation();onDelete(s.id);}}
             style={{background:"none",border:"none",color:C.muted,cursor:"pointer",

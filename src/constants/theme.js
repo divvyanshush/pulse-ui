@@ -18,31 +18,35 @@ export const FS = {
 };
 
 export const DARK = {
-  text:"#d8d8f0", sub:"#8888aa", muted:"#555570", faint:"#333350",
-  bg:"#050507", surface:"#09090f", hover:"#0d0d16", border:"#111128", light:false,
+  text:"#e8e8f4", sub:"#9090b8", muted:"#50506e", faint:"#2a2a45",
+  bg:"#040408", surface:"#07070e", hover:"#0c0c18", border:"#111128",
+  accent:"#00e5ff", accentDim:"rgba(0,229,255,0.1)", accentBorder:"rgba(0,229,255,0.25)",
+  light:false,
 };
 
 export const LIGHT = {
-  text:"#1a1a2e", sub:"#44445a", muted:"#888899", faint:"#ccccdd",
-  bg:"#f5f5f0", surface:"#ededea", hover:"#e5e5e0", border:"#d8d8d0", light:true,
+  text:"#111128", sub:"#44445a", muted:"#888899", faint:"#ccccdd",
+  bg:"#f4f4f8", surface:"#eeeef4", hover:"#e5e5ec", border:"#d0d0dc",
+  accent:"#0066cc", accentDim:"rgba(0,102,204,0.08)", accentBorder:"rgba(0,102,204,0.25)",
+  light:true,
 };
 
 export const TM_DARK = {
-  model:    {label:"MODEL",    a:"rgba(0,255,136,.12)",  b:"rgba(0,255,136,.3)",  t:"#00ff88"},
-  research: {label:"RESEARCH", a:"rgba(77,166,255,.12)", b:"rgba(77,166,255,.3)", t:"#4da6ff"},
-  drama:    {label:"DRAMA",    a:"rgba(255,77,109,.12)", b:"rgba(255,77,109,.3)", t:"#ff4d6d"},
-  funding:  {label:"FUNDING",  a:"rgba(255,215,0,.12)",  b:"rgba(255,215,0,.3)",  t:"#ffd700"},
-  product:  {label:"PRODUCT",  a:"rgba(199,125,255,.12)",b:"rgba(199,125,255,.3)",t:"#c77dff"},
-  policy:   {label:"POLICY",   a:"rgba(255,159,67,.12)", b:"rgba(255,159,67,.3)", t:"#ff9f43"},
+  model:    {label:"MODEL",    a:"rgba(255,255,255,.04)", b:"rgba(255,255,255,.1)", t:"#00e5ff"},
+  research: {label:"RESEARCH", a:"rgba(255,255,255,.04)", b:"rgba(255,255,255,.1)", t:"#7eb8ff"},
+  drama:    {label:"DRAMA",    a:"rgba(255,255,255,.04)", b:"rgba(255,255,255,.1)", t:"#ff6b82"},
+  funding:  {label:"FUNDING",  a:"rgba(255,255,255,.04)", b:"rgba(255,255,255,.1)", t:"#e8c84a"},
+  product:  {label:"PRODUCT",  a:"rgba(255,255,255,.04)", b:"rgba(255,255,255,.1)", t:"#a78bfa"},
+  policy:   {label:"POLICY",   a:"rgba(255,255,255,.04)", b:"rgba(255,255,255,.1)", t:"#fb923c"},
 };
 
 export const TM_LIGHT = {
-  model:    {label:"MODEL",    a:"rgba(0,130,65,.1)",    b:"rgba(0,130,65,.3)",   t:"#006e34"},
-  research: {label:"RESEARCH", a:"rgba(20,90,190,.1)",   b:"rgba(20,90,190,.3)",  t:"#1450aa"},
-  drama:    {label:"DRAMA",    a:"rgba(190,20,55,.1)",   b:"rgba(190,20,55,.3)",  t:"#be1437"},
-  funding:  {label:"FUNDING",  a:"rgba(140,100,0,.1)",   b:"rgba(140,100,0,.3)",  t:"#7a5800"},
-  product:  {label:"PRODUCT",  a:"rgba(110,40,190,.1)",  b:"rgba(110,40,190,.3)", t:"#5e20b8"},
-  policy:   {label:"POLICY",   a:"rgba(185,85,0,.1)",    b:"rgba(185,85,0,.3)",   t:"#a04800"},
+  model:    {label:"MODEL",    a:"rgba(0,0,0,.04)",  b:"rgba(0,0,0,.12)", t:"#0066cc"},
+  research: {label:"RESEARCH", a:"rgba(0,0,0,.04)",  b:"rgba(0,0,0,.12)", t:"#1a56aa"},
+  drama:    {label:"DRAMA",    a:"rgba(0,0,0,.04)",  b:"rgba(0,0,0,.12)", t:"#c0192e"},
+  funding:  {label:"FUNDING",  a:"rgba(0,0,0,.04)",  b:"rgba(0,0,0,.12)", t:"#8a6400"},
+  product:  {label:"PRODUCT",  a:"rgba(0,0,0,.04)",  b:"rgba(0,0,0,.12)", t:"#6d28d9"},
+  policy:   {label:"POLICY",   a:"rgba(0,0,0,.04)",  b:"rgba(0,0,0,.12)", t:"#c2410c"},
 };
 
 export const getTM = (isDark) => isDark ? TM_DARK : TM_LIGHT;
