@@ -191,8 +191,13 @@ export default function Pulse() {
       setStatus("ok");
     }catch(e){
       setStatus("err"); setErrMsg(e.message);
+      // If we have cached items keep showing them, just show a subtle error
+      if(items.length > 0) {
+        setStatus("ok");
+        showToast("Connection issue", "Showing cached feed", "err", null);
+      }
     }
-  },[showToast,pushNotif]);
+  },[showToast,pushNotif,items.length]);
 
   useEffect(()=>{
     loadFeed(false);
@@ -659,7 +664,7 @@ export default function Pulse() {
               <SkeletonRow key={i} C={C} isDark={isDark}/>
             ))}
 
-            {status==="err"&&(
+            {status==="err"&&items.length===0&&(
               <div style={{padding:"52px 20px",textAlign:"center"}}>
                 <div style={{fontSize:FS.sm,color:"#ff4d6d",marginBottom:8,letterSpacing:"0.08em"}}>BACKEND UNREACHABLE</div>
                 <div style={{fontSize:FS.xs,color:C.muted,marginBottom:24,wordBreak:"break-all",lineHeight:1.7}}>{errMsg}</div>
