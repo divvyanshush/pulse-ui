@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabase.js";
 
 export function Auth({ onAuth, C, isDark }) {
   const [mode,     setMode]     = useState("signin");
+  const [resetSent, setResetSent] = useState(false);
   const [email,    setEmail]    = useState("");
   const [password, setPassword] = useState("");
   const [error,    setError]    = useState(null);
@@ -16,6 +17,17 @@ export function Auth({ onAuth, C, isDark }) {
     const err = await onAuth(mode, email, password);
     if(err) setError(err.message);
     else if(mode==="signup") setSuccess(true);
+    setLoading(false);
+  };
+
+  const handleReset = async () => {
+    if(!email) return;
+    setLoading(true); setError(null);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin
+    });
+    if(error) setError(error.message);
+    else setResetSent(true);
     setLoading(false);
   };
 
@@ -150,6 +162,22 @@ export function Auth({ onAuth, C, isDark }) {
                   style={inp}
                   onFocus={e=>e.target.style.borderColor=C.accent}
                   onBlur={e=>e.target.style.borderColor=C.border}/>
+                {mode==="signin"&&(
+                  <div style={{textAlign:"right"}}>
+                    {resetSent
+                      ? <span style={{fontSize:"0.6rem",color:C.accent}}>Reset link sent to {email}</span>
+                      : <button onClick={handleReset} disabled={!email||loading}
+                          style={{fontSize:"0.6rem",color:C.muted,background:"none",border:"none",
+                            cursor:"pointer",fontFamily:"IBM Plex Mono,monospace",
+                            letterSpacing:"0.06em",padding:0,
+                            opacity:!email?0.4:1}}
+                          onMouseEnter={e=>e.currentTarget.style.color=C.sub}
+                          onMouseLeave={e=>e.currentTarget.style.color=C.muted}>
+                          Forgot password?
+                        </button>
+                    }
+                  </div>
+                )}
 
                 {error && (
                   <div style={{fontSize:FS.xs,color:"#ff4d6d",padding:"9px 12px",
