@@ -20,6 +20,17 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
       <div style={{padding:"20px 20px 16px",borderBottom:`1px solid ${C.border}`}}>
         {isMobile && (
           <button onClick={onMenu} style={{
+            background:"none",border:"none",padding:0,marginBottom:14,
+            cursor:"pointer",color:C.muted,display:"flex",alignItems:"center",gap:8,
+          }}>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <path d="M3 5h14M3 10h14M3 15h14"/>
+            </svg>
+          </button>
+        )}
+
+        {isMobile && (
+          <button onClick={onMenu} style={{
             background:"none",border:"none",padding:0,marginBottom:12,
             cursor:"pointer",color:C.muted,display:"flex",alignItems:"center",gap:6,
           }}>

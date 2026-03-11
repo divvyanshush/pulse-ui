@@ -100,7 +100,7 @@ export function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBook
               <span key={tag} style={{
                 fontSize:"0.60rem",padding:"1px 6px",borderRadius:2,
                 background:"transparent",
-                color:C.muted,border:`1px solid ${C.border}`,
+                color:C.muted,border:"none",
                 letterSpacing:"0.06em",fontWeight:500,whiteSpace:"nowrap",
               }}>{tag}</span>
             ))}
