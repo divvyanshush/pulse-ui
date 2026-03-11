@@ -29,16 +29,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
           </button>
         )}
 
-        {isMobile && (
-          <button onClick={onMenu} style={{
-            background:"none",border:"none",padding:0,marginBottom:12,
-            cursor:"pointer",color:C.muted,display:"flex",alignItems:"center",gap:6,
-          }}>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-              <path d="M2 4h14M2 9h14M2 14h14"/>
-            </svg>
-          </button>
-        )}
+        
         <div style={{fontSize:"0.62rem",fontFamily:FF.mono,color:C.muted,letterSpacing:"0.12em",marginBottom:6}}>SAVED</div>
         <div style={{fontSize:"1.4rem",fontWeight:700,color:C.text,fontFamily:FF.sans,letterSpacing:"-0.03em"}}>Your articles</div>
         <div style={{fontSize:FS.xs,color:C.muted,marginTop:6,fontFamily:FF.sans}}>{saved.length} saved {saved.length===1?"article":"articles"}</div>

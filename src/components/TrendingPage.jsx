@@ -33,16 +33,7 @@ export function TrendingPage({ C, isDark, items, onItemClick , isMobile, onMenu 
             </svg>
           </button>
         )}
-        {isMobile && (
-          <button onClick={onMenu} style={{
-            background:"none",border:"none",padding:0,marginBottom:14,
-            cursor:"pointer",color:C.muted,display:"flex",alignItems:"center",gap:8,
-          }}>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-              <path d="M3 5h14M3 10h14M3 15h14"/>
-            </svg>
-          </button>
-        )}
+        
         <div style={{fontSize:"0.62rem",fontFamily:FF.mono,color:C.muted,letterSpacing:"0.12em",marginBottom:6}}>TRENDING</div>
         <div style={{fontSize:"1.4rem",fontWeight:700,color:C.text,fontFamily:FF.sans,letterSpacing:"-0.03em",marginBottom:16}}>What's hot right now</div>
 
