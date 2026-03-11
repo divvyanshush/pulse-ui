@@ -1,17 +1,15 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { API, timeAgo, FS, FF, DARK, LIGHT, getTM, SRC_COLORS, FILTERS } from "./constants/theme.js";
+import { useState, useEffect, useCallback } from "react";
+import { API, timeAgo, FS, FF, DARK, LIGHT } from "./constants/theme.js";
 import { useAuth } from "./hooks/useAuth.js";
 import { Auth } from "./components/Auth.jsx";
 import { Detail } from "./components/Detail.jsx";
 import { useBookmarks } from "./hooks/useBookmarks.js";
-import { useSavedSearches } from "./hooks/useSavedSearches.js";
 import { usePreferences } from "./hooks/usePreferences.js";
 import { NavSidebar } from "./components/NavSidebar.jsx";
 import { TodayPage } from "./components/TodayPage.jsx";
 import { FeedPage } from "./components/FeedPage.jsx";
 import { TrendingPage } from "./components/TrendingPage.jsx";
 import { SavedPage } from "./components/SavedPage.jsx";
-import { Briefing } from "./components/Briefing.jsx";
 
 function Toast({toasts}){
   return(
@@ -19,31 +17,33 @@ function Toast({toasts}){
       zIndex:9999,display:"flex",flexDirection:"column",gap:6,alignItems:"center",pointerEvents:"none"}}>
       {toasts.map(t=>(
         <div key={t.id} style={{
-          background:t.type==="err"?"#ff4d6d":DARK.surface,
+          background:t.type==="err"?"#ff4d6d":"#1a1a1a",
           color:"#fff",padding:"8px 16px",borderRadius:4,
           fontSize:"0.72rem",fontFamily:FF.mono,
           boxShadow:"0 4px 16px rgba(0,0,0,0.3)",
-          animation:"fadeIn .2s ease",
         }}>{t.msg}</div>
       ))}
     </div>
   );
 }
 
+// Persist page & readIds in sessionStorage (cleared on tab close, not refresh)
+function getStoredPage(){ try{ return sessionStorage.getItem("pulse-page")||"today"; }catch(e){ return "today"; } }
+function getStoredReadIds(){ try{ return new Set(JSON.parse(sessionStorage.getItem("pulse-read")||"[]")); }catch(e){ return new Set(); } }
+
 export default function App() {
-  const [isDark, setIsDark]     = useState(true);
-  const [page, setPage]         = useState("today");
-  const [items, setItems]       = useState([]);
-  const [loading, setLoading]   = useState(true);
-  const [status, setStatus]     = useState("loading");
-  const [detail, setDetail]     = useState(null);
-  const [filter, setFilter]     = useState("all");
-  const [query, setQuery]       = useState("");
-  const [srcFilter, setSrcFilter] = useState(null);
-  const [sortBy, setSortBy]     = useState("heat");
-  const [toasts, setToasts]     = useState([]);
-  const [showAuth, setShowAuth] = useState(false);
-  const [readIds, setReadIds]   = useState(new Set());
+  const [isDark,    setIsDark]   = useState(()=>{ try{ const v=localStorage.getItem("pulse-dark"); return v===null?true:v==="true"; }catch(e){ return true; } });
+  const [page,      setPageRaw]  = useState(getStoredPage);
+  const [items,     setItems]    = useState([]);
+  const [loading,   setLoading]  = useState(true);
+  const [detail,    setDetail]   = useState(null);
+  const [filter,    setFilter]   = useState("all");
+  const [query,     setQuery]    = useState("");
+  const [srcFilter, setSrcFilter]= useState(null);
+  const [sortBy,    setSortBy]   = useState("heat");
+  const [toasts,    setToasts]   = useState([]);
+  const [showAuth,  setShowAuth] = useState(false);
+  const [readIds,   setReadIds]  = useState(getStoredReadIds);
 
   const C = isDark ? DARK : LIGHT;
 
@@ -51,10 +51,17 @@ export default function App() {
   const { bookmarks, loadBookmarks, toggleBookmark } = useBookmarks(user);
   const { loadPreferences, savePreferences } = usePreferences(user);
 
-  const showToast = useCallback((msg, type="info", duration=3000)=>{
+  // Page setter — persists to sessionStorage + closes detail
+  const setPage = useCallback((p)=>{
+    setPageRaw(p);
+    setDetail(null);
+    try{ sessionStorage.setItem("pulse-page", p); }catch(e){}
+  },[]);
+
+  const showToast = useCallback((msg, type="info")=>{
     const id = Date.now();
     setToasts(t=>[...t,{id,msg,type}]);
-    setTimeout(()=>setToasts(t=>t.filter(x=>x.id!==id)),duration);
+    setTimeout(()=>setToasts(t=>t.filter(x=>x.id!==id)),3000);
   },[]);
 
   const loadFeed = useCallback(async(silent=false)=>{
@@ -62,16 +69,13 @@ export default function App() {
       if(!silent) setLoading(true);
       const res = await fetch(`${API}/feed`);
       const data = await res.json();
-      const mapped = (data.items||[]).map(i=>({...i,timeLabel:timeAgo(i.time)}));
-      setItems(mapped);
-      setStatus("ok");
+      setItems((data.items||[]).map(i=>({...i,timeLabel:timeAgo(i.time)})));
     } catch(e) {
-      setStatus("err");
-      if(items.length>0) showToast("Connection issue — showing cached feed","err");
+      if(!silent) showToast("Connection issue","err");
     } finally {
       setLoading(false);
     }
-  },[showToast,items.length]);
+  },[showToast]);
 
   useEffect(()=>{
     loadFeed(false);
@@ -84,7 +88,7 @@ export default function App() {
         if(prefs.sort_by) setSortBy(prefs.sort_by);
       });
     }
-  },[loadFeed,loadBookmarks,loadPreferences,user]);
+  },[user]);
 
   useEffect(()=>{
     const id=setInterval(()=>loadFeed(true),90_000);
@@ -95,6 +99,15 @@ export default function App() {
     const id=setInterval(()=>setItems(p=>p.map(i=>({...i,timeLabel:timeAgo(i.time)}))),30_000);
     return()=>clearInterval(id);
   },[]);
+
+  const toggleDark = useCallback(()=>{
+    setIsDark(d=>{
+      const next=!d;
+      try{ localStorage.setItem("pulse-dark", String(next)); }catch(e){}
+      savePreferences({dark_mode:next});
+      return next;
+    });
+  },[savePreferences]);
 
   const handleAuth = useCallback(async(mode,email,password)=>{
     const fn = mode==="up" ? signUp : signIn;
@@ -111,63 +124,74 @@ export default function App() {
 
   const handleItemClick = useCallback((item)=>{
     setDetail(item);
-    setReadIds(r=>new Set([...r,item.id]));
+    setReadIds(r=>{
+      const next=new Set([...r,item.id]);
+      try{ sessionStorage.setItem("pulse-read", JSON.stringify([...next])); }catch(e){}
+      return next;
+    });
   },[]);
+
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   if(authLoading) return <div style={{minHeight:"100vh",background:C.bg}}/>;
 
+  const commonProps = {
+    C, isDark, items, loading, bookmarks,
+    onItemClick:handleItemClick, onBookmark:handleBookmark,
+    detail, readIds, user,
+  };
+
+  const feedProps = {
+    ...commonProps,
+    filter, setFilter, query, setQuery,
+    srcFilter, setSrcFilter, sortBy, setSortBy,
+    savePreferences,
+  };
+
   return (
     <div style={{
-      display:"flex",height:"100vh",overflow:"hidden",
-      background:C.bg,color:C.text,
-      fontFamily:FF.sans,
+      display:"flex", height:"100vh", overflow:"hidden",
+      background:C.bg, color:C.text,
+      fontFamily:FF.sans, WebkitFontSmoothing:"antialiased",
     }}>
-      {/* Nav Sidebar */}
-      <NavSidebar
-        C={C} isDark={isDark} page={page} setPage={setPage}
-        user={user} setShowAuth={setShowAuth}
-        bmCount={Object.keys(bookmarks).length}
-        toggleDark={()=>{
-          setIsDark(d=>{ savePreferences({dark_mode:!d}); return !d; });
-        }}
-      />
 
-      {/* Main content */}
-      <div style={{flex:1,display:"flex",overflow:"hidden"}}>
+      {/* Nav Sidebar — hidden on mobile when detail open */}
+      {!(isMobile && detail) && (
+        <NavSidebar
+          C={C} isDark={isDark} page={page} setPage={setPage}
+          user={user} setShowAuth={setShowAuth}
+          bmCount={Object.keys(bookmarks).length}
+          toggleDark={toggleDark} onSignOut={signOut}
+        />
+      )}
 
-        {/* Page content */}
-        <div style={{flex:1,display:"flex",overflow:"hidden"}}>
-          {page==="today" && (
-            <TodayPage C={C} isDark={isDark} onItemClick={handleItemClick}/>
-          )}
-          {page==="feed" && (
-            <FeedPage
-              C={C} isDark={isDark} items={items} loading={loading}
-              bookmarks={bookmarks} onItemClick={handleItemClick}
-              onBookmark={handleBookmark} filter={filter} setFilter={setFilter}
-              query={query} setQuery={setQuery} srcFilter={srcFilter}
-              setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy}
-              savePreferences={savePreferences} detail={detail} readIds={readIds}
-              user={user}
-            />
-          )}
-          {page==="trending" && (
-            <TrendingPage C={C} isDark={isDark} items={items} onItemClick={handleItemClick}/>
-          )}
-          {page==="saved" && (
-            <SavedPage
-              C={C} isDark={isDark} items={items} bookmarks={bookmarks}
-              onItemClick={handleItemClick} onBookmark={handleBookmark}
-            />
-          )}
-        </div>
+      {/* Main area */}
+      <div style={{flex:1, display:"flex", overflow:"hidden", position:"relative"}}>
+
+        {/* Page — hidden on mobile when detail is open */}
+        {!(isMobile && detail) && (
+          <div style={{flex:1, display:"flex", overflow:"hidden"}}>
+            {page==="today"    && <TodayPage    {...commonProps}/>}
+            {page==="feed"     && <FeedPage     {...feedProps}/>}
+            {page==="trending" && <TrendingPage {...commonProps}/>}
+            {page==="saved"    && <SavedPage    {...commonProps}/>}
+          </div>
+        )}
 
         {/* Detail panel */}
         {detail && (
           <div style={{
-            width:400,flexShrink:0,
-            borderLeft:`1px solid ${C.border}`,
-            overflowY:"auto",background:C.surface,
+            // Mobile: full screen overlay
+            // Desktop: fixed-width side panel
+            position: isMobile?"absolute":"relative",
+            inset: isMobile?0:"auto",
+            zIndex: isMobile?100:"auto",
+            width: isMobile?"100%":380,
+            minWidth: isMobile?"100%":380,
+            flexShrink:0,
+            borderLeft: isMobile?"none":`1px solid ${C.border}`,
+            overflowY:"auto",
+            background:C.surface,
           }}>
             <Detail
               item={detail} C={C} isDark={isDark}
