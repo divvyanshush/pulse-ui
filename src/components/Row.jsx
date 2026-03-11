@@ -12,7 +12,7 @@ export function Row({item, i, onClick, isMobile, C, isDark, isBookmarked, onBook
       onMouseLeave={e=>{ if(!selected) e.currentTarget.style.background="transparent"; }}
       style={{
         borderBottom:`1px solid ${C.border}`,
-        padding:isMobile?"20px 16px":"18px 20px",
+        padding:"16px 20px",
         background:selected?C.hover:"transparent",
         animation:"rowIn .18s ease forwards",
         animationDelay:`${Math.min(i*.012,.28)}s`,

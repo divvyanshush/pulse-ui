@@ -1,7 +1,7 @@
 import { FF, FS, getTM, SRC_COLORS } from "../constants/theme.js";
 import { Briefing } from "./Briefing.jsx";
 
-export function TodayPage({ C, isDark, onItemClick }) {
+export function TodayPage({ C, isDark, onItemClick , isMobile, onMenu }) {
   const date = new Date().toLocaleDateString("en-US", {
     weekday:"long", month:"long", day:"numeric"
   });

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { API, FS, FF, getTM } from "../constants/theme.js";
 
-export function TrendingPage({ C, isDark, items, onItemClick }) {
+export function TrendingPage({ C, isDark, items, onItemClick , isMobile, onMenu }) {
   const [repos, setRepos] = useState([]);
   const [tab, setTab] = useState("hot");
   const TML = getTM(isDark);
@@ -23,6 +23,16 @@ export function TrendingPage({ C, isDark, items, onItemClick }) {
 
       {/* Header */}
       <div style={{padding:"28px 32px 0",borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
+        {isMobile && (
+          <button onClick={onMenu} style={{
+            background:"none",border:"none",padding:0,marginBottom:12,
+            cursor:"pointer",color:C.muted,display:"flex",alignItems:"center",gap:6,
+          }}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+              <path d="M2 4h14M2 9h14M2 14h14"/>
+            </svg>
+          </button>
+        )}
         <div style={{fontSize:"0.62rem",fontFamily:FF.mono,color:C.muted,letterSpacing:"0.12em",marginBottom:6}}>TRENDING</div>
         <div style={{fontSize:"1.4rem",fontWeight:700,color:C.text,fontFamily:FF.sans,letterSpacing:"-0.03em",marginBottom:16}}>What's hot right now</div>
 
