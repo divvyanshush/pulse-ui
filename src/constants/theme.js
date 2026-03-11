@@ -9,12 +9,12 @@ export const timeAgo = ts => {
 };
 
 export const FS = {
-  xs:  "0.70rem",
-  sm:  "0.82rem",
+  xs:  "0.75rem",
+  sm:  "0.85rem",
   base:"0.95rem",
-  md:  "1.05rem",
-  lg:  "1.15rem",
-  xl:  "1.3rem",
+  md:  "1.1rem",
+  lg:  "1.3rem",
+  xl:  "1.6rem",
 };
 
 // Font families
