@@ -22,7 +22,7 @@ export function TrendingPage({ C, isDark, items, onItemClick , isMobile, onMenu 
     <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden",minWidth:0}}>
 
       {/* Header */}
-      <div style={{padding:"28px 32px 0",borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
+      <div style={{padding:"16px 20px 0",borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
         {isMobile && (
           <button onClick={onMenu} style={{
             background:"none",border:"none",padding:0,marginBottom:12,
@@ -59,7 +59,7 @@ export function TrendingPage({ C, isDark, items, onItemClick , isMobile, onMenu 
           return (
             <div key={item.id} onClick={()=>onItemClick(item)}
               style={{
-                padding:"16px 32px",borderBottom:`1px solid ${C.border}`,
+                padding:"16px 20px",
                 cursor:"pointer",display:"flex",gap:14,alignItems:"flex-start",
                 transition:"background .1s",
               }}
@@ -74,7 +74,7 @@ export function TrendingPage({ C, isDark, items, onItemClick , isMobile, onMenu 
                 <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:5}}>
                   <span style={{fontSize:"0.58rem",fontWeight:600,letterSpacing:"0.1em",
                     padding:"1px 5px",borderRadius:2,background:m.a,color:m.t,
-                    border:`1px solid ${m.b}`,flexShrink:0,fontFamily:FF.mono}}>{m.label}</span>
+                    flexShrink:0,fontFamily:FF.mono}}>{m.label}</span>
                   <span style={{fontSize:"0.62rem",color:C.muted,fontFamily:FF.mono}}>{item.src}</span>
                   <span style={{fontSize:"0.62rem",color:C.muted,fontFamily:FF.mono}}>·</span>
                   <span style={{fontSize:"0.62rem",color:C.muted,fontFamily:FF.mono}}>{item.timeLabel}</span>
@@ -95,7 +95,6 @@ export function TrendingPage({ C, isDark, items, onItemClick , isMobile, onMenu 
           <a key={i} href={repo.url||repo.link} target="_blank" rel="noopener noreferrer"
             style={{
               display:"block",padding:"16px 32px",
-              borderBottom:`1px solid ${C.border}`,
               textDecoration:"none",transition:"background .1s",
             }}
             onMouseEnter={e=>e.currentTarget.style.background=C.hover}

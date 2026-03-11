@@ -66,7 +66,7 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
               <div key={i} onClick={()=>onItemClick&&onItemClick(item)}
                 style={{
                   padding:fullPage?"18px 32px":"13px 20px",
-                  borderBottom:isLast?"none":`1px solid ${C.border}`,
+                  borderBottom:"none",
                   display:"flex", gap:14, alignItems:"flex-start",
                   cursor:"pointer", transition:"background .1s",
                 }}
@@ -86,7 +86,7 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
                     <span style={{
                       fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.08em",
                       padding:"1px 5px",borderRadius:2,
-                      background:m.a,color:m.t,border:`1px solid ${m.b}`,
+                      background:m.a,color:m.t,
                       flexShrink:0,fontFamily:FF.mono,whiteSpace:"nowrap",
                     }}>{m.label}</span>
                     <span style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.mono}}>{item.src}</span>

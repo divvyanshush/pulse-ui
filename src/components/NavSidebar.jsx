@@ -172,7 +172,7 @@ export function NavSidebar({ C, isDark, page, setPage, user, setShowAuth, bmCoun
               <polyline points="10,4 13,7.5 10,11"/>
               <line x1="13" y1="7.5" x2="5" y2="7.5"/>
             </svg>
-            <span style={{fontSize:"0.82rem",color:C.accent,fontWeight:500,fontFamily:FF.sans}}>Sign in</span>
+            <span style={{fontSize:"0.82rem",color:C.text,fontWeight:600,fontFamily:FF.sans}}>Sign in</span>
           </NavItem>
         )}
       </div>

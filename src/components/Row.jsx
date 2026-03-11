@@ -10,7 +10,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       onMouseEnter={e=>{ if(!selected) e.currentTarget.style.background=C.hover; }}
       onMouseLeave={e=>{ e.currentTarget.style.background=selected?C.hover:"transparent"; }}
       style={{
-        padding:"13px 20px",
+        padding:"16px 20px",
         background:selected?C.hover:"transparent",
         animation:"rowIn .15s ease forwards",
         animationDelay:`${Math.min(i*.01,.2)}s`,
@@ -83,11 +83,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
         </>}
       </div>
 
-      {/* Subtle divider */}
-      <div style={{
-        position:"absolute", bottom:0, left:20, right:20,
-        height:1, background:C.border, opacity:0.35,
-      }}/>
+
     </div>
   );
 }

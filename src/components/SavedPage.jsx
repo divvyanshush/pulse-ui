@@ -78,7 +78,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
                   flexShrink:0,marginTop:2,color:C.accent}}>
                 <BmSvg filled={true} size={13} color="currentColor"/>
               </button>
-              <div style={{position:"absolute",bottom:0,left:20,right:20,height:1,background:C.border,opacity:0.4}}/>
+
             </div>
           );
         })}

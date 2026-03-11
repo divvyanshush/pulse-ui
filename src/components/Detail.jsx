@@ -53,7 +53,7 @@ export function Detail({item, onClose, C, isDark, isBookmarked, onBookmark, item
           </button>
         </div>
         <span style={{fontSize:"0.62rem",fontWeight:600,letterSpacing:"0.1em",
-          padding:"3px 7px",borderRadius:2,background:m.a,color:m.t,border:`1px solid ${m.b}`}}>
+          padding:"3px 7px",borderRadius:2,background:m.a,color:m.t,}}>
           {m.label}
         </span>
         <div style={{fontSize:FS.lg,fontWeight:600,lineHeight:1.55,
@@ -162,7 +162,7 @@ export function Detail({item, onClose, C, isDark, isBookmarked, onBookmark, item
                     style={{padding:"10px 0",borderBottom:`1px solid ${C.border}`,cursor:"pointer"}}>
                     <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:5}}>
                       <span style={{fontSize:"0.6rem",padding:"2px 5px",borderRadius:2,
-                        background:m.a,color:m.t,border:`1px solid ${m.b}`,letterSpacing:"0.06em"}}>{m.label}</span>
+                        background:m.a,color:m.t,letterSpacing:"0.06em"}}>{m.label}</span>
                       <span style={{fontSize:FS.xs,color:C.muted}}>{r.srcLabel||r.src}</span>
                     </div>
                     <div style={{fontSize:FS.sm,color:C.text,lineHeight:1.5,
