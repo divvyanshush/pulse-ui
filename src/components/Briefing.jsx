@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { API, FS, getTM } from "../constants/theme.js";
+import { API, FS, FF, getTM } from "../constants/theme.js";
 
 export function Briefing({ C, isDark, onItemClick }) {
   const [briefing, setBriefing] = useState(null);
@@ -56,7 +56,7 @@ export function Briefing({ C, isDark, onItemClick }) {
         <div>
           {loading ? (
             // Skeleton
-            [1,2,3,4,5].map(n=>(
+            [1,2,3,4,5,6,7,8,9,10].map(n=>(
               <div key={n} style={{
                 padding:"12px 18px",
                 borderBottom:`1px solid ${C.border}`,
@@ -82,7 +82,7 @@ export function Briefing({ C, isDark, onItemClick }) {
                 })}
                 style={{
                   padding:"12px 18px",
-                  borderBottom:i<4?`1px solid ${C.border}`:"none",
+                  borderBottom:i<9?`1px solid ${C.border}`:"none",
                   display:"flex", gap:12, alignItems:"flex-start",
                   cursor:"pointer", transition:"background .1s",
                 }}
@@ -120,8 +120,9 @@ export function Briefing({ C, isDark, onItemClick }) {
                   }}>{item.title}</div>
                   {item.why && (
                     <div style={{
-                      fontSize:"0.6rem", color:C.sub,
+                      fontSize:FS.xs, color:C.sub,
                       fontStyle:"italic", lineHeight:1.5,
+                      fontFamily:FF.sans,
                     }}>{item.why}</div>
                   )}
                 </div>

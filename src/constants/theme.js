@@ -9,17 +9,23 @@ export const timeAgo = ts => {
 };
 
 export const FS = {
-  xs:  "0.65rem",
-  sm:  "0.75rem",
-  base:"0.85rem",
-  md:  "0.95rem",
-  lg:  "1.05rem",
-  xl:  "1.2rem",
+  xs:  "0.70rem",
+  sm:  "0.82rem",
+  base:"0.95rem",
+  md:  "1.05rem",
+  lg:  "1.15rem",
+  xl:  "1.3rem",
+};
+
+// Font families
+export const FF = {
+  sans: "'Inter', system-ui, -apple-system, sans-serif",
+  mono: "'IBM Plex Mono', 'Fira Mono', monospace",
 };
 
 export const DARK = {
-  text:"#e8e8f4", sub:"#9090b8", muted:"#50506e", faint:"#2a2a45",
-  bg:"#040408", surface:"#07070e", hover:"#0c0c18", border:"#111128",
+  text:"#ececec", sub:"#999999", muted:"#666666", faint:"#333333",
+  bg:"#0f0f0f", surface:"#1a1a1a", hover:"#222222", border:"#2a2a2a",
   accent:"#00e5ff", accentDim:"rgba(0,229,255,0.1)", accentBorder:"rgba(0,229,255,0.25)",
   light:false,
 };

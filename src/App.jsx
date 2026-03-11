@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { API, timeAgo, FS, DARK, LIGHT, TM_DARK, TM_LIGHT, getTM, SRC_COLORS, FILTERS } from "./constants/theme.js";
+import { API, timeAgo, FS, FF, DARK, LIGHT, TM_DARK, TM_LIGHT, getTM, SRC_COLORS, FILTERS } from "./constants/theme.js";
 import { useNotifs } from "./hooks/useNotifs.js";
 import { useAuth } from "./hooks/useAuth.js";
 import { Auth } from "./components/Auth.jsx";
@@ -357,17 +357,21 @@ export default function Pulse() {
 
         {/* Desktop filters */}
         {!isMobile && (
-          <div style={{display:"flex",gap:2,marginLeft:10,overflowX:"auto",
+          <div style={{display:"flex",gap:4,marginLeft:10,overflowX:"auto",
             scrollbarWidth:"none",flexShrink:1,minWidth:0}}>
             {FILTERS.map(f=>{
               const TML=getTM(isDark);
               const m=TML[f];const on=filter===f;const isBm=f==="bookmarks";
               return(
                 <button key={f} className="fbtn" onClick={()=>{setFilter(f);setSrcFilter(null);try{if(f!=="bookmarks")localStorage.setItem("pulse-filter",f);}catch(e){} if(f!=="bookmarks")savePreferences({filter:f});}}
-                  style={{padding:"5px 10px",borderRadius:3,flexShrink:0,fontSize:FS.xs,letterSpacing:"0.08em",
-                    background:on?(isBm||f==="all"?`rgba(${isDark?"216,216,240":"26,26,46"},.08)`:m?.a):"transparent",
+                  style={{padding:"4px 9px",borderRadius:3,flexShrink:0,
+                    fontSize:"0.62rem",letterSpacing:"0.09em",
+                    fontFamily:"'IBM Plex Mono',monospace",
+                    background:on?(isBm||f==="all"?C.faint:m?.a):"transparent",
                     color:on?(isBm||f==="all"?C.text:m?.t):C.muted,
-                    border:on?(isBm||f==="all"?`1px solid ${C.faint}`:`1px solid ${m?.b}`):"1px solid transparent"}}>
+                    border:on?(isBm||f==="all"?`1px solid ${C.border}`:`1px solid ${m?.b}`):"1px solid transparent",
+                    transition:"all .1s",
+                  }}>
                   {isBm?`SAVED${bmCount>0?" "+bmCount:""}`:f.toUpperCase()}
                 </button>
               );
