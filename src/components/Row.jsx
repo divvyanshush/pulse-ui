@@ -7,74 +7,71 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
 
   return (
     <div onClick={onClick}
-      onMouseEnter={e=>{ if(!selected) e.currentTarget.style.background=C.hover; }}
-      onMouseLeave={e=>{ e.currentTarget.style.background=selected?C.hover:"transparent"; }}
+      onMouseEnter={e=>e.currentTarget.style.background=C.hover}
+      onMouseLeave={e=>e.currentTarget.style.background=selected?C.hover:"transparent"}
       style={{
-        padding:"18px 24px",
+        padding:"22px 28px",
         background:selected?C.hover:"transparent",
         animation:"rowIn .15s ease forwards",
-        animationDelay:`${Math.min(i*.01,.2)}s`,
+        animationDelay:`${Math.min(i*.01,.15)}s`,
         opacity:0,
-        filter:isRead?(isDark?"brightness(0.35)":"opacity(0.4)"):"none",
+        filter:isRead?(isDark?"brightness(0.3)":"opacity(0.35)"):"none",
         transition:"background .1s",
         cursor:"pointer",
         borderBottom:`1px solid ${C.border}`,
       }}>
 
-      {/* Meta row — top */}
+      {/* Category · Source · Time */}
       <div style={{
-        display:"flex", alignItems:"center", gap:6,
-        marginBottom:8, fontFamily:FF.mono,
+        display:"flex", alignItems:"center", gap:8,
+        marginBottom:10, fontFamily:FF.mono,
+        fontSize:"0.65rem",
       }}>
         <span style={{
-          fontSize:"0.62rem", fontWeight:500,
-          color:m.t, padding:"2px 7px",
+          color:m.t, padding:"2px 8px",
           borderRadius:3, background:m.a,
-          letterSpacing:"0.06em", flexShrink:0,
+          fontWeight:600, letterSpacing:"0.06em",
+          flexShrink:0,
         }}>{m.label}</span>
 
-        <span style={{fontSize:"0.65rem",color:C.muted,flexShrink:0}}>
-          {item.srcLabel||item.src}
-        </span>
-
-        <span style={{fontSize:"0.65rem",color:C.faint}}>·</span>
-        <span style={{fontSize:"0.65rem",color:C.faint,flexShrink:0}}>{item.timeLabel}</span>
+        <span style={{color:C.muted, flexShrink:0}}>{item.srcLabel||item.src}</span>
+        <span style={{color:C.faint}}>·</span>
+        <span style={{color:C.faint, flexShrink:0}}>{item.timeLabel}</span>
 
         {item.score>0&&<>
-          <span style={{fontSize:"0.65rem",color:C.faint}}>·</span>
-          <span style={{fontSize:"0.65rem",color:C.faint}}>↑{item.score}</span>
+          <span style={{color:C.faint}}>·</span>
+          <span style={{color:C.faint}}>↑{item.score}</span>
         </>}
 
-        {/* Bookmark — right aligned */}
         <button onClick={e=>onBookmark(item,e)}
           style={{
-            marginLeft:"auto",
-            background:"none", border:"none", padding:"2px 4px",
-            cursor:"pointer", flexShrink:0,
+            marginLeft:"auto", background:"none", border:"none",
+            padding:"2px 0", cursor:"pointer", flexShrink:0,
             color:isBookmarked?C.accent:C.muted,
-            opacity:isBookmarked?1:0.4,
+            opacity:isBookmarked?1:0.35,
             transition:"opacity .15s, color .15s",
+            lineHeight:0,
           }}
           onMouseEnter={e=>e.currentTarget.style.opacity=1}
-          onMouseLeave={e=>{ if(!isBookmarked) e.currentTarget.style.opacity=0.4; }}
+          onMouseLeave={e=>{ if(!isBookmarked) e.currentTarget.style.opacity=0.35; }}
         >
           <BmSvg filled={isBookmarked} size={13} color="currentColor"/>
         </button>
       </div>
 
-      {/* Title */}
+      {/* Title — dominant */}
       <div style={{
-        fontSize:FS.base,
-        fontWeight:600,
+        fontSize:"1.05rem",
+        fontWeight:650,
         color:C.text,
-        lineHeight:1.45,
-        letterSpacing:"-0.02em",
+        lineHeight:1.4,
+        letterSpacing:"-0.025em",
         fontFamily:FF.sans,
-        marginBottom:item.sum?7:0,
+        marginBottom:item.sum?8:0,
         wordBreak:"break-word",
       }}>{item.title}</div>
 
-      {/* Summary */}
+      {/* Description — readable, 2 lines */}
       {item.sum && (
         <div style={{
           fontSize:FS.sm,
@@ -85,16 +82,16 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
           WebkitLineClamp:2,
           WebkitBoxOrient:"vertical",
           overflow:"hidden",
+          fontWeight:400,
         }}>{item.sum}</div>
       )}
 
-      {/* Authors */}
+      {/* Authors for papers */}
       {item.type==="research" && item.authors && (
         <div style={{
-          fontSize:FS.xs, color:C.muted, marginTop:5,
+          fontSize:"0.7rem", color:C.muted, marginTop:6,
           overflow:"hidden", textOverflow:"ellipsis",
-          whiteSpace:"nowrap", fontStyle:"italic",
-          fontFamily:FF.sans,
+          whiteSpace:"nowrap", fontFamily:FF.sans, fontStyle:"italic",
         }}>{item.authors}</div>
       )}
     </div>
