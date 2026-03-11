@@ -46,7 +46,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   const bmCount = Object.keys(bookmarks).length;
 
   return (
-    <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden"}}>
+    <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden",minWidth:0}}>
 
       {/* Topbar */}
       <div style={{

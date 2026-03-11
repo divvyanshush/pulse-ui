@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { API, timeAgo, FS, FF, DARK, LIGHT } from "./constants/theme.js";
 import { useAuth } from "./hooks/useAuth.js";
 import { Auth } from "./components/Auth.jsx";
@@ -131,7 +131,14 @@ export default function App() {
     });
   },[]);
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const [winWidth, setWinWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  useEffect(()=>{
+    const handler = ()=>setWinWidth(window.innerWidth);
+    window.addEventListener("resize", handler);
+    return()=>window.removeEventListener("resize", handler);
+  },[]);
+  const isMobile = winWidth < 768;
+  const isSmall  = winWidth < 1100;
 
   if(authLoading) return <div style={{minHeight:"100vh",background:C.bg}}/>;
 
@@ -186,8 +193,8 @@ export default function App() {
             position: isMobile?"absolute":"relative",
             inset: isMobile?0:"auto",
             zIndex: isMobile?100:"auto",
-            width: isMobile?"100%":380,
-            minWidth: isMobile?"100%":380,
+            width: isMobile?"100%":isSmall?320:380,
+            minWidth: isMobile?"100%":isSmall?320:380,
             flexShrink:0,
             borderLeft: isMobile?"none":`1px solid ${C.border}`,
             overflowY:"auto",

@@ -19,7 +19,7 @@ export function TrendingPage({ C, isDark, items, onItemClick }) {
     .slice(0,20);
 
   return (
-    <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden"}}>
+    <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden",minWidth:0}}>
 
       {/* Header */}
       <div style={{padding:"28px 32px 0",borderBottom:`1px solid ${C.border}`,flexShrink:0}}>

@@ -16,7 +16,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
   );
 
   return (
-    <div style={{flex:1,overflowY:"auto",background:C.bg}}>
+    <div style={{flex:1,overflowY:"auto",background:C.bg,minWidth:0}}>
       <div style={{padding:"20px 20px 16px",borderBottom:`1px solid ${C.border}`}}>
         <div style={{fontSize:"0.62rem",fontFamily:FF.mono,color:C.muted,letterSpacing:"0.12em",marginBottom:6}}>SAVED</div>
         <div style={{fontSize:"1.4rem",fontWeight:700,color:C.text,fontFamily:FF.sans,letterSpacing:"-0.03em"}}>Your articles</div>

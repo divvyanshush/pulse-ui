@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { API, FS, SRC_COLORS, getTM } from "../constants/theme.js";
 import { BmSvg, DL } from "./Shared.jsx";
 
-export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBookmark, items=[], onItemClick}) {
+export function Detail({item, onClose, C, isDark, isBookmarked, onBookmark, items=[], onItemClick}) {
   const TML=getTM(isDark);
   const m=TML[item.type]||TML.product;
   const srcColor=SRC_COLORS[item.src]||"#666";
@@ -32,12 +32,16 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
       <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,
         position:"sticky",top:0,background:C.surface,zIndex:5}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-          {!isMobile?(
-            <button className="ibtn" onClick={onClose}
-              style={{color:C.muted,fontSize:FS.xs,padding:0,letterSpacing:"0.12em"}}
-              onMouseEnter={e=>e.currentTarget.style.color=C.sub}
-              onMouseLeave={e=>e.currentTarget.style.color=C.muted}>← BACK</button>
-          ):<div/>}
+          <button className="ibtn" onClick={onClose}
+            style={{color:C.muted,fontSize:FS.xs,padding:0,letterSpacing:"0.12em",
+              display:"flex",alignItems:"center",gap:4,background:"none",border:"none",cursor:"pointer"}}
+            onMouseEnter={e=>e.currentTarget.style.color=C.sub}
+            onMouseLeave={e=>e.currentTarget.style.color=C.muted}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <path d="M8 2L4 6l4 4"/>
+            </svg>
+            CLOSE
+          </button>
           <button className="ibtn" onClick={e=>onBookmark(item,e)}
             style={{display:"flex",alignItems:"center",gap:5,
               color:isBookmarked?C.text:C.muted,fontSize:FS.xs,
@@ -52,7 +56,7 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
           padding:"3px 7px",borderRadius:2,background:m.a,color:m.t,border:`1px solid ${m.b}`}}>
           {m.label}
         </span>
-        <div style={{fontSize:isMobile?FS.xl:FS.lg,fontWeight:600,lineHeight:1.55,
+        <div style={{fontSize:FS.lg,fontWeight:600,lineHeight:1.55,
           margin:"12px 0 10px",color:C.text,wordBreak:"break-word"}}>{item.title}</div>
         <div style={{display:"flex",alignItems:"center",gap:12,fontSize:FS.xs,flexWrap:"wrap"}}>
           <span style={{display:"flex",alignItems:"center",gap:5}}>
@@ -94,13 +98,13 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
           )}
           {!aiLoading&&aiError&&<div style={{fontSize:FS.xs,color:"#ff4d6d"}}>{aiError}</div>}
           {!aiLoading&&aiSummary&&(
-            <p style={{fontSize:isMobile?FS.base:FS.sm,lineHeight:1.85,
+            <p style={{fontSize:FS.sm,lineHeight:1.85,
               color:C.text,margin:0,wordBreak:"break-word"}}>{aiSummary}</p>
           )}
         </div>
 
         <DL C={C}>SUMMARY</DL>
-        <p style={{fontSize:isMobile?FS.base:FS.sm,lineHeight:1.85,
+        <p style={{fontSize:FS.sm,lineHeight:1.85,
           color:C.muted,wordBreak:"break-word",margin:0}}>{item.sum}</p>
 
         {item.authors&&(
@@ -120,9 +124,9 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
         <div style={{marginTop:24,display:"flex",flexDirection:"column",gap:8}}>
           <a href={item.link} target="_blank" rel="noreferrer" className="open-link"
             style={{display:"flex",alignItems:"center",justifyContent:"space-between",
-              padding:isMobile?"14px 16px":"12px 16px",
+              padding:"12px 16px",
               background:C.bg,border:`1px solid ${C.border}`,borderRadius:4,
-              fontSize:isMobile?FS.base:FS.sm,color:C.sub,letterSpacing:"0.08em"}}>
+              fontSize:FS.sm,color:C.sub,letterSpacing:"0.08em"}}>
             <span>READ ON {(item.srcLabel||item.src).toUpperCase()}</span>
             <span style={{fontSize:FS.lg}}>↗</span>
           </a>
@@ -132,9 +136,9 @@ export function Detail({item, onClose, isMobile, C, isDark, isBookmarked, onBook
               if(el){el.style.opacity=1;setTimeout(()=>el.style.opacity=0,1500);}
             }}
             style={{display:"flex",alignItems:"center",justifyContent:"space-between",
-              padding:isMobile?"14px 16px":"12px 16px",width:"100%",
+              padding:"12px 16px",width:"100%",
               background:C.bg,border:`1px solid ${C.border}`,borderRadius:4,
-              fontSize:isMobile?FS.base:FS.sm,color:C.sub,letterSpacing:"0.08em",cursor:"pointer"}}>
+              fontSize:FS.sm,color:C.sub,letterSpacing:"0.08em",cursor:"pointer"}}>
             <span>COPY LINK</span>
             <span id="copy-confirm" style={{fontSize:FS.xs,color:C.accent,opacity:0,transition:"opacity .3s"}}>COPIED ✓</span>
           </button>

@@ -11,6 +11,7 @@ export function TodayPage({ C, isDark, onItemClick }) {
       flex:1,
       overflowY:"auto",
       background:C.bg,
+      minWidth:0,
     }}>
       {/* Page header */}
       <div style={{
