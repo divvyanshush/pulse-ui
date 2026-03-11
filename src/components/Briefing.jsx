@@ -16,6 +16,8 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
 
   const show = open || fullPage;
 
+  if(!fullPage && !loading && (!briefing || !briefing.items?.length)) return null;
+
   return (
     <div style={{background:C.bg}}>
 
@@ -23,20 +25,21 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
       {!fullPage && (
         <div onClick={()=>setOpen(o=>!o)}
           style={{
-            padding:"12px 20px",
+            padding:"12px 24px",
             display:"flex", alignItems:"center", gap:8,
             borderBottom:`1px solid ${C.border}`,
             cursor:"pointer",
+            transition:"background .1s",
           }}
           onMouseEnter={e=>e.currentTarget.style.background=C.hover}
           onMouseLeave={e=>e.currentTarget.style.background="transparent"}
         >
-          <span style={{fontSize:FS.xs,fontWeight:600,letterSpacing:"0.12em",
-            color:C.accent,fontFamily:FF.mono}}>TODAY</span>
+          <span style={{fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.12em",
+            color:C.muted,fontFamily:FF.mono}}>TODAY</span>
           {briefing?.date&&(
-            <span style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.mono}}>{briefing.date}</span>
+            <span style={{fontSize:"0.65rem",color:C.muted,fontFamily:FF.mono,opacity:0.6}}>{briefing.date}</span>
           )}
-          <span style={{marginLeft:"auto",fontSize:FS.xs,color:C.muted,fontFamily:FF.mono}}>
+          <span style={{marginLeft:"auto",fontSize:"0.65rem",color:C.muted,fontFamily:FF.mono,opacity:0.6}}>
             {open?"↑":"↓"}
           </span>
         </div>
@@ -48,15 +51,12 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
           {loading ? (
             [1,2,3,4,5].map(n=>(
               <div key={n} style={{
-                padding:fullPage?"20px 32px":"14px 20px",
+                padding:fullPage?"28px 32px":"20px 24px",
                 borderBottom:`1px solid ${C.border}`,
-                display:"flex", gap:14,
               }}>
-                <div style={{width:20,height:10,borderRadius:2,background:C.faint,flexShrink:0,marginTop:4}}/>
-                <div style={{flex:1}}>
-                  <div style={{width:"65%",height:12,borderRadius:2,background:C.faint,marginBottom:6}}/>
-                  <div style={{width:"40%",height:10,borderRadius:2,background:C.faint}}/>
-                </div>
+                <div style={{width:"15%",height:9,borderRadius:2,background:C.faint,marginBottom:12}}/>
+                <div style={{width:"75%",height:16,borderRadius:2,background:C.faint,marginBottom:8}}/>
+                <div style={{width:"55%",height:12,borderRadius:2,background:C.faint}}/>
               </div>
             ))
           ) : briefing?.items?.map((item,i)=>{
@@ -65,46 +65,53 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
             return (
               <div key={i} onClick={()=>onItemClick&&onItemClick(item)}
                 style={{
-                  padding:fullPage?"18px 32px":"13px 20px",
-                  borderBottom:"none",
-                  display:"flex", gap:14, alignItems:"flex-start",
-                  cursor:"pointer", transition:"background .1s",
+                  padding:fullPage?"28px 32px":"18px 24px",
+                  borderBottom:isLast?"none":`1px solid ${C.border}`,
+                  cursor:"pointer",
+                  transition:"background .12s",
                 }}
                 onMouseEnter={e=>e.currentTarget.style.background=C.hover}
                 onMouseLeave={e=>e.currentTarget.style.background="transparent"}
               >
-                {/* Number */}
-                <span style={{
-                  fontSize:FS.xs, color:C.muted,
-                  fontFamily:FF.mono, flexShrink:0,
-                  width:20, textAlign:"right", marginTop:2,
-                }}>{String(i+1).padStart(2,"0")}</span>
-
-                {/* Content */}
-                <div style={{flex:1,minWidth:0}}>
-                  <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:5}}>
-                    <span style={{
-                      fontSize:"0.65rem",fontWeight:600,letterSpacing:"0.08em",
-                      padding:"1px 5px",borderRadius:2,
-                      background:m.a,color:m.t,
-                      flexShrink:0,fontFamily:FF.mono,whiteSpace:"nowrap",
-                    }}>{m.label}</span>
-                    <span style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.mono}}>{item.src}</span>
-                  </div>
-                  <div style={{
-                    fontSize:fullPage?FS.base:FS.sm,
-                    fontWeight:600, color:C.text,
-                    lineHeight:1.45, letterSpacing:"-0.015em",
-                    fontFamily:FF.sans, marginBottom:item.why?4:0,
-                  }}>{item.title}</div>
-                  {item.why&&(
-                    <div style={{
-                      fontSize:FS.xs,color:C.muted,
-                      fontStyle:"italic",lineHeight:1.5,
-                      fontFamily:FF.sans,
-                    }}>{item.why}</div>
+                {/* Type + source meta — top */}
+                <div style={{
+                  display:"flex", alignItems:"center", gap:8,
+                  marginBottom:10, fontFamily:FF.mono,
+                }}>
+                  <span style={{
+                    fontSize:"0.62rem", fontWeight:500,
+                    color:m.t, padding:"2px 7px",
+                    borderRadius:3, background:m.a,
+                    letterSpacing:"0.06em",
+                  }}>{m.label}</span>
+                  <span style={{fontSize:"0.65rem",color:C.muted}}>
+                    {item.src}
+                  </span>
+                  {item.timeLabel && (
+                    <span style={{fontSize:"0.65rem",color:C.faint}}>· {item.timeLabel}</span>
                   )}
                 </div>
+
+                {/* Title — big and clear */}
+                <div style={{
+                  fontSize:fullPage?FS.md:FS.base,
+                  fontWeight:600,
+                  color:C.text,
+                  lineHeight:1.45,
+                  letterSpacing:"-0.02em",
+                  fontFamily:FF.sans,
+                  marginBottom:item.why?10:0,
+                }}>{item.title}</div>
+
+                {/* Why this matters */}
+                {item.why && (
+                  <div style={{
+                    fontSize:FS.sm,
+                    color:C.muted,
+                    lineHeight:1.6,
+                    fontFamily:FF.sans,
+                  }}>{item.why}</div>
+                )}
               </div>
             );
           })}

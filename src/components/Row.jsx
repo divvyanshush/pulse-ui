@@ -10,80 +10,93 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       onMouseEnter={e=>{ if(!selected) e.currentTarget.style.background=C.hover; }}
       onMouseLeave={e=>{ e.currentTarget.style.background=selected?C.hover:"transparent"; }}
       style={{
-        padding:"16px 20px",
+        padding:"18px 24px",
         background:selected?C.hover:"transparent",
         animation:"rowIn .15s ease forwards",
         animationDelay:`${Math.min(i*.01,.2)}s`,
         opacity:0,
-        filter:isRead?(isDark?"brightness(0.4)":"opacity(0.4)"):"none",
+        filter:isRead?(isDark?"brightness(0.35)":"opacity(0.4)"):"none",
         transition:"background .1s",
         cursor:"pointer",
-        position:"relative",
+        borderBottom:`1px solid ${C.border}`,
       }}>
 
-      {/* Title + bookmark */}
-      <div style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:4}}>
+      {/* Meta row — top */}
+      <div style={{
+        display:"flex", alignItems:"center", gap:6,
+        marginBottom:8, fontFamily:FF.mono,
+      }}>
         <span style={{
-          flex:1, fontSize:FS.base, fontWeight:600,
-          lineHeight:1.4, color:C.text,
-          letterSpacing:"-0.02em", fontFamily:FF.sans,
-          wordBreak:"break-word",
-        }}>{item.title}</span>
+          fontSize:"0.62rem", fontWeight:500,
+          color:m.t, padding:"2px 7px",
+          borderRadius:3, background:m.a,
+          letterSpacing:"0.06em", flexShrink:0,
+        }}>{m.label}</span>
+
+        <span style={{fontSize:"0.65rem",color:C.muted,flexShrink:0}}>
+          {item.srcLabel||item.src}
+        </span>
+
+        <span style={{fontSize:"0.65rem",color:C.faint}}>·</span>
+        <span style={{fontSize:"0.65rem",color:C.faint,flexShrink:0}}>{item.timeLabel}</span>
+
+        {item.score>0&&<>
+          <span style={{fontSize:"0.65rem",color:C.faint}}>·</span>
+          <span style={{fontSize:"0.65rem",color:C.faint}}>↑{item.score}</span>
+        </>}
+
+        {/* Bookmark — right aligned */}
         <button onClick={e=>onBookmark(item,e)}
           style={{
-            background:"none",border:"none",padding:"2px 4px",
-            cursor:"pointer",flexShrink:0,marginTop:1,
+            marginLeft:"auto",
+            background:"none", border:"none", padding:"2px 4px",
+            cursor:"pointer", flexShrink:0,
             color:isBookmarked?C.accent:C.muted,
-            opacity:isBookmarked?1:0.35,
-            transition:"opacity .15s,color .15s",
+            opacity:isBookmarked?1:0.4,
+            transition:"opacity .15s, color .15s",
           }}
           onMouseEnter={e=>e.currentTarget.style.opacity=1}
-          onMouseLeave={e=>{ if(!isBookmarked) e.currentTarget.style.opacity=0.35; }}
+          onMouseLeave={e=>{ if(!isBookmarked) e.currentTarget.style.opacity=0.4; }}
         >
           <BmSvg filled={isBookmarked} size={13} color="currentColor"/>
         </button>
       </div>
 
+      {/* Title */}
+      <div style={{
+        fontSize:FS.base,
+        fontWeight:600,
+        color:C.text,
+        lineHeight:1.45,
+        letterSpacing:"-0.02em",
+        fontFamily:FF.sans,
+        marginBottom:item.sum?7:0,
+        wordBreak:"break-word",
+      }}>{item.title}</div>
+
       {/* Summary */}
       {item.sum && (
         <div style={{
-          fontSize:FS.sm, color:C.muted, lineHeight:1.6,
-          marginBottom:7, fontFamily:FF.sans,
-          display:"-webkit-box", WebkitLineClamp:2,
-          WebkitBoxOrient:"vertical", overflow:"hidden",
+          fontSize:FS.sm,
+          color:C.muted,
+          lineHeight:1.65,
+          fontFamily:FF.sans,
+          display:"-webkit-box",
+          WebkitLineClamp:2,
+          WebkitBoxOrient:"vertical",
+          overflow:"hidden",
         }}>{item.sum}</div>
       )}
 
       {/* Authors */}
       {item.type==="research" && item.authors && (
         <div style={{
-          fontSize:FS.xs, color:C.muted, marginBottom:6,
-          overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap",
-          fontStyle:"italic", fontFamily:FF.sans,
+          fontSize:FS.xs, color:C.muted, marginTop:5,
+          overflow:"hidden", textOverflow:"ellipsis",
+          whiteSpace:"nowrap", fontStyle:"italic",
+          fontFamily:FF.sans,
         }}>{item.authors}</div>
       )}
-
-      {/* Meta */}
-      <div style={{display:"flex",alignItems:"center",gap:5,fontFamily:FF.mono}}>
-        <span style={{
-          fontSize:"0.62rem", fontWeight:500, letterSpacing:"0.05em",
-          padding:"1px 6px", borderRadius:3,
-          background:m.a, color:m.t, flexShrink:0,
-        }}>{m.label}</span>
-        <span style={{color:C.faint,fontSize:FS.xs}}>·</span>
-        <div style={{display:"flex",alignItems:"center",gap:3,flexShrink:0}}>
-          <div style={{width:4,height:4,borderRadius:"50%",background:srcColor}}/>
-          <span style={{fontSize:FS.xs,color:C.muted}}>{item.srcLabel||item.src}</span>
-        </div>
-        <span style={{color:C.faint,fontSize:FS.xs}}>·</span>
-        <span style={{fontSize:FS.xs,color:C.muted,flexShrink:0}}>{item.timeLabel}</span>
-        {item.score>0&&<>
-          <span style={{color:C.faint,fontSize:FS.xs}}>·</span>
-          <span style={{fontSize:FS.xs,color:C.muted}}>↑{item.score}</span>
-        </>}
-      </div>
-
-
     </div>
   );
 }
