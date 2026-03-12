@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { API, FS, FF, getTM } from "../constants/theme.js";
 
-export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
+export function Briefing({ C, isDark, onItemClick, fullPage=false, maxItems=10 }) {
   const [briefing, setBriefing] = useState(null);
   const [loading,  setLoading]  = useState(true);
   const TML = getTM(isDark);
@@ -38,7 +38,7 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
 
   return (
     <div>
-      {briefing.items.map((item,i)=>{
+      {briefing.items.slice(0,maxItems).map((item,i)=>{
         const m=TML[item.type]||TML.product;
         const isLast=i===briefing.items.length-1;
         return (

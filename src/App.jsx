@@ -6,11 +6,11 @@ import { Detail } from "./components/Detail.jsx";
 import { useBookmarks } from "./hooks/useBookmarks.js";
 import { usePreferences } from "./hooks/usePreferences.js";
 import { TopBar } from "./components/TopBar.jsx";
-import { TodayPage } from "./components/TodayPage.jsx";
+
 import { FeedPage } from "./components/FeedPage.jsx";
 import { TrendingPage } from "./components/TrendingPage.jsx";
 import { SavedPage } from "./components/SavedPage.jsx";
-import { DigestPage } from "./components/DigestPage.jsx";
+import { BriefPage } from "./components/BriefPage.jsx";
 
 function Toast({toasts}){
   return(
@@ -35,7 +35,7 @@ function getSession(k,d){ try{ const v=sessionStorage.getItem(k); return v===nul
 
 export default function App() {
   const [isDark,    setIsDark]   = useState(()=>getStored("pulse-dark","true")==="true");
-  const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","today"));
+  const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const [items,     setItems]    = useState([]);
   const [loading,   setLoading]  = useState(true);
   const [detail,    setDetail]   = useState(null);
@@ -157,8 +157,8 @@ export default function App() {
 
         {/* Page */}
         <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", minWidth:0}}>
-          {page==="today"    && <TodayPage    {...shared}/>}
-          {page==="digest"   && <DigestPage {...shared} />}
+          
+          {page==="brief"    && <BriefPage  {...shared} />}
           {page==="feed"     && <FeedPage     {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>}
           {page==="trending" && <TrendingPage {...shared}/>}
           {page==="saved"    && <SavedPage    {...shared}/>}

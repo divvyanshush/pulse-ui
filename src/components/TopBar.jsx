@@ -1,10 +1,9 @@
 import { FF } from "../constants/theme.js";
 
 const TABS = [
-  { id:"today",    label:"today"    },
-  { id:"digest",   label:"digest"   },
-  { id:"feed",     label:"feed"     },
-  { id:"saved",    label:"saved"    },
+  { id:"brief",  label:"brief"  },
+  { id:"feed",   label:"feed"   },
+  { id:"saved",  label:"saved"  },
 ];
 
 export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, toggleDark, onSignOut, isMobile }) {
