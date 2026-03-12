@@ -25,7 +25,7 @@ export const FF = {
 export const DARK = {
   text:"#e8e8e8", sub:"#888888", muted:"#555555", faint:"#2e2e2e",
   bg:"#0a0a0a", surface:"#111111", hover:"#161616", border:"#1e1e1e",
-  accent:"#adfa1d", accentDim:"rgba(173,250,29,0.08)", accentBorder:"rgba(173,250,29,0.2)",
+  accent:"#ffffff", accentDim:"rgba(255,255,255,0.05)", accentBorder:"rgba(255,255,255,0.15)",
   light:false,
 };
 
@@ -37,7 +37,7 @@ export const LIGHT = {
 };
 
 export const TM_DARK = {
-  model:    {label:"MODELS",    a:"rgba(173,250,29,0.08)",  b:"rgba(173,250,29,0.15)",  t:"#adfa1d"},
+  model:    {label:"MODELS",    a:"rgba(255,255,255,0.05)",  b:"rgba(173,250,29,0.15)",  t:"#ffffff"},
   research: {label:"RESEARCH", a:"rgba(96,165,250,0.08)",  b:"rgba(96,165,250,0.15)",  t:"#60a5fa"},
   drama:    {label:"DRAMA",    a:"rgba(248,113,113,0.08)", b:"rgba(248,113,113,0.15)", t:"#f87171"},
   funding:  {label:"FUNDING",  a:"rgba(250,204,21,0.08)",  b:"rgba(250,204,21,0.15)",  t:"#facc15"},
