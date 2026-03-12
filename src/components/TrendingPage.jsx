@@ -60,9 +60,6 @@ export function TrendingPage({ C, isDark, items, onItemClick, isMobile }) {
               onMouseLeave={e=>e.currentTarget.style.background="transparent"}
             >
               <div style={{display:"flex",alignItems:"center",gap:6,fontFamily:FF.mono,fontSize:"0.68rem"}}>
-                <span style={{color:C.faint,width:20,flexShrink:0,textAlign:"right"}}>
-                  {String(i+1).padStart(2,"0")}
-                </span>
                 <span style={{color:m.t,fontWeight:600,letterSpacing:"0.08em"}}>{m.label}</span>
                 <span style={{color:C.faint}}>·</span>
                 <span style={{color:C.muted}}>{item.src}</span>
@@ -71,7 +68,6 @@ export function TrendingPage({ C, isDark, items, onItemClick, isMobile }) {
               </div>
               <div style={{fontSize:FS.base,fontWeight:500,color:C.text,
                 lineHeight:1.4,letterSpacing:"-0.01em",fontFamily:FF.sans,
-                paddingLeft:26,
               }}>{item.title}</div>
               {item.sum&&(
                 <div style={{fontSize:"0.78rem",color:C.muted,lineHeight:1.55,

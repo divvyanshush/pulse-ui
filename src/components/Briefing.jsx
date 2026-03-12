@@ -14,13 +14,17 @@ export function Briefing({ C, isDark, onItemClick, fullPage=false }) {
   },[]);
 
   if(loading) return (
-    <div>
+    <div style={{"--sk-base":isDark?"#1a1a1a":"#efefef","--sk-highlight":isDark?"#252525":"#e0e0e0"}}>
       {[1,2,3,4,5].map(n=>(
-        <div key={n} style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`}}>
-          <div style={{width:"10%",height:7,background:C.faint,marginBottom:8,borderRadius:1}}/>
-          <div style={{width:"70%",height:13,background:C.faint,marginBottom:6,borderRadius:1}}/>
-          <div style={{width:"90%",height:9,background:C.faint,marginBottom:4,borderRadius:1}}/>
-          <div style={{width:"60%",height:9,background:C.faint,borderRadius:1}}/>
+        <div key={n} style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,display:"flex",flexDirection:"column",gap:7}}>
+          <div style={{display:"flex",gap:6,alignItems:"center"}}>
+            <div className="sk" style={{width:46,height:7}}/>
+            <div className="sk" style={{width:60,height:7}}/>
+            <div className="sk" style={{width:28,height:7}}/>
+          </div>
+          <div className="sk" style={{width:`${65+n*5}%`,height:14}}/>
+          <div className="sk" style={{width:`${50+n*7}%`,height:9}}/>
+          <div className="sk" style={{width:`${35+n*4}%`,height:9}}/>
         </div>
       ))}
     </div>
