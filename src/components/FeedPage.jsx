@@ -12,7 +12,11 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   const TML = getTM(isDark);
 
   // Filter + sort
+  const now = Math.floor(Date.now()/1000);
+  const TIME_WINDOWS = { today: 86400, week: 604800, all: Infinity };
   const visible = items.filter(item=>{
+    const age = now - (item.time||0);
+    if(timeFilter !== "all" && age > TIME_WINDOWS[timeFilter]) return false;
     if(filter==="bookmarks") return bookmarks[item.id];
     if(srcFilter && item.src!==srcFilter) return false;
     const normType = item.type==="product"?"tool":(item.src==="GitHub"?"repo":(item.src==="HN"||item.src==="Lobste.rs"?"discuss":item.type));
@@ -77,6 +81,26 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
                 onMouseLeave={e=>{ if(!on) e.currentTarget.style.color=C.muted; }}
               >
                 {f.toUpperCase()}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Time filter */}
+        <div style={{display:"flex",alignItems:"center",gap:2,marginLeft:"auto",flexShrink:0}}>
+          {["today","week","all"].map(t=>{
+            const on = timeFilter===t;
+            return (
+              <button key={t} onClick={()=>setTimeFilter(t)}
+                style={{
+                  padding:"4px 8px",background:"none",
+                  border:`1px solid ${on?C.text:C.border}`,
+                  color:on?C.text:C.muted,
+                  fontSize:"0.62rem",fontFamily:FF.mono,
+                  letterSpacing:"0.06em",cursor:"pointer",
+                  borderRadius:2,transition:"all .1s",
+                }}>
+                {t}
               </button>
             );
           })}
