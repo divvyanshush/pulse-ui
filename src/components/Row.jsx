@@ -89,6 +89,20 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
           overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",
         }}>by {item.authors}</div>
       )}
+
+      {item.relatedCount > 0 && (
+        <div style={{
+          fontSize:"0.62rem", color:C.faint,
+          fontFamily:FF.mono, letterSpacing:"0.04em",
+          display:"flex", alignItems:"center", gap:6,
+        }}>
+          <span style={{color:C.muted}}>+{item.relatedCount} more covering this</span>
+          <span style={{color:C.faint}}>·</span>
+          {(item.related||[]).slice(0,2).map(r=>(
+            <span key={r.id} style={{color:C.faint}}>{r.src}</span>
+          )).reduce((a,b)=>[a, <span key="sep" style={{color:C.faint}}> · </span>, b])}
+        </div>
+      )}
     </div>
   );
 }
