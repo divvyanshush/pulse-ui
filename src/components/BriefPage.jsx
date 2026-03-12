@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Briefing } from "./Briefing.jsx";
 import { API, FF, FS, getTM } from "../constants/theme.js";
 import { Row } from "./Row.jsx";
 
