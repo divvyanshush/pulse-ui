@@ -168,7 +168,7 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
           </span>
           <span style={{fontSize:"0.62rem",color:C.faint,fontFamily:FF.mono}}>top 5 from today</span>
         </div>
-        <Briefing C={C} isDark={isDark} onItemClick={onItemClick} fullPage={false} maxItems={5}/>
+
       </div>
 
       {/* Content */}
