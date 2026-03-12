@@ -10,70 +10,97 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
   return (
     <div style={{ borderBottom: `1px solid ${C.border}` }}>
 
-      {/* Section header */}
-      <div
-        onClick={() => setOpen(o => !o)}
-        style={{
-          padding: "16px 16px 14px",
-          cursor: "pointer",
-          transition: "background .08s",
-          userSelect: "none",
-        }}
-        onMouseEnter={e => e.currentTarget.style.background = C.hover}
-        onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-      >
-        {/* Top row — label + count + toggle */}
+      {/* Header — always visible */}
+      <div style={{ padding: "18px 16px 16px" }}>
+
+        {/* Label row */}
         <div style={{
-          display: "flex", alignItems: "center", gap: 8,
-          marginBottom: cat.summary ? 10 : 0,
+          display: "flex", alignItems: "center", gap: 8, marginBottom: 10,
         }}>
           <span style={{
-            fontSize: "0.62rem", fontWeight: 600,
-            color: m.t, letterSpacing: "0.1em",
+            fontSize: "0.62rem", fontWeight: 700,
+            color: m.t, letterSpacing: "0.12em",
             fontFamily: FF.mono,
           }}>{cat.label.toUpperCase()}</span>
           <span style={{
-            fontSize: "0.65rem", color: C.muted,
+            fontSize: "0.62rem", color: C.faint,
             fontFamily: FF.mono,
-          }}>{cat.count} items</span>
-          <span style={{
-            marginLeft: "auto",
-            fontSize: "0.65rem", color: C.muted,
-            fontFamily: FF.mono,
-          }}>{open ? "↑ collapse" : "↓ expand"}</span>
+          }}>· {cat.count}</span>
         </div>
 
-        {/* AI digest summary */}
+        {/* AI summary */}
         {cat.summary && (
           <div style={{
-            fontSize: "0.82rem",
+            fontSize: FS.sm,
             color: C.text,
-            lineHeight: 1.6,
+            lineHeight: 1.65,
             fontFamily: FF.sans,
-            fontWeight: 400,
             borderLeft: `2px solid ${m.t}`,
             paddingLeft: 10,
-            opacity: 0.9,
+            marginBottom: 12,
+            opacity: 0.88,
           }}>{cat.summary}</div>
         )}
 
-        {/* Top 3 titles preview when collapsed */}
-        {!open && cat.items.slice(0, 3).map((item, i) => (
-          <div key={item.id} style={{
-            fontSize: "0.72rem", color: C.muted,
-            fontFamily: FF.mono, marginTop: i === 0 ? 10 : 4,
-            overflow: "hidden", textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}>
-            <span style={{ color: C.faint, marginRight: 6 }}>—</span>
-            {item.title}
+        {/* Preview titles — collapsed */}
+        {!open && (
+          <div style={{ marginBottom: 10 }}>
+            {cat.items.slice(0, 3).map((item, i) => (
+              <div key={item.id}
+                onClick={(e) => { e.stopPropagation(); onItemClick(item); }}
+                style={{
+                  fontSize: "0.72rem", color: C.muted,
+                  fontFamily: FF.mono,
+                  marginTop: i === 0 ? 0 : 5,
+                  overflow: "hidden", textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  cursor: "pointer",
+                  padding: "2px 0",
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = C.text}
+                onMouseLeave={e => e.currentTarget.style.color = C.muted}
+              >
+                <span style={{ color: C.faint, marginRight: 8, fontFamily: FF.mono }}>›</span>
+                {item.title}
+              </div>
+            ))}
+            {cat.count > 3 && (
+              <div style={{
+                fontSize: "0.65rem", color: C.faint,
+                fontFamily: FF.mono, marginTop: 6,
+              }}>+{cat.count - 3} more</div>
+            )}
           </div>
-        ))}
+        )}
+
+        {/* Toggle button */}
+        <button
+          onClick={() => setOpen(o => !o)}
+          style={{
+            background: "none",
+            border: `1px solid ${C.border}`,
+            padding: "3px 10px",
+            cursor: "pointer",
+            color: C.muted,
+            fontSize: "0.65rem",
+            fontFamily: FF.mono,
+            letterSpacing: "0.06em",
+            borderRadius: 2,
+            transition: "all .1s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = C.sub; e.currentTarget.style.color = C.text; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.muted; }}
+        >
+          {open ? "↑ collapse" : `↓ show all ${cat.count}`}
+        </button>
       </div>
 
-      {/* Expanded items */}
+      {/* Expanded items — visually separated */}
       {open && (
-        <div>
+        <div style={{
+          borderTop: `1px solid ${C.border}`,
+          background: isDark ? "rgba(255,255,255,0.01)" : "rgba(0,0,0,0.01)",
+        }}>
           {cat.items.map((item, i) => (
             <Row
               key={item.id} item={item} i={i}
@@ -85,16 +112,31 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
               isRead={readIds.has(item.id)}
             />
           ))}
+          {/* Collapse button at bottom */}
+          <div style={{ padding: "10px 16px", borderTop: `1px solid ${C.border}` }}>
+            <button
+              onClick={() => setOpen(false)}
+              style={{
+                background: "none", border: `1px solid ${C.border}`,
+                padding: "3px 10px", cursor: "pointer",
+                color: C.muted, fontSize: "0.65rem",
+                fontFamily: FF.mono, letterSpacing: "0.06em",
+                borderRadius: 2, transition: "all .1s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = C.sub; e.currentTarget.style.color = C.text; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.muted; }}
+            >↑ collapse</button>
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-export function DigestPage({ C, isDark, onItemClick, onBookmark, bookmarks, readIds, detail, isMobile }) {
-  const [digest, setDigest] = useState(null);
+export function DigestPage({ C, isDark, onItemClick, onBookmark, bookmarks, readIds, detail }) {
+  const [digest,  setDigest]  = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error,   setError]   = useState(null);
 
   useEffect(() => {
     fetch(`${API}/digest`)
@@ -104,46 +146,44 @@ export function DigestPage({ C, isDark, onItemClick, onBookmark, bookmarks, read
   }, []);
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", background: C.bg, overflow: "hidden", minWidth: 0 }}>
+    <div style={{ flex:1, display:"flex", flexDirection:"column", background:C.bg, overflow:"hidden", minWidth:0 }}>
 
       {/* Header */}
-      <div style={{ padding: "16px 16px 14px", borderBottom: `1px solid ${C.border}`, flexShrink: 0 }}>
-        <div style={{ fontSize: "0.65rem", color: C.muted, fontFamily: FF.mono, letterSpacing: "0.1em", marginBottom: 4 }}>
+      <div style={{ padding:"16px 16px 14px", borderBottom:`1px solid ${C.border}`, flexShrink:0 }}>
+        <div style={{ fontSize:"0.65rem", color:C.muted, fontFamily:FF.mono, letterSpacing:"0.1em", marginBottom:4 }}>
           // digest
         </div>
-        <div style={{ fontSize: "0.75rem", color: C.muted, fontFamily: FF.mono }}>
-          what's happening across ai today — by category
+        <div style={{ fontSize:"0.72rem", color:C.muted, fontFamily:FF.mono }}>
+          what's happening in ai today — by category
         </div>
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, overflowY: "auto" }}>
+      <div style={{ flex:1, overflowY:"auto" }}>
         {loading && (
-          <div style={{
-            "--sk-base": isDark ? "#1a1a1a" : "#efefef",
-            "--sk-highlight": isDark ? "#252525" : "#e0e0e0",
-          }}>
-            {[1, 2, 3, 4].map(n => (
-              <div key={n} style={{ padding: "16px 16px", borderBottom: `1px solid ${C.border}` }}>
-                <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-                  <div className="sk" style={{ width: 60, height: 8 }} />
-                  <div className="sk" style={{ width: 40, height: 8 }} />
+          <div style={{"--sk-base":isDark?"#1a1a1a":"#efefef","--sk-highlight":isDark?"#252525":"#e0e0e0"}}>
+            {[1,2,3,4].map(n=>(
+              <div key={n} style={{padding:"18px 16px",borderBottom:`1px solid ${C.border}`}}>
+                <div style={{display:"flex",gap:8,marginBottom:12}}>
+                  <div className="sk" style={{width:80,height:8}}/>
+                  <div className="sk" style={{width:30,height:8}}/>
                 </div>
-                <div className="sk" style={{ width: "90%", height: 11, marginBottom: 6 }} />
-                <div className="sk" style={{ width: "70%", height: 11, marginBottom: 6 }} />
-                <div className="sk" style={{ width: "50%", height: 11 }} />
+                <div className="sk" style={{width:"92%",height:10,marginBottom:6}}/>
+                <div className="sk" style={{width:"75%",height:10,marginBottom:6}}/>
+                <div className="sk" style={{width:"55%",height:10,marginBottom:14}}/>
+                <div className="sk" style={{width:80,height:22,borderRadius:2}}/>
               </div>
             ))}
           </div>
         )}
 
         {error && (
-          <div style={{ padding: "32px 16px", color: C.muted, fontSize: "0.75rem", fontFamily: FF.mono }}>
-            failed to load digest — {error}
+          <div style={{padding:"32px 16px",color:C.muted,fontSize:"0.75rem",fontFamily:FF.mono}}>
+            failed to load — {error}
           </div>
         )}
 
-        {!loading && digest?.categories?.map(cat => (
+        {!loading && !error && digest?.categories?.map(cat => (
           <DigestSection
             key={cat.id} cat={cat}
             C={C} isDark={isDark}
