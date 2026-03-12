@@ -43,7 +43,7 @@ export const TM_DARK = {
   funding:  {label:"FUNDING",  a:"rgba(250,204,21,0.08)",  b:"rgba(250,204,21,0.15)",  t:"#facc15"},
   product:  {label:"TOOL",     a:"rgba(167,139,250,0.08)", b:"rgba(167,139,250,0.15)", t:"#a78bfa"},
   policy:   {label:"POLICY",   a:"rgba(251,146,60,0.08)",  b:"rgba(251,146,60,0.15)",  t:"#fb923c"},
-  repos:    {label:"REPOS",    a:"rgba(155,114,232,0.08)",  b:"rgba(155,114,232,0.15)",  t:"#9b72e8"},
+  repo:     {label:"REPO",     a:"rgba(155,114,232,0.08)",  b:"rgba(155,114,232,0.15)",  t:"#9b72e8"},
 };
 
 export const TM_LIGHT = {
@@ -53,7 +53,7 @@ export const TM_LIGHT = {
   funding:  {label:"FUNDING",  a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#854d0e"},
   product:  {label:"TOOL",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
   policy:   {label:"POLICY",   a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#9a3412"},
-  repos:    {label:"REPOS",    a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
+  repo:     {label:"REPO",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
 };
 
 export const getTM = (isDark) => isDark ? TM_DARK : TM_LIGHT;
@@ -67,4 +67,4 @@ export const SRC_COLORS = {
   GoogleResearch:"#4285f4", MetaAI:"#0668E1", TDS:"#1a8c6b", MarkTechPost:"#7b2ff7",
 };
 
-export const FILTERS = ["all","model","research","tool","drama","funding","policy","repos"];
+export const FILTERS = ["all","model","research","tool","repo","drama","funding","policy"];
