@@ -37,9 +37,8 @@ export const LIGHT = {
 };
 
 export const TM_DARK = {
-  model:    {label:"MODELS",    a:"rgba(255,255,255,0.05)",  b:"rgba(255,255,255,0.08)",  t:"#ffffff"},
+  model:    {label:"MODELS",    a:"rgba(34,211,238,0.08)",   b:"rgba(34,211,238,0.15)",   t:"#22d3ee"},
   research: {label:"RESEARCH", a:"rgba(96,165,250,0.08)",  b:"rgba(96,165,250,0.15)",  t:"#60a5fa"},
-  drama:    {label:"DRAMA",    a:"rgba(248,113,113,0.08)", b:"rgba(248,113,113,0.15)", t:"#f87171"},
   funding:  {label:"FUNDING",  a:"rgba(250,204,21,0.08)",  b:"rgba(250,204,21,0.15)",  t:"#facc15"},
   product:  {label:"TOOLS",     a:"rgba(167,139,250,0.08)", b:"rgba(167,139,250,0.15)", t:"#a78bfa"},
   policy:   {label:"POLICY",   a:"rgba(251,146,60,0.08)",  b:"rgba(251,146,60,0.15)",  t:"#fb923c"},
@@ -50,7 +49,6 @@ export const TM_DARK = {
 export const TM_LIGHT = {
   model:    {label:"MODELS",    a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#166534"},
   research: {label:"RESEARCH", a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#1e40af"},
-  drama:    {label:"DRAMA",    a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#991b1b"},
   funding:  {label:"FUNDING",  a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#854d0e"},
   product:  {label:"TOOLS",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
   policy:   {label:"POLICY",   a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#9a3412"},
