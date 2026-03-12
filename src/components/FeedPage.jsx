@@ -124,7 +124,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         </div>
 
         {loading && displayed.length===0 && (
-          [1,2,3,4,5].map(n=><SkeletonRow key={n} C={C}/>)
+          [1,2,3,4,5].map(n=><SkeletonRow key={n} C={C} isDark={isDark}/>)
         )}
 
         {displayed.map((item,i)=>(
@@ -140,7 +140,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         {/* Infinite scroll loader */}
         {displayCount < sorted.length && (
           <div ref={loaderRef} style={{padding:"20px",textAlign:"center"}}>
-            {[1,2,3].map(n=><SkeletonRow key={n} C={C}/>)}
+            {[1,2,3].map(n=><SkeletonRow key={n} C={C} isDark={isDark}/>)}
           </div>
         )}
 
