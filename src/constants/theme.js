@@ -37,23 +37,25 @@ export const LIGHT = {
 };
 
 export const TM_DARK = {
-  model:    {label:"MODEL",    a:"rgba(173,250,29,0.08)",  b:"rgba(173,250,29,0.15)",  t:"#adfa1d"},
+  model:    {label:"MODELS",    a:"rgba(173,250,29,0.08)",  b:"rgba(173,250,29,0.15)",  t:"#adfa1d"},
   research: {label:"RESEARCH", a:"rgba(96,165,250,0.08)",  b:"rgba(96,165,250,0.15)",  t:"#60a5fa"},
   drama:    {label:"DRAMA",    a:"rgba(248,113,113,0.08)", b:"rgba(248,113,113,0.15)", t:"#f87171"},
   funding:  {label:"FUNDING",  a:"rgba(250,204,21,0.08)",  b:"rgba(250,204,21,0.15)",  t:"#facc15"},
-  product:  {label:"TOOL",     a:"rgba(167,139,250,0.08)", b:"rgba(167,139,250,0.15)", t:"#a78bfa"},
+  product:  {label:"TOOLS",     a:"rgba(167,139,250,0.08)", b:"rgba(167,139,250,0.15)", t:"#a78bfa"},
   policy:   {label:"POLICY",   a:"rgba(251,146,60,0.08)",  b:"rgba(251,146,60,0.15)",  t:"#fb923c"},
   repo:     {label:"REPO",     a:"rgba(155,114,232,0.08)",  b:"rgba(155,114,232,0.15)",  t:"#9b72e8"},
+  discuss:  {label:"DISCUSS",  a:"rgba(100,116,139,0.08)",  b:"rgba(100,116,139,0.15)",  t:"#94a3b8"},
 };
 
 export const TM_LIGHT = {
-  model:    {label:"MODEL",    a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#166534"},
+  model:    {label:"MODELS",    a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#166534"},
   research: {label:"RESEARCH", a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#1e40af"},
   drama:    {label:"DRAMA",    a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#991b1b"},
   funding:  {label:"FUNDING",  a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#854d0e"},
-  product:  {label:"TOOL",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
+  product:  {label:"TOOLS",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
   policy:   {label:"POLICY",   a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#9a3412"},
   repo:     {label:"REPO",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
+  discuss:  {label:"DISCUSS",  a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#475569"},
 };
 
 export const getTM = (isDark) => isDark ? TM_DARK : TM_LIGHT;
@@ -67,4 +69,4 @@ export const SRC_COLORS = {
   GoogleResearch:"#4285f4", MetaAI:"#0668E1", TDS:"#1a8c6b", MarkTechPost:"#7b2ff7",
 };
 
-export const FILTERS = ["all","model","research","tool","repo","drama","funding","policy"];
+export const FILTERS = ["all","model","research","tool","repo","discuss"];
