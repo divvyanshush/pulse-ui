@@ -8,6 +8,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   savePreferences, detail, readIds, user, isMobile, onMenu }) {
 
   const [displayCount, setDisplayCount] = useState(30);
+  const [timeFilter, setTimeFilter] = useState("all");
   const loaderRef = useRef(null);
   const TML = getTM(isDark);
 
