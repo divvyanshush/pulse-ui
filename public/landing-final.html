@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pulse — AI signals for developers</title>
-  <meta name="description" content="Research papers, trending repos, model releases and industry news. Aggregated from 15+ sources, ranked by signal."/>
-  <meta property="og:title" content="Pulse — AI signals for developers"/>
-  <meta property="og:description" content="Research, repos, tools and news from 15+ sources. Curated in real time."/>
+  <title>Pulse — AI signal feed for builders</title>
+  <meta name="description" content="The daily brief for AI builders. Top signals from arXiv, HN, GitHub, OpenAI, Anthropic and 20+ sources. Ranked by relevance."/>
+  <meta property="og:title" content="Pulse — AI signal feed for builders"/>
+  <meta property="og:description" content="One daily brief. Every AI signal that matters. Ranked for people who build."/>
   <meta property="og:type" content="website"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:        #030306;
-      --surface:   #06060c;
-      --surface2:  #09090f;
-      --border:    #0f0f24;
-      --border2:   #161630;
-      --text:      #eeeef8;
-      --sub:       #8888b0;
-      --muted:     #44445a;
-      --accent:    #00e5ff;
-      --accent2:   rgba(0,229,255,0.06);
-      --accent3:   rgba(0,229,255,0.18);
-      --mono:      "IBM Plex Mono", monospace;
-      --sans:      "IBM Plex Sans", sans-serif;
+      --bg:       #0a0a0a;
+      --surface:  #111111;
+      --hover:    #161616;
+      --border:   #1e1e1e;
+      --text:     #e8e8e8;
+      --sub:      #888888;
+      --muted:    #555555;
+      --faint:    #2e2e2e;
+      --accent:   #adfa1d;
+      --adim:     rgba(173,250,29,0.07);
+      --aborder:  rgba(173,250,29,0.2);
+      --mono:     'IBM Plex Mono', monospace;
+      --sans:     'IBM Plex Sans', sans-serif;
     }
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; font-size:16px; }
+    html { scroll-behavior:smooth; }
 
     body {
       background: var(--bg);
@@ -41,835 +41,471 @@
 
     a { text-decoration:none; color:inherit; }
 
-    /* ─── GRAIN ─── */
+    /* grain */
     body::after {
       content:""; position:fixed; inset:0; pointer-events:none; z-index:999;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.35;
+      opacity:0.3;
     }
 
-    /* ─── GLOW ─── */
-    .glow {
-      position:absolute; border-radius:50%; pointer-events:none;
-      filter: blur(120px); opacity:0.07;
-    }
-    .glow-1 {
-      width:600px; height:600px;
-      background: var(--accent);
-      top:-200px; left:50%; transform:translateX(-50%);
-    }
-    .glow-2 {
-      width:400px; height:400px;
-      background: var(--accent);
-      top:200px; right:-100px;
-      opacity:0.03;
-    }
-
-    /* ─── NAV ─── */
+    /* ── NAV ── */
     nav {
       position:fixed; top:0; left:0; right:0; z-index:100;
-      height:54px; padding:0 40px;
+      height:44px; padding:0 24px;
       display:flex; align-items:center; justify-content:space-between;
-      background:rgba(3,3,6,0.8);
-      backdrop-filter:blur(20px) saturate(180%);
+      background:rgba(10,10,10,0.9);
+      backdrop-filter:blur(16px);
       border-bottom:1px solid var(--border);
     }
-    .nav-logo {
-      display:flex; align-items:center; gap:9px;
-      font-size:12px; font-weight:700; letter-spacing:0.28em;
-    }
-    .live-dot {
-      width:6px; height:6px; border-radius:50%;
-      background:var(--accent);
-      box-shadow:0 0 0 0 rgba(0,229,255,0.4);
-      animation:pulse-ring 2.5s ease infinite;
-    }
-    @keyframes pulse-ring {
-      0%   { box-shadow:0 0 0 0 rgba(0,229,255,0.4); }
-      70%  { box-shadow:0 0 0 8px rgba(0,229,255,0); }
-      100% { box-shadow:0 0 0 0 rgba(0,229,255,0); }
-    }
-    .nav-center {
-      display:flex; align-items:center; gap:32px;
-    }
-    .nav-center a {
-      font-size:11px; color:var(--muted); letter-spacing:0.1em;
-      transition:color .2s;
-    }
-    .nav-center a:hover { color:var(--sub); }
-    .nav-btn {
-      padding:7px 18px;
-      background:var(--accent); color:#000;
-      font-family:var(--mono); font-size:10px;
-      font-weight:700; letter-spacing:0.14em;
-      border:none; border-radius:3px; cursor:pointer;
-      transition:all .2s;
-    }
-    .nav-btn:hover { opacity:0.85; transform:translateY(-1px); }
 
-    /* ─── HERO ─── */
+    .nav-logo {
+      font-size:0.72rem; font-weight:700;
+      letter-spacing:0.2em; color:var(--text);
+    }
+
+    .nav-cta {
+      font-size:0.62rem; font-weight:600;
+      letter-spacing:0.1em;
+      color:var(--bg); background:var(--accent);
+      padding:5px 14px; border:none; cursor:pointer;
+      transition:opacity .15s;
+    }
+    .nav-cta:hover { opacity:0.85; }
+
+    /* ── HERO ── */
     .hero {
-      min-height:100vh;
-      display:flex; flex-direction:column;
-      align-items:center; justify-content:center;
-      padding:120px 24px 80px;
-      text-align:center;
-      position:relative; overflow:hidden;
+      padding:120px 24px 64px;
+      max-width:640px;
+      margin:0 auto;
     }
 
     .hero-eyebrow {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:5px 14px;
-      border:1px solid var(--border2);
-      border-radius:100px;
-      font-size:10px; letter-spacing:0.16em; color:var(--muted);
-      margin-bottom:36px;
-      animation:fadeUp .7s ease both;
-      background:var(--surface);
-    }
-    .hero-eyebrow span { color:var(--accent); }
-
-    .hero-h1 {
-      font-size:clamp(40px,7vw,88px);
-      font-weight:700; line-height:1.05;
-      letter-spacing:-0.03em;
-      max-width:900px;
-      margin-bottom:28px;
-      animation:fadeUp .7s .1s ease both;
-    }
-    .hero-h1 em {
-      font-style:normal;
-      color:var(--accent);
+      display:flex; align-items:center; gap:8px;
+      font-size:0.6rem; letter-spacing:0.18em;
+      color:var(--muted); margin-bottom:24px;
+      animation: fadeUp .5s ease forwards; opacity:0;
     }
 
-    .hero-p {
+    .live-dot {
+      width:5px; height:5px;
+      background:var(--accent); border-radius:50%;
+      animation:blink 2s infinite;
+      flex-shrink:0;
+    }
+
+    @keyframes blink {
+      0%,100%{opacity:1} 50%{opacity:0.25}
+    }
+
+    .hero-title {
+      font-size:clamp(2rem, 6vw, 3.2rem);
+      font-weight:700;
+      line-height:1.2;
+      letter-spacing:-0.01em;
+      color:var(--text);
       font-family:var(--sans);
-      font-size:clamp(15px,2vw,19px);
-      color:var(--sub); font-weight:300;
-      max-width:500px; line-height:1.75;
-      margin-bottom:44px;
-      animation:fadeUp .7s .2s ease both;
+      margin-bottom:16px;
+      animation: fadeUp .5s .08s ease forwards; opacity:0;
     }
 
-    .hero-cta {
-      display:flex; gap:12px; flex-wrap:wrap;
-      justify-content:center; align-items:center;
-      animation:fadeUp .7s .3s ease both;
-      margin-bottom:72px;
-    }
-    .btn-lg {
-      padding:14px 32px;
-      background:var(--accent); color:#000;
-      font-family:var(--mono); font-size:11px;
-      font-weight:700; letter-spacing:0.14em;
-      border:none; border-radius:3px; cursor:pointer;
-      display:inline-flex; align-items:center; gap:8px;
-      transition:all .2s;
-    }
-    .btn-lg:hover { opacity:0.85; transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,229,255,0.2); }
-    .btn-ghost {
-      padding:14px 32px;
-      background:transparent; color:var(--sub);
-      font-family:var(--mono); font-size:11px;
-      font-weight:500; letter-spacing:0.14em;
-      border:1px solid var(--border2); border-radius:3px;
-      cursor:pointer; transition:all .2s;
-    }
-    .btn-ghost:hover { border-color:var(--muted); color:var(--text); }
-
-    /* ─── STATS BAR ─── */
-    .stats-bar {
-      display:flex; gap:0;
-      border:1px solid var(--border2); border-radius:6px;
-      overflow:hidden; background:var(--surface);
-      animation:fadeUp .7s .4s ease both;
-    }
-    .stat-item {
-      padding:16px 32px; text-align:center;
-      border-right:1px solid var(--border2);
-    }
-    .stat-item:last-child { border-right:none; }
-    .stat-n {
-      font-size:24px; font-weight:700; color:var(--text);
-      line-height:1; display:block; margin-bottom:4px;
-    }
-    .stat-n.accent { color:var(--accent); }
-    .stat-l {
-      font-size:9px; color:var(--muted);
-      letter-spacing:0.14em; display:block;
+    .hero-desc {
+      font-family:var(--sans);
+      font-size:clamp(0.9rem, 2vw, 1.05rem);
+      font-weight:300;
+      color:var(--sub);
+      line-height:1.7;
+      margin-bottom:32px;
+      animation: fadeUp .5s .16s ease forwards; opacity:0;
     }
 
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(20px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    /* ─── FEED PREVIEW ─── */
-    .preview-wrap {
-      padding:100px 24px;
-      max-width:860px; margin:0 auto;
-      position:relative; z-index:1;
-    }
-    .label {
-      font-size:9px; letter-spacing:0.2em; color:var(--muted);
-      margin-bottom:20px; display:flex; align-items:center; gap:12px;
-    }
-    .label::before, .label::after {
-      content:""; flex:1; height:1px; background:var(--border2);
-    }
-
-    .app-frame {
-      border:1px solid var(--border2);
-      border-radius:8px; overflow:hidden;
-      background:var(--surface);
-      box-shadow:0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
-      position:relative;
-    }
-    .app-frame::before {
-      content:"";
-      position:absolute; top:0; left:50%; transform:translateX(-50%);
-      width:300px; height:1px;
-      background:linear-gradient(90deg,transparent,var(--accent),transparent);
-    }
-
-    .app-topbar {
-      height:46px; padding:0 16px;
-      border-bottom:1px solid var(--border2);
-      background:var(--surface2);
+    .hero-actions {
       display:flex; align-items:center; gap:10px;
-    }
-    .tb-dot { width:5px; height:5px; border-radius:50%; background:var(--accent); }
-    .tb-logo { font-size:11px; font-weight:700; letter-spacing:0.22em; }
-    .tb-pill {
-      padding:3px 8px; border-radius:2px;
-      font-size:9px; letter-spacing:0.1em; color:var(--muted);
-      border:1px solid var(--border2); background:transparent;
-    }
-    .tb-pill.active {
-      color:var(--accent);
-      border-color:rgba(0,229,255,0.25);
-      background:rgba(0,229,255,0.06);
-    }
-    .tb-right { margin-left:auto; display:flex; gap:6px; align-items:center; }
-    .tb-icon {
-      width:26px; height:26px; border-radius:3px;
-      background:var(--surface); border:1px solid var(--border2);
-      display:flex; align-items:center; justify-content:center;
+      animation: fadeUp .5s .24s ease forwards; opacity:0;
     }
 
-    .app-body { display:flex; min-height:320px; }
-    .app-sidebar {
-      width:160px; flex-shrink:0;
-      border-right:1px solid var(--border2);
-      padding:12px;
+    .btn-primary {
+      font-family:var(--mono);
+      font-size:0.68rem; font-weight:600;
+      letter-spacing:0.1em;
+      color:var(--bg); background:var(--accent);
+      padding:10px 24px; border:none; cursor:pointer;
+      transition:opacity .15s, transform .1s;
+      display:inline-block;
     }
-    .sidebar-section { margin-bottom:16px; }
-    .sidebar-label {
-      font-size:8px; color:var(--muted); letter-spacing:0.16em;
-      margin-bottom:8px;
-    }
-    .sidebar-item {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:4px 6px; border-radius:3px; margin-bottom:2px;
-      font-size:10px; color:var(--sub);
-    }
-    .sidebar-item.active {
-      background:var(--accent2); color:var(--accent);
-    }
-    .sidebar-dot { width:4px; height:4px; border-radius:50%; margin-right:6px; }
+    .btn-primary:hover { opacity:0.87; transform:translateY(-1px); }
 
-    .app-feed { flex:1; }
-    .feed-row {
-      padding:14px 16px;
-      border-bottom:1px solid var(--border);
-      cursor:pointer; transition:background .15s;
+    .btn-ghost {
+      font-family:var(--mono);
+      font-size:0.68rem; letter-spacing:0.08em;
+      color:var(--muted); background:none;
+      border:1px solid var(--border);
+      padding:10px 24px; cursor:pointer;
+      transition:border-color .15s, color .15s;
+      display:inline-block;
     }
-    .feed-row:hover { background:var(--surface2); }
-    .feed-row:last-child { border-bottom:none; }
-    .row-top { display:flex; gap:8px; margin-bottom:6px; align-items:flex-start; }
-    .row-badge {
-      font-size:8px; font-weight:600; letter-spacing:0.1em;
-      padding:2px 5px; border-radius:2px; flex-shrink:0; margin-top:1px;
-    }
-    .rb-model    { background:rgba(0,229,255,.08);  color:#00e5ff; border:1px solid rgba(0,229,255,.2); }
-    .rb-research { background:rgba(255,255,255,.04); color:#7eb8ff; border:1px solid rgba(255,255,255,.1); }
-    .rb-product  { background:rgba(255,255,255,.04); color:#a78bfa; border:1px solid rgba(255,255,255,.1); }
-    .rb-drama    { background:rgba(255,255,255,.04); color:#fb7185; border:1px solid rgba(255,255,255,.1); }
-    .row-title { font-size:12px; font-weight:600; color:var(--text); line-height:1.4; }
-    .row-sum {
-      font-size:11px; color:var(--sub); line-height:1.55; margin-bottom:7px;
-      font-family:var(--sans); font-weight:300;
-      display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;
-    }
-    .row-meta { display:flex; gap:6px; font-size:9px; color:var(--muted); align-items:center; }
-    .row-src-dot { width:3px; height:3px; border-radius:50%; }
+    .btn-ghost:hover { border-color:var(--sub); color:var(--text); }
 
-    /* ─── FEATURES ─── */
-    .features-wrap {
-      padding:100px 24px;
-      max-width:860px; margin:0 auto;
+    .hero-meta {
+      margin-top:20px;
+      font-size:0.6rem; color:var(--muted);
+      letter-spacing:0.08em;
+      animation: fadeUp .5s .32s ease forwards; opacity:0;
     }
-    .features-grid {
-      display:grid; grid-template-columns:1fr 1fr;
-      gap:1px; background:var(--border2);
-      border:1px solid var(--border2); border-radius:8px;
+    .hero-meta span { color:var(--faint); margin:0 6px; }
+
+    /* ── LIVE BRIEF EMBED ── */
+    .brief-section {
+      max-width:640px;
+      margin:0 auto;
+      padding:0 24px 100px;
+      animation: fadeUp .6s .4s ease forwards; opacity:0;
+    }
+
+    .brief-label {
+      font-size:0.6rem; letter-spacing:0.15em;
+      color:var(--muted); margin-bottom:12px;
+      display:flex; align-items:center; gap:8px;
+    }
+
+    .brief-frame {
+      border:1px solid var(--border);
+      background:var(--surface);
       overflow:hidden;
     }
-    .feat {
-      background:var(--surface);
-      padding:36px 32px;
-      transition:background .2s;
-      position:relative; overflow:hidden;
-    }
-    .feat::before {
-      content:""; position:absolute;
-      top:0; left:0; right:0; height:1px;
-      background:linear-gradient(90deg,transparent,var(--border2),transparent);
-    }
-    .feat:hover { background:var(--surface2); }
-    .feat-num {
-      font-size:9px; color:var(--accent); letter-spacing:0.16em;
-      font-weight:600; margin-bottom:16px;
-    }
-    .feat-title {
-      font-size:16px; font-weight:600; color:var(--text);
-      margin-bottom:10px; letter-spacing:-0.02em;
-    }
-    .feat-desc {
-      font-family:var(--sans); font-size:13px;
-      color:var(--sub); line-height:1.75; font-weight:300;
+
+    .brief-topbar {
+      padding:10px 14px;
+      border-bottom:1px solid var(--border);
+      background:var(--bg);
+      display:flex; align-items:center; justify-content:space-between;
     }
 
-    /* ─── SOURCES ─── */
-    .sources-wrap {
-      padding:80px 24px;
-      max-width:860px; margin:0 auto;
-      text-align:center;
+    .brief-topbar-left {
+      font-size:0.6rem; letter-spacing:0.1em; color:var(--muted);
     }
-    .sources-grid {
-      display:flex; flex-wrap:wrap;
-      gap:8px; justify-content:center;
-      margin-top:24px;
-    }
-    .src-chip {
-      padding:7px 14px;
-      border:1px solid var(--border2); border-radius:100px;
-      font-size:11px; color:var(--sub); letter-spacing:0.06em;
+
+    .brief-topbar-right {
       display:flex; align-items:center; gap:6px;
-      transition:all .2s; background:var(--surface);
-    }
-    .src-chip:hover { border-color:var(--muted); color:var(--text); }
-    .src-dot { width:5px; height:5px; border-radius:50%; }
-
-    /* ─── FINAL CTA ─── */
-    .final-cta {
-      padding:80px 24px 120px;
-      max-width:640px; margin:0 auto;
-      text-align:center; position:relative; z-index:1;
-    }
-    .cta-card {
-      border:1px solid var(--border2); border-radius:8px;
-      padding:56px 48px; background:var(--surface);
-      position:relative; overflow:hidden;
-    }
-    .cta-card::before {
-      content:""; position:absolute;
-      top:0; left:50%; transform:translateX(-50%);
-      width:240px; height:1px;
-      background:linear-gradient(90deg,transparent,var(--accent),transparent);
-    }
-    .cta-card::after {
-      content:""; position:absolute;
-      top:-80px; left:50%; transform:translateX(-50%);
-      width:400px; height:200px;
-      background:var(--accent); filter:blur(100px); opacity:0.04;
-      pointer-events:none;
-    }
-    .cta-h2 {
-      font-size:28px; font-weight:700; color:var(--text);
-      letter-spacing:-0.02em; margin-bottom:12px;
-    }
-    .cta-p {
-      font-family:var(--sans); font-size:15px;
-      color:var(--sub); font-weight:300;
-      line-height:1.7; margin-bottom:36px;
-    }
-    .cta-note {
-      font-size:9px; color:var(--muted);
-      letter-spacing:0.14em; margin-top:16px;
+      font-size:0.6rem; color:var(--muted);
     }
 
-    /* ─── FOOTER ─── */
-    footer {
+    /* category */
+    .bcat { border-bottom:1px solid var(--border); }
+
+    .bcat-header {
+      padding:12px 14px 10px;
+    }
+
+    .bcat-top {
+      display:flex; align-items:center; gap:7px;
+      margin-bottom:8px;
+    }
+
+    .bcat-label {
+      font-size:0.58rem; font-weight:700;
+      letter-spacing:0.12em;
+    }
+
+    .bcat-count {
+      font-size:0.58rem; color:var(--faint);
+    }
+
+    .bcat-summary {
+      font-family:var(--sans);
+      font-size:0.76rem; color:var(--text);
+      line-height:1.55; opacity:0.85;
+      border-left:2px solid;
+      padding-left:9px;
+    }
+
+    .bcat-items { border-top:1px solid var(--border); }
+
+    .bcat-item {
+      padding:9px 14px;
+      border-bottom:1px solid var(--border);
+      cursor:pointer;
+      transition:background .08s;
+      display:block;
+    }
+    .bcat-item:last-child { border-bottom:none; }
+    .bcat-item:hover { background:var(--hover); }
+
+    .bcat-item-meta {
+      display:flex; align-items:center; gap:5px;
+      font-size:0.58rem; color:var(--muted);
+      margin-bottom:4px;
+    }
+
+    .bcat-item-title {
+      font-family:var(--sans);
+      font-size:0.78rem; font-weight:500;
+      color:var(--text); line-height:1.35;
+      overflow:hidden;
+      display:-webkit-box;
+      -webkit-line-clamp:1;
+      -webkit-box-orient:vertical;
+    }
+
+    .brief-footer {
+      padding:10px 14px;
       border-top:1px solid var(--border);
-      padding:24px 40px;
+      font-size:0.62rem; color:var(--accent);
+      letter-spacing:0.06em;
+      cursor:pointer;
+      transition:background .08s;
+      display:block;
+    }
+    .brief-footer:hover { background:var(--hover); }
+
+    .brief-loading {
+      padding:40px 16px;
+      text-align:center;
+      font-size:0.65rem; color:var(--muted);
+    }
+
+    /* skeleton */
+    .sk {
+      background:linear-gradient(90deg, var(--sk-base) 25%, var(--sk-hi) 50%, var(--sk-base) 75%);
+      background-size:200% 100%;
+      animation:shimmer 1.4s infinite;
+      border-radius:2px;
+    }
+    @keyframes shimmer {
+      0%{background-position:200% 0}
+      100%{background-position:-200% 0}
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding:20px 24px;
+      border-top:1px solid var(--border);
       display:flex; align-items:center;
       justify-content:space-between; flex-wrap:wrap; gap:12px;
-      position:relative; z-index:1;
     }
-    .footer-logo {
-      display:flex; align-items:center; gap:8px;
-      font-size:11px; font-weight:700; letter-spacing:0.22em; color:var(--muted);
-    }
-    .footer-links { display:flex; gap:20px; }
-    .footer-links a {
-      font-size:10px; color:var(--muted); letter-spacing:0.1em;
-      transition:color .15s;
-    }
-    .footer-links a:hover { color:var(--sub); }
-    .footer-copy { font-size:10px; color:var(--muted); letter-spacing:0.08em; }
 
-    /* ─── RESPONSIVE ─── */
-    @media(max-width:640px) {
-      nav { padding:0 16px; }
-      .nav-center { display:none; }
-      .hero-h1 { font-size:36px; }
-      .stats-bar { flex-wrap:wrap; }
-      .stat-item { flex:1; min-width:100px; border-right:none; border-bottom:1px solid var(--border2); }
-      .stat-item:last-child { border-bottom:none; }
-      .features-grid { grid-template-columns:1fr; }
-      .cta-card { padding:32px 20px; }
-      footer { flex-direction:column; text-align:center; }
-      .app-sidebar { display:none; }
+    .footer-logo {
+      font-size:0.65rem; font-weight:700;
+      letter-spacing:0.2em; color:var(--muted);
+    }
+
+    .footer-links {
+      display:flex; gap:20px;
+    }
+    .footer-links a {
+      font-size:0.6rem; color:var(--muted);
+      letter-spacing:0.08em; transition:color .12s;
+    }
+    .footer-links a:hover { color:var(--text); }
+
+    /* type colors */
+    .t-model    { color:#adfa1d; }
+    .t-research { color:#60a5fa; }
+    .t-tool     { color:#a78bfa; }
+    .t-product  { color:#a78bfa; }
+    .t-discuss  { color:#94a3b8; }
+    .t-funding  { color:#facc15; }
+    .t-repo     { color:#9b72e8; }
+
+    /* animations */
+    @keyframes fadeUp {
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--border)}
+
+    @media(max-width:520px){
+      .hero-actions{flex-direction:column;width:100%}
+      .btn-primary,.btn-ghost{width:100%;text-align:center}
+      footer{flex-direction:column;text-align:center}
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
-    <div class="nav-logo">
-      <div class="live-dot"></div>
-      PULSE
-    </div>
-    <div class="nav-center">
-      <a href="#preview">Preview</a>
-      <a href="#features">Features</a>
-      <a href="#sources">Sources</a>
-    </div>
-    <a href="/app" class="nav-btn">GET ACCESS →</a>
+    <span class="nav-logo">PULSE</span>
+    <a href="/app" class="nav-cta">OPEN PULSE →</a>
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
-
+  <div class="hero">
     <div class="hero-eyebrow">
-      <div class="live-dot" style="width:5px;height:5px;"></div>
-      <span id="live-count">—</span> ITEMS LIVE RIGHT NOW
+      <div class="live-dot"></div>
+      AI SIGNAL FEED FOR BUILDERS
     </div>
 
-    <h1 class="hero-h1">
-      Every AI signal<br/>
-      that <em>matters</em>
+    <h1 class="hero-title">
+      Everything happening in AI.<br/>
+      In one brief. Every day.
     </h1>
 
-    <p class="hero-p">
-      Research papers, model releases, trending repos and industry news —
-      aggregated from 15+ sources and ranked by signal strength.
+    <p class="hero-desc">
+      Models, research, tools, repos and community signals from 20+ sources.
+      Ranked by relevance. Summarized by AI. Built for people who ship.
     </p>
 
-    <div class="hero-cta">
-      <a href="/app" class="btn-lg">
-        START READING FREE
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <a href="#preview" class="btn-ghost">SEE LIVE FEED</a>
+    <div class="hero-actions">
+      <a href="/app" class="btn-primary">OPEN PULSE →</a>
+      <a href="#brief" class="btn-ghost">SEE TODAY'S BRIEF</a>
     </div>
 
-    <div class="stats-bar">
-      <div class="stat-item">
-        <span class="stat-n accent" id="stat-items">—</span>
-        <span class="stat-l">LIVE ITEMS</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-n">15+</span>
-        <span class="stat-l">SOURCES</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-n">90s</span>
-        <span class="stat-l">REFRESH RATE</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-n">Free</span>
-        <span class="stat-l">TO START</span>
-      </div>
-    </div>
-  </section>
+    <p class="hero-meta">
+      Free<span>·</span>No account required<span>·</span>Updated hourly
+    </p>
+  </div>
 
-  <!-- FEED PREVIEW -->
-  <div class="preview-wrap" id="preview">
-    <div class="label">LIVE FEED PREVIEW</div>
-    <div class="app-frame">
-      <!-- Topbar -->
-      <div class="app-topbar">
-        <div class="tb-dot"></div>
-        <span class="tb-logo">PULSE</span>
-        <div style="width:1px;height:16px;background:var(--border2);margin:0 4px;"></div>
-        <span class="tb-pill active">ALL</span>
-        <span class="tb-pill">MODEL</span>
-        <span class="tb-pill">RESEARCH</span>
-        <span class="tb-pill">PRODUCT</span>
-        <div class="tb-right">
-          <div class="tb-icon">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="var(--muted)" stroke-width="1.5"><circle cx="5" cy="5" r="3.5"/><path d="M8 8l2.5 2.5"/></svg>
-          </div>
-          <div class="tb-icon">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M1 1h10v8H1z"/><path d="M4 11h4"/><path d="M6 9v2"/></svg>
-          </div>
+  <!-- LIVE BRIEF -->
+  <div class="brief-section" id="brief">
+    <div class="brief-label">
+      <div class="live-dot"></div>
+      LIVE — TODAY'S BRIEF
+    </div>
+
+    <div class="brief-frame">
+      <div class="brief-topbar">
+        <span class="brief-topbar-left">// brief</span>
+        <div class="brief-topbar-right">
+          <div class="live-dot"></div>
+          <span id="brief-date">—</span>
         </div>
       </div>
-      <!-- Body -->
-      <div class="app-body">
-        <!-- Sidebar -->
-        <div class="app-sidebar">
-          <div class="sidebar-section">
-            <div class="sidebar-label">HOT RIGHT NOW</div>
-            <div id="sidebar-items"></div>
-          </div>
-          <div class="sidebar-section">
-            <div class="sidebar-label">SOURCES</div>
-            <div id="sidebar-sources"></div>
-          </div>
-        </div>
-        <!-- Feed -->
-        <div class="app-feed" id="feed-rows">
-          <!-- Skeletons -->
-          <div class="feed-row">
-            <div class="row-top">
-              <div style="width:48px;height:13px;background:var(--border2);border-radius:2px;flex-shrink:0;"></div>
-              <div style="flex:1;height:13px;background:var(--border2);border-radius:2px;"></div>
+
+      <div id="brief-body">
+        <!-- skeleton -->
+        <div style="--sk-base:#161616;--sk-hi:#1e1e1e;">
+          <div style="padding:14px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;gap:8px;margin-bottom:10px">
+              <div class="sk" style="width:70px;height:8px"></div>
+              <div class="sk" style="width:30px;height:8px"></div>
             </div>
-            <div style="width:80%;height:10px;background:var(--border2);border-radius:2px;margin-bottom:7px;"></div>
-            <div style="width:40%;height:8px;background:var(--border2);border-radius:2px;"></div>
+            <div class="sk" style="width:92%;height:10px;margin-bottom:6px"></div>
+            <div class="sk" style="width:74%;height:10px;margin-bottom:6px"></div>
+            <div class="sk" style="width:50%;height:10px"></div>
           </div>
-          <div class="feed-row">
-            <div class="row-top">
-              <div style="width:60px;height:13px;background:var(--border2);border-radius:2px;flex-shrink:0;"></div>
-              <div style="flex:1;height:13px;background:var(--border2);border-radius:2px;"></div>
+          <div style="padding:14px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;gap:8px;margin-bottom:10px">
+              <div class="sk" style="width:80px;height:8px"></div>
+              <div class="sk" style="width:25px;height:8px"></div>
             </div>
-            <div style="width:70%;height:10px;background:var(--border2);border-radius:2px;margin-bottom:7px;"></div>
-            <div style="width:45%;height:8px;background:var(--border2);border-radius:2px;"></div>
+            <div class="sk" style="width:88%;height:10px;margin-bottom:6px"></div>
+            <div class="sk" style="width:66%;height:10px;margin-bottom:6px"></div>
+            <div class="sk" style="width:45%;height:10px"></div>
           </div>
-          <div class="feed-row">
-            <div class="row-top">
-              <div style="width:52px;height:13px;background:var(--border2);border-radius:2px;flex-shrink:0;"></div>
-              <div style="flex:1;height:13px;background:var(--border2);border-radius:2px;"></div>
+          <div style="padding:14px">
+            <div style="display:flex;gap:8px;margin-bottom:10px">
+              <div class="sk" style="width:60px;height:8px"></div>
+              <div class="sk" style="width:35px;height:8px"></div>
             </div>
-            <div style="width:85%;height:10px;background:var(--border2);border-radius:2px;margin-bottom:7px;"></div>
-            <div style="width:35%;height:8px;background:var(--border2);border-radius:2px;"></div>
+            <div class="sk" style="width:95%;height:10px;margin-bottom:6px"></div>
+            <div class="sk" style="width:70%;height:10px;margin-bottom:6px"></div>
+            <div class="sk" style="width:40%;height:10px"></div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- FEATURES -->
-  <div class="features-wrap" id="features">
-    <div class="label">WHY DEVELOPERS USE PULSE</div>
-    <div class="features-grid">
-      <div class="feat">
-        <div class="feat-num">01 / SIGNAL</div>
-        <div class="feat-title">Heat score ranking</div>
-        <div class="feat-desc">Items are ranked by engagement velocity, not just recency. See what's actually resonating with the developer community right now.</div>
-      </div>
-      <div class="feat">
-        <div class="feat-num">02 / INSIGHT</div>
-        <div class="feat-title">AI summaries on demand</div>
-        <div class="feat-desc">Every article gets a deep AI-generated insight. Know if something is worth your time before you click through to the original source.</div>
-      </div>
-      <div class="feat">
-        <div class="feat-num">03 / ALERTS</div>
-        <div class="feat-title">Saved searches & alerts</div>
-        <div class="feat-desc">Save any query and get notified the moment new items match. Track topics, companies, models, or technologies without manual checking.</div>
-      </div>
-      <div class="feat">
-        <div class="feat-num">04 / DIGEST</div>
-        <div class="feat-title">Daily email briefing</div>
-        <div class="feat-desc">Request your top items by heat score delivered to your inbox. Stay informed on your schedule, not the internet's schedule.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SOURCES -->
-  <div class="sources-wrap" id="sources">
-    <div class="label">AGGREGATED FROM</div>
-    <div class="sources-grid" id="sources-grid"></div>
-  </div>
-
-
-  <!-- TRENDING REPOS -->
-  <div class="features-wrap" id="repos">
-    <div class="label">TRENDING GITHUB REPOS</div>
-    <div style="border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--surface);">
-      <div style="padding:12px 16px;border-bottom:1px solid var(--border2);background:var(--surface2);
-        display:flex;align-items:center;gap:8px;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--sub)">
-          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-        </svg>
-        <span style="font-size:10px;color:var(--muted);letter-spacing:0.12em;">AI REPOS TRENDING TODAY</span>
-        <span style="font-size:9px;color:var(--muted);margin-left:auto;">Updated every 10 min</span>
-      </div>
-      <div id="trending-repos" style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
-        <!-- Populated by JS -->
-        <div style="padding:16px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);">
-          <div style="width:60%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
-          <div style="width:85%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
-          <div style="width:30%;height:9px;background:var(--border2);border-radius:2px;"></div>
-        </div>
-        <div style="padding:16px;border-bottom:1px solid var(--border);">
-          <div style="width:55%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
-          <div style="width:80%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
-          <div style="width:35%;height:9px;background:var(--border2);border-radius:2px;"></div>
-        </div>
-        <div style="padding:16px;border-right:1px solid var(--border);">
-          <div style="width:65%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
-          <div style="width:75%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
-          <div style="width:28%;height:9px;background:var(--border2);border-radius:2px;"></div>
-        </div>
-        <div style="padding:16px;">
-          <div style="width:50%;height:12px;background:var(--border2);border-radius:2px;margin-bottom:8px;"></div>
-          <div style="width:90%;height:9px;background:var(--border2);border-radius:2px;margin-bottom:6px;"></div>
-          <div style="width:32%;height:9px;background:var(--border2);border-radius:2px;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SOCIAL PROOF -->
-  <div class="features-wrap">
-    <div class="label">BUILT FOR DEVELOPERS WHO USE</div>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
-      <div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Hacker News</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">arXiv</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">GitHub</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Dev.to</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Hugging Face</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Anthropic</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">OpenAI</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">Google Research</div><div style="padding:8px 16px;border:1px solid var(--border2);border-radius:3px;font-size:11px;color:var(--muted);letter-spacing:0.08em;background:var(--surface);">MIT Tech Review</div>
-    </div>
-  </div>
-
-  <!-- FINAL CTA -->
-  <div class="final-cta">
-    <div class="cta-card">
-      <div class="cta-h2">Stay ahead of AI</div>
-      <p class="cta-p">Join developers who use Pulse every morning to cut through noise and find what actually matters.</p>
-      <a href="/app" class="btn-lg" style="display:inline-flex;">
-        CREATE FREE ACCOUNT
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <div class="cta-note">FREE · NO CREDIT CARD · 30 SECONDS TO SET UP</div>
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">
-      <div class="live-dot" style="animation:none;"></div>
-      PULSE
-    </div>
+    <span class="footer-logo">PULSE</span>
     <div class="footer-links">
+      <a href="/app">App</a>
       <a href="/privacy.html">Privacy</a>
       <a href="/terms.html">Terms</a>
-      <a href="/app">App</a>
     </div>
-    <div class="footer-copy">© 2025 Pulse</div>
   </footer>
 
   <script>
-    const API = "https://pulse-backend-production-cd92.up.railway.app";
-    const SRC_COLORS = {
-      HN:"#ff6314",arXiv:"#e05555","Dev.to":"#5b6df8",GitHub:"#9b72e8",
-      "Lobste.rs":"#d44040",OpenAI:"#19c37d",Anthropic:"#d4845a",
-      HuggingFace:"#ffb020",VentureBeat:"#3d8fe0",TechCrunch:"#2ab858",
-      TheVerge:"#e84040",Wired:"#aaaaaa",MITReview:"#cc3333",SimonW:"#1a8cff",
-      Interconnects:"#e06030",AINnews:"#cc2244",Microsoft:"#0078d4",
-      GoogleResearch:"#4285f4",MetaAI:"#0668E1",TDS:"#1a8c6b",
-      MarkTechPost:"#7b2ff7",TechTalks:"#2d6a9f",TheSequence:"#e05c00",
-      AIWeekly:"#0a8a5c",LastWeekInAI:"#c0392b",ImportAI:"#8e44ad",
+    const API = 'https://pulse-backend-production-cd92.up.railway.app';
+
+    const TYPE = {
+      model:    { label:'MODEL',    cls:'t-model'    },
+      research: { label:'RESEARCH', cls:'t-research' },
+      product:  { label:'TOOL',     cls:'t-tool'     },
+      tool:     { label:'TOOL',     cls:'t-tool'     },
+      discuss:  { label:'DISCUSS',  cls:'t-discuss'  },
+      funding:  { label:'FUNDING',  cls:'t-funding'  },
+      repo:     { label:'REPO',     cls:'t-repo'     },
     };
-    const BADGE_MAP = {
-      model:"rb-model",research:"rb-research",product:"rb-product",
-      drama:"rb-drama",funding:"rb-research",policy:"rb-research",
-    };
-    const LABEL_MAP = {
-      model:"MODEL",research:"RESEARCH",product:"PRODUCT",
-      drama:"DRAMA",funding:"FUNDING",policy:"POLICY",
+
+    const CAT_COLORS = {
+      model:    '#adfa1d',
+      research: '#60a5fa',
+      tool:     '#a78bfa',
+      discuss:  '#94a3b8',
+      funding:  '#facc15',
     };
 
     function timeAgo(ts) {
-      const s = Math.floor(Date.now()/1000 - ts);
-      if(s<60) return s+"s";
-      if(s<3600) return Math.floor(s/60)+"m";
-      if(s<86400) return Math.floor(s/3600)+"h";
-      return Math.floor(s/86400)+"d";
+      const d = Math.floor(Date.now()/1000) - ts;
+      if(d < 3600)  return Math.floor(d/60)  + 'm ago';
+      if(d < 86400) return Math.floor(d/3600) + 'h ago';
+      return Math.floor(d/86400) + 'd ago';
     }
 
-    async function load() {
+    async function loadBrief() {
       try {
-        const res = await fetch(`${API}/feed`);
-        const { items } = await res.json();
+        const res  = await fetch(`${API}/digest`);
+        const data = await res.json();
+        const cats = (data.categories || []).slice(0, 4);
 
-        // Stats
-        document.getElementById("live-count").textContent = items.length;
-        document.getElementById("stat-items").textContent = items.length;
+        // date
+        document.getElementById('brief-date').textContent =
+          new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}).toUpperCase();
 
-        // Feed rows - top 5 by heat
-        const top5 = [...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,5);
-        document.getElementById("feed-rows").innerHTML = top5.map(item => {
-          const cls = BADGE_MAP[item.type] || "rb-research";
-          const lbl = LABEL_MAP[item.type] || "NEWS";
-          const sc  = SRC_COLORS[item.src] || "#666";
-          const rm  = Math.max(1,Math.round(((item.title||"")+" "+(item.sum||"")).split(" ").length/200));
-          return `<div class="feed-row" onclick="location.href='/app'">
-            <div class="row-top">
-              <span class="row-badge ${cls}">${lbl}</span>
-              <span class="row-title">${item.title||""}</span>
-            </div>
-            ${item.sum?`<div class="row-sum">${item.sum}</div>`:""}
-            <div class="row-meta">
-              <div class="row-src-dot" style="background:${sc}"></div>
-              <span style="color:${sc};font-weight:500">${item.src}</span>
-              <span>·</span><span>${timeAgo(item.time)}</span>
-              <span>·</span><span>${rm}m read</span>
-            </div>
-          </div>`;
-        }).join("");
+        if(!cats.length) {
+          document.getElementById('brief-body').innerHTML =
+            '<div class="brief-loading">no data — <a href="/app" style="color:var(--accent)">open pulse</a></div>';
+          return;
+        }
 
-        // Sidebar hot items
-        const hot3 = [...items].sort((a,b)=>(b.heat||0)-(a.heat||0)).slice(0,3);
-        document.getElementById("sidebar-items").innerHTML = hot3.map(item=>`
-          <div class="sidebar-item" style="font-size:9px;color:var(--sub);margin-bottom:6px;line-height:1.4;cursor:pointer;" onclick="location.href='/app'">
-            ${item.title.slice(0,40)}${item.title.length>40?"...":""}
-          </div>`).join("");
+        document.getElementById('brief-body').innerHTML =
+          cats.map(cat => {
+            const color = CAT_COLORS[cat.id] || '#888';
+            const items = (cat.items || []).slice(0, 2);
 
-        // Sidebar sources
-        const srcCounts = {};
-        items.forEach(i=>{ srcCounts[i.src]=(srcCounts[i.src]||0)+1; });
-        const top6src = Object.entries(srcCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
-        document.getElementById("sidebar-sources").innerHTML = top6src.map(([src,cnt])=>`
-          <div class="sidebar-item">
-            <div style="display:flex;align-items:center;gap:5px;">
-              <div class="sidebar-dot" style="background:${SRC_COLORS[src]||'#666'}"></div>
-              ${src}
-            </div>
-            <span style="color:var(--muted)">${cnt}</span>
-          </div>`).join("");
-
-        // Sources grid
-        document.getElementById("sources-grid").innerHTML = Object.entries(srcCounts)
-          .sort((a,b)=>b[1]-a[1])
-          .map(([src,cnt])=>`
-            <div class="src-chip">
-              <div class="src-dot" style="background:${SRC_COLORS[src]||'#666'}"></div>
-              ${src}
-              <span style="color:var(--muted);font-size:9px">${cnt}</span>
-            </div>`).join("");
+            return `
+              <div class="bcat">
+                <div class="bcat-header">
+                  <div class="bcat-top">
+                    <span class="bcat-label" style="color:${color}">${cat.label.toUpperCase()}</span>
+                    <span class="bcat-count">· ${cat.count} items</span>
+                  </div>
+                  ${cat.summary
+                    ? `<div class="bcat-summary" style="border-color:${color}">${cat.summary}</div>`
+                    : ''}
+                </div>
+                <div class="bcat-items">
+                  ${items.map(item => {
+                    const t = TYPE[item.type] || TYPE.tool;
+                    return `
+                      <a href="/app" class="bcat-item">
+                        <div class="bcat-item-meta">
+                          <span class="${t.cls}" style="font-size:0.56rem;font-weight:700;letter-spacing:0.08em">${t.label}</span>
+                          <span style="color:var(--faint)">·</span>
+                          <span>${item.src}</span>
+                          <span style="color:var(--faint)">·</span>
+                          <span>${timeAgo(item.time)}</span>
+                        </div>
+                        <div class="bcat-item-title">${item.title}</div>
+                      </a>`;
+                  }).join('')}
+                </div>
+              </div>`;
+          }).join('') +
+          `<a href="/app" class="brief-footer">→ open full brief in pulse</a>`;
 
       } catch(e) {
-        document.getElementById("live-count").textContent = "200+";
-        document.getElementById("stat-items").textContent = "200+";
+        document.getElementById('brief-body').innerHTML =
+          '<div class="brief-loading">failed to load — <a href="/app" style="color:var(--accent)">open pulse directly</a></div>';
       }
     }
 
-    load();
-
-    // Load trending repos
-    async function loadRepos() {
-      try {
-        const res = await fetch(`${API}/trending-repos`);
-        const { repos } = await res.json();
-        if(!repos || !repos.length) return;
-        const top4 = repos.slice(0,4);
-        function fmtNum(n) {
-          if(n>=1000) return (n/1000).toFixed(1)+"k";
-          return n;
-        }
-        document.getElementById("trending-repos").innerHTML = top4.map((r,i)=>{
-          const isRight = i%2===1;
-          const isTop = i<2;
-          return `<div style="padding:16px;
-            border-bottom:${isTop?"1px solid var(--border)":"none"};
-            border-right:${!isRight?"1px solid var(--border)":"none"};
-            cursor:pointer;transition:background .15s;"
-            onmouseenter="this.style.background='var(--surface2)'"
-            onmouseleave="this.style.background='transparent'"
-            onclick="window.open('${r.url||"#"}','_blank')">
-            <div style="font-size:12px;font-weight:600;color:var(--text);
-              margin-bottom:5px;letter-spacing:-0.01em;">
-              ${r.name||r.full_name||""}
-            </div>
-            <div style="font-size:11px;color:var(--sub);margin-bottom:8px;
-              font-family:var(--sans);font-weight:300;line-height:1.5;
-              display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-              ${r.description||"No description"}
-            </div>
-            <div style="display:flex;gap:10px;font-size:10px;color:var(--muted);">
-              <span>${fmtNum(r.stars||0)} ★</span>
-              ${r.language?`<span>· ${r.language}</span>`:""}
-            </div>
-          </div>`;
-        }).join("");
-      } catch(e) {}
-    }
-    loadRepos();
-
-    // Load trending repos
-    async function loadRepos() {
-      try {
-        const res = await fetch(`${API}/trending-repos`);
-        const { repos } = await res.json();
-        if(!repos || !repos.length) return;
-        const top4 = repos.slice(0,4);
-        function fmtNum(n) {
-          if(n>=1000) return (n/1000).toFixed(1)+"k";
-          return n;
-        }
-        document.getElementById("trending-repos").innerHTML = top4.map((r,i)=>{
-          const isRight = i%2===1;
-          const isTop = i<2;
-          return `<div style="padding:16px;
-            border-bottom:${isTop?"1px solid var(--border)":"none"};
-            border-right:${!isRight?"1px solid var(--border)":"none"};
-            cursor:pointer;transition:background .15s;"
-            onmouseenter="this.style.background='var(--surface2)'"
-            onmouseleave="this.style.background='transparent'"
-            onclick="window.open('${r.url||"#"}','_blank')">
-            <div style="font-size:12px;font-weight:600;color:var(--text);
-              margin-bottom:5px;letter-spacing:-0.01em;">
-              ${r.name||r.full_name||""}
-            </div>
-            <div style="font-size:11px;color:var(--sub);margin-bottom:8px;
-              font-family:var(--sans);font-weight:300;line-height:1.5;
-              display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-              ${r.description||"No description"}
-            </div>
-            <div style="display:flex;gap:10px;font-size:10px;color:var(--muted);">
-              <span>${fmtNum(r.stars||0)} ★</span>
-              ${r.language?`<span>· ${r.language}</span>`:""}
-            </div>
-          </div>`;
-        }).join("");
-      } catch(e) {}
-    }
-    loadRepos();
-
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if(e.isIntersecting) {
-          e.target.style.opacity = "1";
-          e.target.style.transform = "translateY(0)";
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.feat, .src-chip').forEach(el => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(16px)";
-      el.style.transition = "opacity .5s ease, transform .5s ease";
-      observer.observe(el);
-    });
+    loadBrief();
   </script>
 </body>
 </html>
