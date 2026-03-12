@@ -18,7 +18,7 @@ export const FS = {
 };
 
 export const FF = {
-  sans: "'Inter', system-ui, -apple-system, sans-serif",
+  sans: "'IBM Plex Sans', sans-serif",
   mono: "'IBM Plex Mono', 'Fira Mono', monospace",
 };
 
