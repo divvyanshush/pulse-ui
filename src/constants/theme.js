@@ -37,7 +37,7 @@ export const LIGHT = {
 };
 
 export const TM_DARK = {
-  model:    {label:"MODELS",    a:"rgba(255,255,255,0.05)",  b:"rgba(173,250,29,0.15)",  t:"#ffffff"},
+  model:    {label:"MODELS",    a:"rgba(255,255,255,0.05)",  b:"rgba(255,255,255,0.08)",  t:"#ffffff"},
   research: {label:"RESEARCH", a:"rgba(96,165,250,0.08)",  b:"rgba(96,165,250,0.15)",  t:"#60a5fa"},
   drama:    {label:"DRAMA",    a:"rgba(248,113,113,0.08)", b:"rgba(248,113,113,0.15)", t:"#f87171"},
   funding:  {label:"FUNDING",  a:"rgba(250,204,21,0.08)",  b:"rgba(250,204,21,0.15)",  t:"#facc15"},
