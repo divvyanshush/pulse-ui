@@ -10,89 +10,84 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       onMouseEnter={e=>e.currentTarget.style.background=C.hover}
       onMouseLeave={e=>e.currentTarget.style.background=selected?C.hover:"transparent"}
       style={{
-        padding:"22px 28px",
+        padding:"12px 16px",
         background:selected?C.hover:"transparent",
-        animation:"rowIn .15s ease forwards",
-        animationDelay:`${Math.min(i*.01,.15)}s`,
+        animation:"rowIn .12s ease forwards",
+        animationDelay:`${Math.min(i*.008,.15)}s`,
         opacity:0,
-        filter:isRead?(isDark?"brightness(0.3)":"opacity(0.35)"):"none",
-        transition:"background .1s",
+        filter:isRead?(isDark?"brightness(0.28)":"opacity(0.3)"):"none",
+        transition:"background .08s",
         cursor:"pointer",
         borderBottom:`1px solid ${C.border}`,
+        display:"flex",
+        flexDirection:"column",
+        gap:5,
       }}>
 
-      {/* Category · Source · Time */}
+      {/* Meta line */}
       <div style={{
-        display:"flex", alignItems:"center", gap:8,
-        marginBottom:10, fontFamily:FF.mono,
-        fontSize:"0.65rem",
+        display:"flex",alignItems:"center",gap:6,
+        fontFamily:FF.mono, fontSize:"0.68rem",
+        color:C.muted,
       }}>
         <span style={{
-          color:m.t, padding:"2px 8px",
-          borderRadius:3, background:m.a,
-          fontWeight:600, letterSpacing:"0.06em",
+          color:m.t, fontSize:"0.62rem",
+          fontWeight:600, letterSpacing:"0.08em",
           flexShrink:0,
         }}>{m.label}</span>
-
-        <span style={{color:C.muted, flexShrink:0}}>{item.srcLabel||item.src}</span>
         <span style={{color:C.faint}}>·</span>
-        <span style={{color:C.faint, flexShrink:0}}>{item.timeLabel}</span>
-
+        <span style={{
+          color:srcColor, fontWeight:500, flexShrink:0,
+        }}>{item.srcLabel||item.src}</span>
+        <span style={{color:C.faint}}>·</span>
+        <span style={{color:C.muted,flexShrink:0}}>{item.timeLabel}</span>
         {item.score>0&&<>
           <span style={{color:C.faint}}>·</span>
-          <span style={{color:C.faint}}>↑{item.score}</span>
+          <span style={{color:C.muted}}>↑{item.score}</span>
         </>}
-
         <button onClick={e=>onBookmark(item,e)}
           style={{
-            marginLeft:"auto", background:"none", border:"none",
-            padding:"2px 0", cursor:"pointer", flexShrink:0,
+            marginLeft:"auto",background:"none",border:"none",
+            padding:0,cursor:"pointer",flexShrink:0,lineHeight:0,
             color:isBookmarked?C.accent:C.muted,
-            opacity:isBookmarked?1:0.35,
-            transition:"opacity .15s, color .15s",
-            lineHeight:0,
+            opacity:isBookmarked?1:0.3,
+            transition:"opacity .12s,color .12s",
           }}
           onMouseEnter={e=>e.currentTarget.style.opacity=1}
-          onMouseLeave={e=>{ if(!isBookmarked) e.currentTarget.style.opacity=0.35; }}
-        >
-          <BmSvg filled={isBookmarked} size={13} color="currentColor"/>
-        </button>
+          onMouseLeave={e=>{ if(!isBookmarked) e.currentTarget.style.opacity=0.3; }}
+        ><BmSvg filled={isBookmarked} size={12} color="currentColor"/></button>
       </div>
 
-      {/* Title — dominant */}
+      {/* Title */}
       <div style={{
-        fontSize:"1.05rem",
-        fontWeight:650,
+        fontSize:FS.base,
+        fontWeight:500,
         color:C.text,
         lineHeight:1.4,
-        letterSpacing:"-0.025em",
+        letterSpacing:"-0.01em",
         fontFamily:FF.sans,
-        marginBottom:item.sum?8:0,
         wordBreak:"break-word",
       }}>{item.title}</div>
 
-      {/* Description — readable, 2 lines */}
+      {/* Summary */}
       {item.sum && (
         <div style={{
-          fontSize:FS.sm,
+          fontSize:"0.78rem",
           color:C.muted,
-          lineHeight:1.65,
-          fontFamily:FF.sans,
+          lineHeight:1.55,
+          fontFamily:FF.mono,
           display:"-webkit-box",
           WebkitLineClamp:2,
           WebkitBoxOrient:"vertical",
           overflow:"hidden",
-          fontWeight:400,
         }}>{item.sum}</div>
       )}
 
-      {/* Authors for papers */}
       {item.type==="research" && item.authors && (
         <div style={{
-          fontSize:"0.7rem", color:C.muted, marginTop:6,
-          overflow:"hidden", textOverflow:"ellipsis",
-          whiteSpace:"nowrap", fontFamily:FF.sans, fontStyle:"italic",
-        }}>{item.authors}</div>
+          fontSize:"0.68rem",color:C.muted,fontFamily:FF.mono,
+          overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",
+        }}>by {item.authors}</div>
       )}
     </div>
   );

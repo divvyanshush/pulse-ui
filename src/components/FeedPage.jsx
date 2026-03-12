@@ -55,19 +55,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         borderBottom:`1px solid ${C.border}`,
         background:C.surface,flexShrink:0,
       }}>
-        {/* Hamburger on mobile */}
-        {isMobile && (
-          <button onClick={onMenu} style={{
-            background:"none",border:"none",padding:"4px 8px 4px 0",
-            cursor:"pointer",color:C.muted,flexShrink:0,display:"flex",alignItems:"center",
-          }}>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-              <path d="M2 4h14M2 9h14M2 14h14"/>
-            </svg>
-          </button>
-        )}
-
-        {/* Filter pills */}
+{/* Filter pills */}
         <div style={{display:"flex",gap:4,overflowX:"auto",scrollbarWidth:"none",flex:1,minWidth:0}}>
           {FILTERS.filter(f=>f!=="bookmarks").map(f=>{
             const m=TML[f]; const on=filter===f;
