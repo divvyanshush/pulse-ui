@@ -149,26 +149,11 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
     <div style={{ flex:1, display:"flex", flexDirection:"column", background:C.bg, overflow:"hidden", minWidth:0 }}>
 
       {/* Header */}
-      <div style={{ padding:"16px 16px 14px", borderBottom:`1px solid ${C.border}`, flexShrink:0 }}>
-        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-          <div style={{ fontSize:"0.65rem", color:C.muted, fontFamily:FF.mono, letterSpacing:"0.1em" }}>
-            // brief
-          </div>
-          <div style={{ fontSize:"0.65rem", color:C.muted, fontFamily:FF.mono }}>
-            {new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}
-          </div>
-        </div>
-      </div>
-
-      {/* Top briefing — must reads */}
-      <div style={{borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
-        <div style={{padding:"10px 16px 0",display:"flex",alignItems:"center",gap:8}}>
-          <span style={{fontSize:"0.62rem",fontWeight:700,color:C.accent,fontFamily:FF.mono,letterSpacing:"0.1em"}}>
-            MUST READ
-          </span>
-          <span style={{fontSize:"0.62rem",color:C.faint,fontFamily:FF.mono}}>top 5 from today</span>
-        </div>
-
+      <div style={{ padding:"14px 16px", borderBottom:`1px solid ${C.border}`, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <span style={{ fontSize:"0.62rem", color:C.muted, fontFamily:FF.mono, letterSpacing:"0.1em" }}>// brief</span>
+        <span style={{ fontSize:"0.62rem", color:C.faint, fontFamily:FF.mono }}>
+          {new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}).toUpperCase()}
+        </span>
       </div>
 
       {/* Content */}
