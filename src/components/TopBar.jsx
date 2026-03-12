@@ -3,7 +3,6 @@ import { FF } from "../constants/theme.js";
 const TABS = [
   { id:"today",    label:"today"    },
   { id:"feed",     label:"feed"     },
-  { id:"trending", label:"trending" },
   { id:"saved",    label:"saved"    },
 ];
 

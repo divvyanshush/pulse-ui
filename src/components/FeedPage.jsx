@@ -15,7 +15,9 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   const visible = items.filter(item=>{
     if(filter==="bookmarks") return bookmarks[item.id];
     if(srcFilter && item.src!==srcFilter) return false;
-    if(filter!=="all" && item.type!==filter) return false;
+    const normType = item.type==="product"?"tool":item.type;
+    if(filter==="repos" && item.src!=="GitHub") return false;
+    if(filter!=="all" && filter!=="repos" && normType!==filter) return false;
     if(!query) return true;
     const q=query.toLowerCase();
     return (item.title||"").toLowerCase().includes(q)||
