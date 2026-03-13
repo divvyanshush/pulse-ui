@@ -1,4 +1,376 @@
-```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pulse — AI signals for developers</title>
+<meta name="description" content="Research papers, GitHub repos, tools and news from 20+ sources. Heat-ranked in real time. Built for AI builders."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#000000;--surface:#0a0a0a;--surface2:#111111;--border:#1a1a1a;--border2:#222222;--text:#f0f0f0;--sub:#888888;--muted:#444444;--mono:"IBM Plex Mono",monospace;--sans:"IBM Plex Sans",sans-serif;--pad:clamp(24px,8vw,120px)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);border-bottom:1px solid var(--border);background:rgba(0,0,0,0.85);backdrop-filter:blur(12px)}
+.nav-logo{font-family:var(--mono);font-size:0.8rem;font-weight:600;letter-spacing:0.12em}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-link{font-family:var(--mono);font-size:0.7rem;color:var(--sub);letter-spacing:0.08em;transition:color .15s}
+.nav-link:hover{color:var(--text)}
+.nav-cta{font-family:var(--mono);font-size:0.7rem;font-weight:500;letter-spacing:0.08em;border:1px solid var(--text);padding:5px 14px;color:var(--text);transition:background .15s,color .15s}
+.nav-cta:hover{background:var(--text);color:#000}
+section{padding:100px var(--pad)}
+.divider{height:1px;background:var(--border);margin:0 var(--pad)}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:148px;padding-bottom:100px;padding-left:var(--pad);padding-right:var(--pad);position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.4;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 40%,transparent 100%)}
+.hero-tag{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.14em;color:var(--sub);border:1px solid var(--border2);display:inline-flex;align-items:center;gap:8px;padding:5px 12px;margin-bottom:32px;width:fit-content}
+.hero-tag::before{content:"";width:6px;height:6px;background:var(--text);border-radius:50%;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{font-family:var(--mono);font-size:clamp(2.2rem,6vw,5rem);font-weight:600;line-height:1.1;letter-spacing:-0.02em;max-width:800px;margin-bottom:24px}
+h1 span{color:var(--sub)}
+.hero-sub{font-family:var(--sans);font-size:clamp(0.95rem,2vw,1.15rem);color:var(--sub);max-width:520px;line-height:1.7;margin-bottom:40px;font-weight:300}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-primary{font-family:var(--mono);font-size:0.78rem;font-weight:500;letter-spacing:0.1em;background:var(--text);color:#000;padding:12px 28px;border:none;cursor:pointer;transition:opacity .15s;display:inline-block}
+.btn-primary:hover{opacity:0.85}
+.btn-ghost{font-family:var(--mono);font-size:0.78rem;letter-spacing:0.1em;color:var(--sub);padding:12px 0;border:none;background:none;cursor:pointer;transition:color .15s}
+.btn-ghost:hover{color:var(--text)}
+.hero-stats{display:flex;gap:40px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border);flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:4px}
+.stat-num{font-family:var(--mono);font-size:1.6rem;font-weight:600}
+.stat-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--sub)}
+.app-preview{background:var(--surface);border:1px solid var(--border2);border-radius:2px;overflow:hidden;margin-top:80px;max-width:900px}
+.preview-topbar{height:36px;display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 16px;gap:16px;background:var(--surface2)}
+.preview-logo{font-family:var(--mono);font-size:0.7rem;font-weight:600;letter-spacing:0.1em;margin-right:8px}
+.preview-tab{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.06em;color:var(--muted);padding:0 10px;height:100%;display:flex;align-items:center;border-bottom:2px solid transparent}
+.preview-tab.active{color:var(--text);border-bottom-color:var(--text)}
+.preview-body{display:grid;grid-template-columns:280px 1fr;min-height:300px}
+.preview-left{border-right:1px solid var(--border);padding:16px}
+.preview-section-title{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;color:var(--sub);margin-bottom:12px}
+.preview-brief-item{padding:10px 0;border-bottom:1px solid var(--border)}
+.preview-brief-item:last-child{border-bottom:none}
+.preview-brief-cat{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;color:var(--sub);margin-bottom:4px}
+.preview-brief-text{font-size:0.72rem;color:var(--text);line-height:1.4}
+.preview-right{padding:16px;display:flex;flex-direction:column;gap:8px}
+.preview-feed-item{padding:10px;border:1px solid var(--border)}
+.preview-feed-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.preview-src{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.08em;color:var(--sub)}
+.preview-pill{font-family:var(--mono);font-size:0.55rem;letter-spacing:0.08em;padding:2px 6px;border-radius:1px}
+.preview-heat{font-family:var(--mono);font-size:0.58rem;color:var(--sub);margin-left:auto}
+.preview-feed-title{font-size:0.72rem;line-height:1.4;color:var(--text)}
+.section-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.14em;color:var(--sub);margin-bottom:16px}
+.section-title{font-family:var(--mono);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;line-height:1.2;margin-bottom:16px}
+.section-sub{font-size:0.95rem;color:var(--sub);max-width:480px;line-height:1.7;font-weight:300}
+.props-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);margin-top:60px}
+.prop{background:var(--surface);padding:32px}
+.prop-icon{font-family:var(--mono);font-size:1.2rem;margin-bottom:16px;color:var(--sub)}
+.prop-title{font-family:var(--mono);font-size:0.85rem;font-weight:500;letter-spacing:0.06em;margin-bottom:8px}
+.prop-text{font-size:0.82rem;color:var(--sub);line-height:1.7;font-weight:300}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:60px}
+.feature{border:1px solid var(--border);padding:28px;transition:border-color .2s}
+.feature:hover{border-color:var(--border2)}
+.feature-num{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:16px}
+.feature-title{font-family:var(--mono);font-size:0.9rem;font-weight:500;margin-bottom:10px}
+.feature-text{font-size:0.82rem;color:var(--sub);line-height:1.7;font-weight:300}
+.cats-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:48px}
+.cat{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;padding:8px 16px;border:1px solid var(--border2);display:flex;align-items:center;gap:8px;transition:border-color .15s}
+.cat:hover{border-color:var(--sub)}
+.cat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:60px;position:relative}
+.steps::before{content:"";position:absolute;top:20px;left:0;right:0;height:1px;background:var(--border)}
+.step{padding:48px 0 0;position:relative}
+.step-num{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--bg);background:var(--text);width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;position:relative;z-index:1;font-weight:600}
+.step-title{font-family:var(--mono);font-size:0.85rem;font-weight:500;margin-bottom:8px}
+.step-text{font-size:0.82rem;color:var(--sub);line-height:1.7;font-weight:300;max-width:220px}
+.comp-table{width:100%;border-collapse:collapse;margin-top:48px;font-size:0.82rem}
+.comp-table th{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--sub);padding:12px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:400}
+.comp-table th.hl{color:var(--text)}
+.comp-table td{padding:14px 20px;border-bottom:1px solid var(--border);color:var(--sub);vertical-align:middle}
+.comp-table td.fc{color:var(--text);font-weight:400}
+.comp-table td.hl{color:var(--text)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:hover td{background:var(--surface2)}
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:60px}
+.persona{border:1px solid var(--border);padding:28px}
+.persona-role{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;color:var(--sub);margin-bottom:12px}
+.persona-name{font-family:var(--mono);font-size:1rem;font-weight:500;margin-bottom:16px}
+.persona-need{font-size:0.82rem;color:var(--sub);line-height:1.7;margin-bottom:20px;font-weight:300}
+.persona-tags{display:flex;flex-wrap:wrap;gap:6px}
+.persona-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;border:1px solid var(--border2);padding:3px 8px;color:var(--sub)}
+.faq-list{margin-top:48px;border-top:1px solid var(--border)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{font-family:var(--mono);font-size:0.85rem;font-weight:400;padding:20px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;letter-spacing:0.02em}
+.faq-q::after{content:"+";font-size:1.2rem;color:var(--sub);transition:transform .2s;flex-shrink:0}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{font-size:0.82rem;color:var(--sub);line-height:1.8;font-weight:300;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:20px}
+#cta{text-align:center}
+#cta h2{font-family:var(--mono);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:600;line-height:1.2;margin-bottom:16px}
+#cta p{font-size:0.95rem;color:var(--sub);margin-bottom:40px;font-weight:300}
+footer{border-top:1px solid var(--border);padding:40px var(--pad);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:var(--mono);font-size:0.75rem;font-weight:600;letter-spacing:0.1em}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-link{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;color:var(--sub);transition:color .15s}
+.footer-link:hover{color:var(--text)}
+.footer-copy{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.06em}
+.deepdive-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:60px;align-items:center}
+.deepdive-visual{background:var(--surface);border:1px solid var(--border2);padding:24px}
+.deepdive-text h3{font-family:var(--mono);font-size:1.4rem;font-weight:600;line-height:1.3;margin-bottom:16px}
+.deepdive-text p{font-size:0.85rem;color:var(--sub);line-height:1.8;font-weight:300;margin-bottom:12px}
+.dd-item{padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.dd-item:last-child{border-bottom:none}
+.dd-title{font-size:0.75rem;color:var(--text);line-height:1.4;flex:1;margin-right:12px}
+.dd-heat{font-family:var(--mono);font-size:0.6rem;color:var(--sub)}
+.heat-bar{height:3px;background:var(--border2);margin-top:4px;max-width:120px}
+.heat-fill{height:100%;background:var(--text)}
+.sources-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:40px}
+.source-chip{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.06em;padding:6px 12px;border:1px solid var(--border);color:var(--sub);transition:border-color .15s,color .15s}
+.source-chip:hover{border-color:var(--sub);color:var(--text)}
+@media(max-width:768px){.preview-body{grid-template-columns:1fr}.preview-left{display:none}.deepdive-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.steps::before{display:none}.nav-link{display:none}.hero-stats{gap:24px}}
+@media(max-width:480px){.steps{grid-template-columns:1fr}.comp-table{font-size:0.72rem}.comp-table th,.comp-table td{padding:10px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">PULSE</div>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">FEATURES</a>
+    <a href="#how" class="nav-link">HOW IT WORKS</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="/app" class="nav-cta">OPEN APP</a>
+  </div>
+</nav>
 
-Then paste the entire HTML, then on a new line type:
-```
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-tag">LIVE — updating every 30 minutes</div>
+  <h1>AI signals.<br/><span>Zero noise.</span></h1>
+  <p class="hero-sub">Pulse aggregates research papers, GitHub repos, tools, and news from 20+ sources — heat-ranked in real time so you always know what actually matters in AI.</p>
+  <div class="hero-actions">
+    <a href="/app" class="btn-primary">OPEN PULSE</a>
+    <a href="#how" class="btn-ghost">SEE HOW IT WORKS</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">20+</span><span class="stat-label">SOURCES</span></div>
+    <div class="stat"><span class="stat-num">150+</span><span class="stat-label">ITEMS / DAY</span></div>
+    <div class="stat"><span class="stat-num">30m</span><span class="stat-label">UPDATE CYCLE</span></div>
+    <div class="stat"><span class="stat-num">6</span><span class="stat-label">CATEGORIES</span></div>
+  </div>
+  <div class="app-preview">
+    <div class="preview-topbar">
+      <span class="preview-logo">PULSE</span>
+      <span class="preview-tab active">brief</span>
+      <span class="preview-tab">feed</span>
+      <span class="preview-tab">saved</span>
+    </div>
+    <div class="preview-body">
+      <div class="preview-left">
+        <div class="preview-section-title">TODAY'S BRIEF</div>
+        <div class="preview-brief-item">
+          <div class="preview-brief-cat">MODELS</div>
+          <div class="preview-brief-text">3 new model releases — GPT-5 leads with 2.4k comments across HN</div>
+        </div>
+        <div class="preview-brief-item">
+          <div class="preview-brief-cat">RESEARCH</div>
+          <div class="preview-brief-text">Flash attention variant achieves 3x speedup — arXiv paper trending</div>
+        </div>
+        <div class="preview-brief-item">
+          <div class="preview-brief-cat">TOOLS</div>
+          <div class="preview-brief-text">New MCP framework — 1.2k GitHub stars in first 24 hours</div>
+        </div>
+      </div>
+      <div class="preview-right">
+        <div class="preview-feed-item">
+          <div class="preview-feed-meta">
+            <span class="preview-src">HN</span>
+            <span class="preview-pill" style="background:rgba(34,211,238,0.1);color:#22d3ee">MODEL</span>
+            <span class="preview-heat">heat 99</span>
+          </div>
+          <div class="preview-feed-title">OpenAI releases GPT-5 — community benchmarks show 40% gains on coding</div>
+        </div>
+        <div class="preview-feed-item">
+          <div class="preview-feed-meta">
+            <span class="preview-src">arXiv</span>
+            <span class="preview-pill" style="background:rgba(96,165,250,0.1);color:#60a5fa">RESEARCH</span>
+            <span class="preview-heat">heat 94</span>
+          </div>
+          <div class="preview-feed-title">FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision</div>
+        </div>
+        <div class="preview-feed-item">
+          <div class="preview-feed-meta">
+            <span class="preview-src">GitHub</span>
+            <span class="preview-pill" style="background:rgba(167,139,250,0.1);color:#a78bfa">TOOLS</span>
+            <span class="preview-heat">heat 89</span>
+          </div>
+          <div class="preview-feed-title">microsoft/AutoGen — Multi-agent conversation framework for LLM workflows</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="value" style="background:var(--surface)">
+  <div class="section-tag">WHY PULSE</div>
+  <div class="section-title">Built for people<br/>who build with AI</div>
+  <p class="section-sub">Not a newsletter. Not a Twitter feed. A real-time intelligence layer that works while you do.</p>
+  <div class="props-grid">
+    <div class="prop"><div class="prop-icon">01</div><div class="prop-title">HEAT RANKING</div><div class="prop-text">Every item gets a heat score based on velocity, engagement, and cross-source signals. The top story is actually the top story.</div></div>
+    <div class="prop"><div class="prop-icon">02</div><div class="prop-title">CROSS-SOURCE CLUSTERING</div><div class="prop-text">When the same story breaks on HN, arXiv, and GitHub simultaneously, Pulse clusters them. One item, full picture.</div></div>
+    <div class="prop"><div class="prop-icon">03</div><div class="prop-title">AI DAILY BRIEF</div><div class="prop-text">Every morning, Pulse summarises what happened overnight across all categories. Start your day informed in 90 seconds.</div></div>
+    <div class="prop"><div class="prop-icon">04</div><div class="prop-title">ZERO FRICTION</div><div class="prop-text">No algorithm trying to addict you. No sponsored posts. No engagement bait. Just the signal, ranked honestly.</div></div>
+    <div class="prop"><div class="prop-icon">05</div><div class="prop-title">BOOKMARK AND SEARCH</div><div class="prop-text">Save items, search history, pick up where you left off. Your reading list synced across devices.</div></div>
+    <div class="prop"><div class="prop-icon">06</div><div class="prop-title">20+ CURATED SOURCES</div><div class="prop-text">HN, arXiv, GitHub, Simon Willison, Interconnects, OpenAI, Anthropic, HuggingFace, MIT Tech Review and more.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="features">
+  <div class="section-tag">FEATURES</div>
+  <div class="section-title">Everything you need.<br/>Nothing you dont.</div>
+  <div class="features-grid">
+    <div class="feature"><div class="feature-num">01</div><div class="feature-title">REAL-TIME FEED</div><div class="feature-text">170+ items refreshed every 30 minutes. Filter by type — models, research, tools, repos, policy, or discussion.</div></div>
+    <div class="feature"><div class="feature-num">02</div><div class="feature-title">AI SUMMARIES</div><div class="feature-text">Click any item for an instant AI-generated summary. No more clicking through to read a paper just to find out if it matters.</div></div>
+    <div class="feature"><div class="feature-num">03</div><div class="feature-title">DAILY BRIEF</div><div class="feature-text">Categorised digest of what moved in the last 24 hours. Know the landscape before you open a single link.</div></div>
+    <div class="feature"><div class="feature-num">04</div><div class="feature-title">TRENDING REPOS</div><div class="feature-text">GitHub repos gaining stars fast, filtered to AI/ML. Spot the next big framework early.</div></div>
+    <div class="feature"><div class="feature-num">05</div><div class="feature-title">SAVED ITEMS</div><div class="feature-text">Bookmark anything to read later. Synced to your account. Never lose a paper you meant to come back to.</div></div>
+    <div class="feature"><div class="feature-num">06</div><div class="feature-title">SOURCE FILTER</div><div class="feature-text">Filter to just HN, just arXiv, just GitHub, or any combination. Your feed, your way.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="categories" style="background:var(--surface)">
+  <div class="section-tag">COVERAGE</div>
+  <div class="section-title">Every corner of the AI stack</div>
+  <p class="section-sub">From foundational research to funding rounds — if it matters to AI builders, Pulse tracks it.</p>
+  <div class="cats-grid">
+    <div class="cat"><span class="cat-dot" style="background:#22d3ee"></span>MODELS</div>
+    <div class="cat"><span class="cat-dot" style="background:#60a5fa"></span>RESEARCH</div>
+    <div class="cat"><span class="cat-dot" style="background:#a78bfa"></span>TOOLS</div>
+    <div class="cat"><span class="cat-dot" style="background:#9b72e8"></span>REPOS</div>
+    <div class="cat"><span class="cat-dot" style="background:#facc15"></span>FUNDING</div>
+    <div class="cat"><span class="cat-dot" style="background:#fb923c"></span>POLICY</div>
+    <div class="cat"><span class="cat-dot" style="background:#94a3b8"></span>DISCUSS</div>
+  </div>
+  <div style="margin-top:48px">
+    <div class="section-tag">SOURCES</div>
+    <div class="sources-grid">
+      <span class="source-chip">Hacker News</span><span class="source-chip">arXiv</span><span class="source-chip">GitHub</span><span class="source-chip">Simon Willison</span><span class="source-chip">Interconnects</span><span class="source-chip">OpenAI Blog</span><span class="source-chip">Anthropic</span><span class="source-chip">HuggingFace</span><span class="source-chip">MIT Tech Review</span><span class="source-chip">TechCrunch AI</span><span class="source-chip">The Verge AI</span><span class="source-chip">VentureBeat</span><span class="source-chip">Lobste.rs</span><span class="source-chip">Dev.to</span><span class="source-chip">Google Research</span><span class="source-chip">LangChain Blog</span><span class="source-chip">Towards Data Science</span><span class="source-chip">Wired AI</span><span class="source-chip">Import AI</span><span class="source-chip">Last Week in AI</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="how">
+  <div class="section-tag">HOW IT WORKS</div>
+  <div class="section-title">Simple by design</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><div class="step-title">SOURCES CRAWLED</div><div class="step-text">Every 30 minutes, Pulse pulls from 20+ sources and normalises everything into a unified format.</div></div>
+    <div class="step"><div class="step-num">02</div><div class="step-title">HEAT SCORED</div><div class="step-text">Each item gets a heat score based on engagement velocity, comment count, cross-source mentions, and time decay.</div></div>
+    <div class="step"><div class="step-num">03</div><div class="step-title">CLUSTERED</div><div class="step-text">Related items from different sources are grouped together. One story, not five separate links.</div></div>
+    <div class="step"><div class="step-num">04</div><div class="step-title">BRIEFED</div><div class="step-text">An AI model summarises the day into a structured brief — ready when you open the app each morning.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="deepdive" style="background:var(--surface)">
+  <div class="section-tag">DEEP DIVE</div>
+  <div class="section-title">The brief that replaces<br/>your morning scroll</div>
+  <div class="deepdive-grid">
+    <div class="deepdive-text">
+      <p>Most developers start the day by opening Twitter, HN, and three newsletters — spending 20 minutes to figure out what is worth reading. Pulse compresses that into 90 seconds.</p>
+      <p>The daily brief runs every morning across every category. Each section is an AI-generated summary of the highest-signal items from the last 24 hours.</p>
+      <p>You are not reading a curated opinion. You are reading a structured summary of what the community actually engaged with — ranked by real signals.</p>
+    </div>
+    <div class="deepdive-visual">
+      <div class="preview-section-title" style="margin-bottom:16px">TODAY'S BRIEF</div>
+      <div class="dd-item"><div><div class="preview-brief-cat">MODELS · 3 ITEMS</div><div class="dd-title">GPT-5 release dominates. Coding benchmark improvements confirmed by independent evaluators.</div><div class="heat-bar"><div class="heat-fill" style="width:95%"></div></div></div><div class="dd-heat">99</div></div>
+      <div class="dd-item"><div><div class="preview-brief-cat">RESEARCH · 5 ITEMS</div><div class="dd-title">Three arXiv papers on attention efficiency. LoRA variant achieving full fine-tune quality at 10% cost.</div><div class="heat-bar"><div class="heat-fill" style="width:82%"></div></div></div><div class="dd-heat">82</div></div>
+      <div class="dd-item"><div><div class="preview-brief-cat">TOOLS · 4 ITEMS</div><div class="dd-title">New MCP framework from Anthropic. LiteLLM hits 40k stars. Two agentic coding tools on HN.</div><div class="heat-bar"><div class="heat-fill" style="width:74%"></div></div></div><div class="dd-heat">74</div></div>
+      <div class="dd-item"><div><div class="preview-brief-cat">FUNDING · 2 ITEMS</div><div class="dd-title">$480M raised across two infrastructure rounds. Inference cost war accelerating.</div><div class="heat-bar"><div class="heat-fill" style="width:56%"></div></div></div><div class="dd-heat">56</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="comparison">
+  <div class="section-tag">VS ALTERNATIVES</div>
+  <div class="section-title">Why not just use Twitter?</div>
+  <p class="section-sub">Every option has a trade-off. Here is an honest comparison.</p>
+  <table class="comp-table">
+    <thead>
+      <tr><th style="width:220px">FEATURE</th><th class="hl">PULSE</th><th>TWITTER/X</th><th>HN</th><th>NEWSLETTERS</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="fc">Real-time updates</td><td class="hl">30 min</td><td>Live</td><td>Live</td><td>Weekly</td></tr>
+      <tr><td class="fc">Multi-source aggregation</td><td class="hl">20+ sources</td><td>One platform</td><td>One platform</td><td>One author</td></tr>
+      <tr><td class="fc">Heat / relevance ranking</td><td class="hl">Algorithmic</td><td>Engagement bait</td><td>Votes only</td><td>Editorial</td></tr>
+      <tr><td class="fc">AI summaries on demand</td><td class="hl">Per item</td><td>No</td><td>No</td><td>No</td></tr>
+      <tr><td class="fc">Daily structured brief</td><td class="hl">Every morning</td><td>No</td><td>No</td><td>Some</td></tr>
+      <tr><td class="fc">GitHub and arXiv coverage</td><td class="hl">Native</td><td>Manual follows</td><td>Partial</td><td>Occasional</td></tr>
+      <tr><td class="fc">No ads or algorithm manipulation</td><td class="hl">Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<section id="usecases" style="background:var(--surface)">
+  <div class="section-tag">USE CASES</div>
+  <div class="section-title">Who uses Pulse</div>
+  <div class="personas">
+    <div class="persona"><div class="persona-role">PERSONA 01</div><div class="persona-name">The AI Engineer</div><div class="persona-need">Building production systems with LLMs. Needs to know about new models, APIs, and frameworks the day they drop — not a week later when the newsletter arrives.</div><div class="persona-tags"><span class="persona-tag">MODEL RELEASES</span><span class="persona-tag">NEW TOOLING</span><span class="persona-tag">GITHUB REPOS</span></div></div>
+    <div class="persona"><div class="persona-role">PERSONA 02</div><div class="persona-name">The ML Researcher</div><div class="persona-need">Tracking what is happening in the field without drowning in arXiv. Wants to know which papers are actually being discussed, not just published.</div><div class="persona-tags"><span class="persona-tag">ARXIV PAPERS</span><span class="persona-tag">COMMUNITY SIGNAL</span><span class="persona-tag">BENCHMARKS</span></div></div>
+    <div class="persona"><div class="persona-role">PERSONA 03</div><div class="persona-name">The Technical Founder</div><div class="persona-need">Running a company in the AI space. Needs the funding news, capability jumps, and policy shifts without spending 2 hours a day on information gathering.</div><div class="persona-tags"><span class="persona-tag">FUNDING ROUNDS</span><span class="persona-tag">POLICY SHIFTS</span><span class="persona-tag">CAPABILITY JUMPS</span></div></div>
+    <div class="persona"><div class="persona-role">PERSONA 04</div><div class="persona-name">The Curious Developer</div><div class="persona-need">Not working in AI full-time but wants to stay informed. Needs a single place that surfaces what is worth knowing without requiring 5 separate subscriptions.</div><div class="persona-tags"><span class="persona-tag">DAILY BRIEF</span><span class="persona-tag">TOP STORIES</span><span class="persona-tag">LOW TIME COST</span></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="faq">
+  <div class="section-tag">FAQ</div>
+  <div class="section-title">Common questions</div>
+  <div class="faq-list">
+    <div class="faq-item"><div class="faq-q">Is Pulse free?</div><div class="faq-a">Yes. Pulse is free to use. Sign up with email or Google to unlock bookmarks, saved searches, and the daily brief. No credit card required.</div></div>
+    <div class="faq-item"><div class="faq-q">How often is the feed updated?</div><div class="faq-a">Every 30 minutes. The backend crawls all 20+ sources on a rolling schedule, scores new items, and pushes updates to the feed.</div></div>
+    <div class="faq-item"><div class="faq-q">What is the heat score?</div><div class="faq-a">Heat is a composite score based on upvotes, comment count, engagement velocity, and cross-source mentions. Items decay over time so the feed stays fresh.</div></div>
+    <div class="faq-item"><div class="faq-q">How are sources selected?</div><div class="faq-a">Sources are manually curated for signal quality. We prioritise sources with high technical depth and engaged communities. Quality over quantity.</div></div>
+    <div class="faq-item"><div class="faq-q">Can I suggest a source?</div><div class="faq-a">Yes. If a source consistently produces high-quality AI content that Pulse is not covering, reach out and we will evaluate it.</div></div>
+    <div class="faq-item"><div class="faq-q">Is there a mobile app?</div><div class="faq-a">The web app is fully responsive and works well on mobile. A native app is on the roadmap but not yet available.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="cta">
+  <div class="section-tag" style="display:flex;justify-content:center">GET STARTED</div>
+  <h2>Stop scrolling.<br/>Start knowing.</h2>
+  <p>The AI space moves fast. Pulse makes sure you do too.</p>
+  <a href="/app" class="btn-primary" style="font-size:0.85rem;padding:14px 36px">OPEN PULSE — IT IS FREE</a>
+</section>
+
+<footer>
+  <div class="footer-logo">PULSE</div>
+  <div class="footer-links">
+    <a href="/app" class="footer-link">APP</a>
+    <a href="/privacy.html" class="footer-link">PRIVACY</a>
+    <a href="/terms.html" class="footer-link">TERMS</a>
+  </div>
+  <div class="footer-copy">2026 PULSE. BUILT FOR BUILDERS.</div>
+</footer>
+
+<script>
+document.querySelectorAll(".faq-q").forEach(q=>{
+  q.addEventListener("click",()=>q.parentElement.classList.toggle("open"));
+});
+</script>
+</body>
+</html>
