@@ -38,6 +38,7 @@ export default function App() {
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
+  const [slideDir, setSlideDir] = useState(0); // -1 left, 1 right, 0 none
   const [items,     setItems]    = useState([]);
   const [loading,   setLoading]  = useState(true);
   const [detail,    setDetail]   = useState(null);
@@ -159,7 +160,7 @@ export default function App() {
 
         {/* Page */}
         <div
-          style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", minWidth:0}}
+          style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", minWidth:0, transform:slideDir===0?"translateX(0)":slideDir===-1?"translateX(-18px)":"translateX(18px)", opacity:slideDir===0?1:0, transition:"transform 0.18s ease, opacity 0.18s ease"}}
           onTouchStart={e=>{ touchStartX.current=e.touches[0].clientX; touchStartY.current=e.touches[0].clientY; }}
           onTouchEnd={e=>{
             if(!isMobile) return;
@@ -168,8 +169,8 @@ export default function App() {
             if(Math.abs(dx) < 50 || dy > 80) return; // not a swipe
             const TABS = ["brief","feed","saved"];
             const cur = TABS.indexOf(page);
-            if(dx < 0 && cur < TABS.length-1) setPage(TABS[cur+1]); // swipe left → next
-            if(dx > 0 && cur > 0) setPage(TABS[cur-1]); // swipe right → prev
+            if(dx < 0 && cur < TABS.length-1) { setSlideDir(-1); setTimeout(()=>{ setPage(TABS[cur+1]); setSlideDir(0); },180); }
+            if(dx > 0 && cur > 0) { setSlideDir(1); setTimeout(()=>{ setPage(TABS[cur-1]); setSlideDir(0); },180); }
           }}
         >
           
