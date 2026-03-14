@@ -18,12 +18,12 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
           display: "flex", alignItems: "center", gap: 8, marginBottom: 10,
         }}>
           <span style={{
-            fontSize: FS.xs, fontWeight: 700,
+            fontSize: FS.sm, fontWeight: 700,
             color: m.t, letterSpacing: "0.12em",
             fontFamily: FF.mono,
           }}>{cat.label.toUpperCase()}</span>
           <span style={{
-            fontSize: FS.xs, color: C.faint,
+            fontSize: FS.sm, color: C.faint,
             fontFamily: FF.mono,
           }}>· {cat.count}</span>
         </div>
@@ -31,14 +31,14 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
         {/* AI summary */}
         {cat.summary && (
           <div style={{
-            fontSize: FS.sm,
+            fontSize: FS.base,
+            fontWeight: 400,
             color: C.text,
-            lineHeight: 1.65,
+            lineHeight: 1.75,
             fontFamily: FF.sans,
             borderLeft: `2px solid ${m.t}`,
-            paddingLeft: 10,
-            marginBottom: 12,
-            opacity: 0.88,
+            paddingLeft: 12,
+            marginBottom: 14,
           }}>{cat.summary}</div>
         )}
 
@@ -51,6 +51,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
                 style={{
                   fontSize: FS.sm, color: C.sub,
                   fontFamily: FF.sans,
+                  fontWeight: 400,
                   marginTop: i === 0 ? 0 : 5,
                   overflow: "hidden", textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
