@@ -60,7 +60,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
 
       {/* Title */}
       <div style={{
-        fontSize:FS.sm,
+        fontSize:FS.base,
         fontWeight:500,
         color:C.text,
         lineHeight:1.4,
