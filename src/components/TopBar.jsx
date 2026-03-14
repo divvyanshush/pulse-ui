@@ -1,4 +1,5 @@
 import { FF, FS } from "../constants/theme.js";
+import { MoonIcon, SunIcon, SignOutIcon, BriefIcon, FeedIcon, BmSvg } from "./Shared.jsx";
 
 const TABS = [
   { id:"brief",  label:"Brief"  },
@@ -65,7 +66,12 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
               onMouseEnter={e=>{ if(!active) e.currentTarget.style.color=C.sub; }}
               onMouseLeave={e=>{ if(!active) e.currentTarget.style.color=C.muted; }}
             >
-              {t.id==="saved" && bmCount>0 ? `Saved (${bmCount})` : t.label}
+              <span style={{display:"flex",alignItems:"center",gap:5}}>
+                {t.id==="brief" && <BriefIcon size={12} color="currentColor"/>}
+                {t.id==="feed"  && <FeedIcon  size={12} color="currentColor"/>}
+                {t.id==="saved" && <BmSvg size={11} filled={bmCount>0} color="currentColor"/>}
+                {t.id==="saved" && bmCount>0 ? `Saved (${bmCount})` : t.label}
+              </span>
             </button>
           );
         })}
@@ -85,7 +91,13 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
           }}
           onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
           onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
-        >{isDark?"light":"dark"}</button>
+        style={{display:"flex",alignItems:"center",justifyContent:"center",width:28,height:28,
+            background:"none",border:`1px solid ${C.border}`,
+            cursor:"pointer",color:C.muted,borderRadius:2,transition:"border-color .1s, color .1s",
+          }}
+          onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
+          onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
+        >{isDark ? <SunIcon size={14} color="currentColor"/> : <MoonIcon size={14} color="currentColor"/>}</button>
 
         {/* Auth */}
         {user ? (
@@ -105,7 +117,16 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
               }}
               onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
               onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
-            >sign out</button>
+            style={{display:"flex",alignItems:"center",gap:5,
+                background:"none",border:`1px solid ${C.border}`,
+                padding:"3px 8px",cursor:"pointer",
+                color:C.muted,fontSize:FS.xs,
+                fontFamily:FF.sans,letterSpacing:"0.04em",
+                borderRadius:2,transition:"all .1s",
+              }}
+              onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
+              onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
+            ><SignOutIcon size={12} color="currentColor"/>{!isMobile && "sign out"}</button>
           </div>
         ) : (
           <button onClick={()=>setShowAuth(true)}
