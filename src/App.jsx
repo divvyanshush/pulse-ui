@@ -108,7 +108,7 @@ export default function App() {
   },[savePreferences]);
 
   const handleAuth = useCallback(async(mode,email,password)=>{
-    const {error}=await (mode==="up"?signUp:signIn)(email,password);
+    const {error}=await (mode==="signup"?signUp:signIn)(email,password);
     return error?error.message:null;
   },[signUp,signIn]);
 
