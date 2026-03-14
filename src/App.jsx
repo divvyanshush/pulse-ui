@@ -159,7 +159,7 @@ export default function App() {
 
         {/* Page */}
         <div
-          style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", minWidth:0, transform:slideDir===0?"translateX(0)":slideDir===-1?"translateX(-18px)":"translateX(18px)", opacity:slideDir===0?1:0, transition:"transform 0.18s ease, opacity 0.18s ease"}}
+
           onTouchStart={e=>{ touchStartX.current=e.touches[0].clientX; touchStartY.current=e.touches[0].clientY; }}
           onTouchEnd={e=>{
             if(!isMobile) return;
