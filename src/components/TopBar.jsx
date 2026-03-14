@@ -132,7 +132,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
                   </div>
 
                   {/* Dark/light toggle */}
-                  <button onClick={()=>{ toggleDark(); }}
+                  <button onClick={()=>{ toggleDark(); setMenuOpen(false); }}
                     style={{
                       width:"100%",display:"flex",alignItems:"center",gap:10,
                       padding:"11px 14px",background:"none",border:"none",
