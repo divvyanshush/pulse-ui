@@ -15,12 +15,16 @@ html{scroll-behavior:smooth}
 body{background:#0a0a0a;color:#e8e8e8;font-family:'IBM Plex Mono',monospace;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 ::selection{background:#8D8BFA33;color:#fff}
 a{text-decoration:none;color:inherit}
+img{max-width:100%}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}.reveal-delay-4{transition-delay:0.4s}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
 nav{display:flex;align-items:center;justify-content:space-between;padding:20px 80px;border-bottom:1px solid #1a1a1a;background:#0a0a0a;position:sticky;top:0;z-index:100;animation:fadeIn 0.4s ease}
 .nav-links{display:flex;align-items:center;gap:40px}
 .nav-link{font-size:16px;letter-spacing:0.06em;color:#666;cursor:pointer;background:none;border:none;font-family:'IBM Plex Mono',monospace;transition:color 0.2s}
@@ -32,21 +36,21 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:20px 8
 .hero{padding:80px 80px 0}
 .hero-title{font-family:'IBM Plex Sans',sans-serif;font-size:64px;font-weight:700;line-height:1.05;letter-spacing:-0.02em;margin-bottom:20px;animation:fadeUp 0.6s ease 0.1s both}
 .hero-title span{color:#8D8BFA}
-.hero-sub{font-size:16px;color:#888;line-height:1.6;max-width:680px;margin-bottom:56px;animation:fadeUp 0.6s ease 0.2s both}
+.hero-sub{font-size:16px;color:#888;line-height:1.6;max-width:640px;margin-bottom:56px;animation:fadeUp 0.6s ease 0.2s both}
 .mockup{border:1px solid #1e1e1e;border-radius:8px;overflow:hidden;background:#0d0d0d;animation:fadeUp 0.7s ease 0.35s both}
 .mockup-bar{border-bottom:1px solid #1e1e1e;padding:14px 24px;display:flex;gap:28px;align-items:center;background:#0d0d0d}
 .mockup-logo{color:#8D8BFA;font-size:12px;font-weight:600;letter-spacing:0.1em}
-.mockup-tab{font-size:12px;color:#333;letter-spacing:0.06em}
+.mockup-tab{font-size:12px;color:#333;letter-spacing:0.06em;cursor:default}
 .mockup-tab.active{color:#e8e8e8;border-bottom:1px solid #e8e8e8;padding-bottom:2px}
-.mockup-body{padding:20px 24px;min-height:280px}
+.mockup-body{padding:20px 24px;min-height:320px}
 .mockup-section{margin-bottom:24px}
 .mockup-cat{font-size:9px;letter-spacing:0.16em;margin-bottom:10px;font-family:'IBM Plex Mono',monospace}
 .mockup-summary{border-left:2px solid currentColor;padding-left:12px;margin-bottom:10px}
-.mockup-bar-line{border-radius:2px;margin-bottom:5px;background:#1a1a1a;height:7px}
+.mockup-bar-line{border-radius:2px;margin-bottom:5px;background:#1a1a1a}
 .mockup-item{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .mockup-dot{width:4px;height:4px;border-radius:50%;background:#2a2a2a;flex-shrink:0}
 .mockup-line{height:6px;background:#141414;border-radius:2px}
-.mockup-loading{display:flex;align-items:center;justify-content:center;min-height:240px;color:#333;font-size:11px;letter-spacing:0.1em}
+.mockup-loading{display:flex;align-items:center;justify-content:center;min-height:260px;color:#333;font-size:11px;letter-spacing:0.1em}
 .live-badge{font-size:9px;color:#00ff88;letter-spacing:0.14em;display:flex;align-items:center;gap:5px;margin-left:auto}
 .live-dot{width:5px;height:5px;border-radius:50%;background:#00ff88;animation:pulse 2s ease infinite}
 .features-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px}
@@ -54,6 +58,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:20px 8
 .features-sub{font-size:16px;color:#666;margin-bottom:64px;line-height:1.7}
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:72px 60px}
 .feature-icon{margin-bottom:20px}
+.feature-icon svg{width:32px;height:32px}
 .feature-name{font-family:'IBM Plex Sans',sans-serif;font-size:20px;font-weight:600;margin-bottom:12px;color:#e8e8e8}
 .feature-desc{font-size:16px;color:#555;line-height:1.7}
 .sources-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px}
@@ -64,27 +69,26 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:20px 8
 .cat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .sources-label{font-size:11px;color:#444;letter-spacing:0.1em;margin-bottom:16px}
 .sources-grid{display:flex;flex-wrap:wrap;gap:10px}
-.source-pill{border:1px solid #1e1e1e;border-radius:20px;padding:8px 18px;font-size:14px;color:#666;transition:all 0.2s}
+.source-pill{border:1px solid #1e1e1e;border-radius:20px;padding:8px 18px;font-size:14px;color:#666;letter-spacing:0.02em;transition:all 0.2s;cursor:default}
 .source-pill:hover{border-color:#333;color:#999}
 .brief-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:60px}
 .brief-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:start}
 .brief-timeline{display:flex;flex-direction:column;position:relative;padding-left:24px}
 .brief-timeline::before{content:'';position:absolute;left:4px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,#8D8BFA,#2a2a2a)}
-.brief-point{position:relative;margin-bottom:40px;transition:all 0.4s ease}
+.brief-point{position:relative;margin-bottom:40px;cursor:default}
 .brief-point:last-child{margin-bottom:0}
 .brief-point-marker{position:absolute;left:-24px;top:6px;width:9px;height:9px;border-radius:50%;border:2px solid #8D8BFA;background:#0a0a0a;transition:background 0.3s}
 .brief-point.active .brief-point-marker{background:#8D8BFA}
-.brief-point-text{font-size:16px;line-height:1.7;transition:color 0.4s}
+.brief-point-text{font-size:16px;line-height:1.7;transition:color 0.3s}
 .brief-point.active .brief-point-text{color:#e8e8e8}
-.brief-point.inactive .brief-point-text{color:#2a2a2a}
-.brief-mockup{background:#0d0d0d;border:1px solid #1e1e1e;border-radius:8px;padding:28px;min-height:260px}
-.brief-mockup-label{font-size:9px;letter-spacing:0.2em;color:#444;margin-bottom:24px;font-family:'IBM Plex Mono',monospace}
+.brief-point.inactive .brief-point-text{color:#333}
+.brief-mockup{background:#0d0d0d;border:1px solid #1e1e1e;border-radius:8px;padding:28px;min-height:300px}
+.brief-mockup-label{font-size:9px;letter-spacing:0.2em;color:#444;margin-bottom:24px}
 .brief-row{padding:18px 0;border-bottom:1px solid #141414;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
-.brief-row:first-of-type{padding-top:0}
 .brief-row:last-child{border-bottom:none;padding-bottom:0}
-.brief-row-cat{font-size:9px;letter-spacing:0.16em;margin-bottom:8px;font-family:'IBM Plex Mono',monospace}
+.brief-row-cat{font-size:9px;letter-spacing:0.16em;margin-bottom:8px}
 .brief-row-text{font-size:13px;color:#888;line-height:1.6;border-bottom:1px solid #8D8BFA33;padding-bottom:6px;display:inline}
-.brief-row-heat{font-size:12px;color:#333;font-family:'IBM Plex Mono',monospace;padding-top:20px}
+.brief-row-heat{font-size:12px;color:#333;padding-top:20px}
 .brief-loading{display:flex;align-items:center;justify-content:center;min-height:200px;color:#333;font-size:11px;letter-spacing:0.1em}
 .compare-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
 .compare-sub{font-size:16px;color:#666;margin-bottom:64px;line-height:1.7}
@@ -100,7 +104,7 @@ tr:hover td{background:#0d0d0d}
 .faq-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:60px}
 .faq-list{max-width:800px}
 .faq-item{border-bottom:1px solid #1a1a1a}
-.faq-btn{width:100%;background:none;border:none;color:#e8e8e8;display:flex;justify-content:space-between;align-items:center;padding:24px 0;cursor:pointer;text-align:left;font-family:'IBM Plex Sans',sans-serif;font-size:16px;font-weight:400;gap:16px;transition:color 0.2s;min-height:44px}
+.faq-btn{width:100%;background:none;border:none;color:#e8e8e8;display:flex;justify-content:space-between;align-items:center;padding:24px 0;cursor:pointer;text-align:left;font-family:'IBM Plex Sans',sans-serif;font-size:16px;font-weight:400;gap:16px;transition:color 0.2s}
 .faq-btn:hover{color:#8D8BFA}
 .faq-plus{font-size:22px;color:#444;line-height:1;flex-shrink:0;transition:transform 0.2s,color 0.2s}
 .faq-btn[aria-expanded="true"] .faq-plus{transform:rotate(45deg);color:#8D8BFA}
@@ -118,27 +122,13 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 .footer-link:hover{color:#888}
 .footer-copy{font-size:11px;color:#2a2a2a;letter-spacing:0.1em}
 @media(max-width:1024px){.features-grid{grid-template-columns:repeat(2,1fr)}.brief-layout{grid-template-columns:1fr}}
-@media(max-width:768px){
-  nav{padding:16px 24px}
-  .nav-links .nav-link{display:none}
-  .hero,.section{padding:60px 24px}
-  .hero{padding-bottom:0}
-  .hero-title{font-size:40px}
-  .features-grid{grid-template-columns:1fr;gap:48px}
-  .features-title,.sources-title,.brief-title,.compare-title,.faq-title{font-size:36px}
-  .cta-title{font-size:32px}
-  .cta-section{padding:80px 24px}
-  footer{padding:24px;flex-direction:column;gap:16px;text-align:center}
-  .divider{margin:0 24px}
-  th,td{padding:12px 14px;font-size:12px}
-  .faq-btn{font-size:15px;padding:20px 0}
-}
+@media(max-width:768px){nav{padding:16px 24px}.nav-links .nav-link{display:none}.hero,.section{padding:60px 24px}.hero{padding-bottom:0}.hero-title{font-size:40px}.features-grid{grid-template-columns:1fr;gap:48px}.features-title,.sources-title,.brief-title,.compare-title,.faq-title{font-size:36px}.cta-title{font-size:32px}.cta-section{padding:80px 24px}footer{padding:24px;flex-direction:column;gap:16px;text-align:center}.divider{margin:0 24px}th,td{padding:12px 14px;font-size:12px}.faq-btn{font-size:15px}}
 @media(max-width:480px){.hero-title{font-size:32px}.nav-cta{padding:7px 16px;font-size:13px}}
 </style>
 </head>
 <body>
 <nav>
-  <a href="/"><svg width="183" height="39" viewBox="0 0 183 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.6195 27.7702C11.3018 25.4498 10 22.3043 10 19.0247C10 15.7451 11.3018 12.5996 13.6195 10.2793M17.1192 24.2705C15.7295 22.8784 14.9489 20.9917 14.9489 19.0247C14.9489 17.0577 15.7295 15.171 17.1192 13.7789" stroke="#8D8BFA" stroke-width="2.475" stroke-linecap="round"/><path d="M27.6311 18.496L25.7831 14.944H25.7111V27.76H23.1191V11.008H26.1431L31.6151 20.272L33.4631 23.824H33.5351V11.008H36.1271V27.76H33.1031L27.6311 18.496Z" fill="#8D8BFA"/><path d="M44.956 28.048C44.06 28.048 43.26 27.896 42.556 27.592C41.852 27.288 41.252 26.856 40.756 26.296C40.26 25.72 39.876 25.032 39.604 24.232C39.348 23.416 39.22 22.512 39.22 21.52C39.22 20.528 39.348 19.632 39.604 18.832C39.876 18.016 40.26 17.328 40.756 16.768C41.252 16.192 41.852 15.752 42.556 15.448C43.26 15.144 44.06 14.992 44.956 14.992C45.868 14.992 46.668 15.152 47.356 15.472C48.06 15.792 48.644 16.24 49.108 16.816C49.572 17.376 49.916 18.032 50.14 18.784C50.38 19.536 50.5 20.344 50.5 21.208V22.192H41.932V22.6C41.932 23.56 42.212 24.352 42.772 24.976C43.348 25.584 44.164 25.888 45.22 25.888C45.988 25.888 46.636 25.72 47.164 25.384C47.692 25.048 48.14 24.592 48.508 24.016L50.044 25.528C49.58 26.296 48.908 26.912 48.028 27.376C47.148 27.824 46.124 28.048 44.956 28.048Z" fill="#8D8BFA"/><path d="M60.9559 25.696H60.8599C60.7479 26 60.5959 26.296 60.4039 26.584C60.2279 26.872 59.9959 27.128 59.7079 27.352C59.4359 27.56 59.0999 27.728 58.6999 27.856C58.3159 27.984 57.8679 28.048 57.3559 28.048C56.0599 28.048 55.0519 27.632 54.3319 26.8C53.6279 25.968 53.2759 24.776 53.2759 23.224V15.28H55.8919V22.888C55.8919 24.824 56.6919 25.792 58.2919 25.792C58.6279 25.792 58.9559 25.752 59.2759 25.672C59.5959 25.576 59.8759 25.44 60.1159 25.264C60.3719 25.088 60.5719 24.864 60.7159 24.592C60.8759 24.32 60.9559 24 60.9559 23.632V15.28H63.5719V27.76H60.9559V25.696Z" fill="#8D8BFA"/><path d="M67.3178 27.76V15.28H69.9338V17.68H70.0538C70.2298 17.04 70.5978 16.48 71.1578 16C71.7178 15.52 72.4938 15.28 73.4858 15.28H74.1818V17.8H73.1498C72.1098 17.8 71.3098 17.968 70.7498 18.304C70.2058 18.64 69.9338 19.136 69.9338 19.792V27.76H67.3178Z" fill="#8D8BFA"/><path d="M85.4618 27.76C84.7738 27.76 84.2458 27.568 83.8778 27.184C83.5098 26.784 83.2858 26.28 83.2058 25.672H83.0858C82.8458 26.456 82.4058 27.048 81.7658 27.448C81.1258 27.848 80.3498 28.048 79.4378 28.048C78.1418 28.048 77.1418 27.712 76.4378 27.04C75.7498 26.368 75.4058 25.464 75.4058 24.328C75.4058 23.08 75.8538 22.144 76.7498 21.52C77.6618 20.896 78.9898 20.584 80.7338 20.584H82.9898V19.528C82.9898 18.76 82.7818 18.168 82.3658 17.752C81.9498 17.336 81.3018 17.128 80.4218 17.128C79.6858 17.128 79.0858 17.288 78.6218 17.608C78.1578 17.928 77.7658 18.336 77.4458 18.832L75.8858 17.416C76.3018 16.712 76.8858 16.136 77.6378 15.688C78.3898 15.224 79.3738 14.992 80.5898 14.992C82.2058 14.992 83.4458 15.368 84.3098 16.12C85.1738 16.872 85.6058 17.952 85.6058 19.36V25.624H86.9258V27.76H85.4618Z" fill="#8D8BFA"/><path d="M92.1536 27.76C91.2576 27.76 90.5856 27.536 90.1376 27.088C89.7056 26.624 89.4896 25.984 89.4896 25.168V10H92.1056V25.624H93.8336V27.76H92.1536Z" fill="#8D8BFA"/><path d="M104.651 28.048C102.459 28.048 100.739 27.312 99.4911 25.84C98.2431 24.352 97.6191 22.2 97.6191 19.384C97.6191 17.976 97.7791 16.736 98.0991 15.664C98.4191 14.592 98.8831 13.688 99.4911 12.952C100.099 12.216 100.835 11.664 101.699 11.296C102.579 10.912 103.563 10.72 104.651 10.72C106.107 10.72 107.323 11.04 108.299 11.68C109.291 12.32 110.067 13.264 110.627 14.512L108.347 15.76C108.059 14.96 107.611 14.328 107.003 13.864C106.411 13.384 105.627 13.144 104.651 13.144C103.355 13.144 102.339 13.584 101.603 14.464C100.867 15.344 100.499 16.56 100.499 18.112V20.656C100.499 22.208 100.867 23.424 101.603 24.304C102.339 25.184 103.355 25.624 104.651 25.624C105.659 25.624 106.475 25.368 107.099 24.856C107.739 24.328 108.211 13.656 108.515 22.84L110.699 24.16C110.139 25.376 109.355 26.328 108.347 27.016C107.339 27.704 106.107 28.048 104.651 28.048Z" fill="#8D8BFA"/><path d="M113.382 27.76V15.28H115.998V17.68H116.118C116.294 17.04 116.662 16.48 117.222 16C117.782 15.52 118.558 15.28 119.55 15.28H120.246V17.8H119.214C118.174 17.8 117.374 17.968 116.814 18.304C116.27 18.64 115.998 19.136 115.998 19.792V27.76H113.382Z" fill="#8D8BFA"/><path d="M134.212 15.28H136.756L138.028 20.512L139.156 25.24H139.228L140.524 20.512L142.036 15.28H144.388L145.924 20.512L147.244 25.24H147.316L148.42 20.512L149.716 15.28H152.14L148.78 27.76H145.828L143.188 18.568H143.14L142.156 22.072L140.5 27.76H137.62L134.212 15.28Z" fill="#8D8BFA"/><path d="M157.296 27.76C156.4 27.76 155.728 27.536 155.28 27.088C154.848 26.624 154.632 25.984 154.632 25.168V10H157.248V25.624H158.976V27.76H157.296Z" fill="#8D8BFA"/><path d="M164.977 13.7789C166.366 15.171 167.147 17.0577 167.147 19.0247C167.147 20.9917 166.366 22.8784 164.977 24.2705M168.476 10.2793C170.794 12.5996 172.096 15.7451 172.096 19.0247C172.096 22.3043 170.794 25.4498 168.476 27.7701" stroke="#8D8BFA" stroke-width="2.475" stroke-linecap="round"/></svg></a>
+  <a href="/"><svg width="183" height="39" viewBox="0 0 183 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.6195 27.7702C11.3018 25.4498 10 22.3043 10 19.0247C10 15.7451 11.3018 12.5996 13.6195 10.2793M17.1192 24.2705C15.7295 22.8784 14.9489 20.9917 14.9489 19.0247C14.9489 17.0577 15.7295 15.171 17.1192 13.7789" stroke="#8D8BFA" stroke-width="2.475" stroke-linecap="round"/><path d="M27.6311 18.496L25.7831 14.944H25.7111V27.76H23.1191V11.008H26.1431L31.6151 20.272L33.4631 23.824H33.5351V11.008H36.1271V27.76H33.1031L27.6311 18.496Z" fill="#8D8BFA"/><path d="M44.956 28.048C44.06 28.048 43.26 27.896 42.556 27.592C41.852 27.288 41.252 26.856 40.756 26.296C40.26 25.72 39.876 25.032 39.604 24.232C39.348 23.416 39.22 22.512 39.22 21.52C39.22 20.528 39.348 19.632 39.604 18.832C39.876 18.016 40.26 17.328 40.756 16.768C41.252 16.192 41.852 15.752 42.556 15.448C43.26 15.144 44.06 14.992 44.956 14.992C45.868 14.992 46.668 15.152 47.356 15.472C48.06 15.792 48.644 16.24 49.108 16.816C49.572 17.376 49.916 18.032 50.14 18.784C50.38 19.536 50.5 20.344 50.5 21.208V22.192H41.932V22.6C41.932 23.56 42.212 24.352 42.772 24.976C43.348 25.584 44.164 25.888 45.22 25.888C45.988 25.888 46.636 25.72 47.164 25.384C47.692 25.048 48.14 24.592 48.508 24.016L50.044 25.528C49.58 26.296 48.908 26.912 48.028 27.376C47.148 27.824 46.124 28.048 44.956 28.048Z" fill="#8D8BFA"/><path d="M164.977 13.7789C166.366 15.171 167.147 17.0577 167.147 19.0247C167.147 20.9917 166.366 22.8784 164.977 24.2705M168.476 10.2793C170.794 12.5996 172.096 15.7451 172.096 19.0247C172.096 22.3043 170.794 25.4498 168.476 27.7701" stroke="#8D8BFA" stroke-width="2.475" stroke-linecap="round"/></svg></a>
   <div class="nav-links">
     <button class="nav-link" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">HOW IT WORKS</button>
     <button class="nav-link" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">FEATURES</button>
@@ -146,7 +136,6 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
     <a href="/app" class="nav-cta">OPEN APP</a>
   </div>
 </nav>
-
 <section class="hero">
   <h1 class="hero-title">AI signals <span>Zero</span> noise</h1>
   <p class="hero-sub">NeuralCrawl aggregates research papers, GitHub repositories, tools, and news from 20+ sources, ranking them in real time so you instantly see what actually matters in AI.</p>
@@ -162,6 +151,67 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
   </div>
 </section>
 <hr class="divider" style="margin-top:80px"/>
+<section class="section" id="features">
+  <h2 class="features-title reveal">Built for people who build with <span>AI</span></h2>
+  <p class="features-sub reveal reveal-delay-1">Not a newsletter. Not a Twitter feed. A real-time intelligence layer that works while you do.</p>
+  <div class="features-grid">
+    <div class="reveal reveal-delay-1"><div class="feature-icon"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M10 24L24 10M24 10L38 24M24 10V38" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="feature-name">Heat Ranking</div><p class="feature-desc">Every item gets a heat score based on velocity, engagement, and cross-source signals. The top story is actually the top story.</p></div>
+    <div class="reveal reveal-delay-2"><div class="feature-icon"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M24 37.9992V26.9992M24 26.9992L14 20.9992M24 26.9992L34 20.9992M14 20.9992V12.2592C14.0015 11.5704 14.1809 10.8936 14.5208 10.2944C14.8607 9.69521 15.3495 9.19397 15.94 8.83921L21.94 5.23921C22.5621 4.86543 23.2742 4.66797 24 4.66797C24.7258 4.66797 25.4379 4.86543 26.06 5.23921L32.06 8.83921C32.6505 9.19397 33.1393 9.69521 33.4792 10.2944C33.8191 10.8936 33.9985 11.5704 34 12.2592V20.9992" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="feature-name">Cross-Source Clustered</div><p class="feature-desc">When the same story breaks on HN, arXiv, and GitHub simultaneously, NeuralCrawl clusters them. One item, full picture.</p></div>
+    <div class="reveal reveal-delay-3"><div class="feature-icon"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M6 14V10C6 8.93913 6.42143 7.92172 7.17157 7.17157C7.92172 6.42143 8.93913 6 10 6H14M34 6H38C39.0609 6 40.0783 6.42143 40.8284 7.17157C41.5786 7.92172 42 8.93913 42 10V14M42 34V38C42 39.0609 41.5786 40.0783 40.8284 40.8284C40.0783 41.5786 39.0609 42 38 42H34M14 42H10C8.93913 42 7.92172 41.5786 7.17157 40.8284C6.42143 40.0783 6 39.0609 6 38V34M14 16H30M14 24H34M14 32H26" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="feature-name">AI Daily Brief</div><p class="feature-desc">Every morning, NeuralCrawl summarises what happened overnight across all categories. Start your day informed in 90 seconds.</p></div>
+    <div class="reveal reveal-delay-2"><div class="feature-icon"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M4 12C5.2 13 6.4 14 9 14C14 14 14 10 19 10C24.2 10 23.8 14 29 14C34 14 34 10 39 10C41.6 10 42.8 11 44 12M4 24C5.2 25 6.4 26 9 26C14 26 14 22 19 22C24.2 22 23.8 26 29 26C34 26 34 22 39 22C41.6 22 42.8 23 44 24M4 36C5.2 37 6.4 38 9 38C14 38 14 34 19 34C24.2 34 23.8 38 29 38C34 38 34 34 39 34C41.6 34 42.8 35 44 36" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="feature-name">Zero Friction</div><p class="feature-desc">No algorithm trying to addict you. No sponsored posts. No engagement bait. Just the signal, ranked honestly.</p></div>
+    <div class="reveal reveal-delay-3"><div class="feature-icon"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M40.0009 4.00088V12.0009M44.0009 8.00088H36.0009M22.0349 5.62888C22.1206 5.17009 22.364 4.75571 22.7231 4.45752C23.0821 4.15933 23.5342 3.99609 24.0009 3.99609C24.4676 3.99609 24.9196 4.15933 25.2787 4.45752C25.6377 4.75571 25.8812 5.17009 25.9669 5.62888L28.0689 16.7449C28.2182 17.5352 28.6022 18.2621 29.1709 18.8308C29.7396 19.3995 30.4666 19.7836 31.2569 19.9329L42.3729 22.0349C42.8317 22.1206 43.246 22.364 43.5442 22.7231C43.8424 23.0821 44.0057 23.5342 44.0057 24.0009C44.0057 24.4676 43.8424 24.9196 43.5442 25.2787C43.246 25.6377 42.8317 25.8812 42.3729 25.9669L31.2569 28.0689C30.4666 28.2182 29.7396 28.6022 29.1709 29.1709C28.6022 29.7396 28.2182 30.4666 28.0689 31.2569L25.9669 42.3729C25.8812 42.8317 25.6377 43.246 25.2787 43.5442C24.9196 43.8424 24.4676 44.0057 24.0009 44.0057C23.5342 44.0057 23.0821 43.8424 22.7231 43.5442C22.364 43.246 22.1206 42.8317 22.0349 42.3729L19.9329 31.2569C19.7836 30.4666 19.3995 29.7396 18.8308 29.1709C18.2621 28.6022 17.5352 28.2182 16.7449 28.0689L5.62888 25.9669C5.17009 25.8812 4.75571 25.6377 4.45752 25.2787C4.15933 24.9196 3.99609 24.4676 3.99609 24.0009C3.99609 23.5342 4.15933 23.0821 4.45752 22.7231C4.75571 22.364 5.17009 22.1206 5.62888 22.0349L16.7449 19.9329C17.5352 19.7836 18.2621 19.3995 18.8308 18.8308C19.3995 18.2621 19.7836 17.5352 19.9329 16.7449L22.0349 5.62888Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="feature-name">AI Insights</div><p class="feature-desc">Click any item for an instant AI summary. No need to open a paper just to see if it is worth it.</p></div>
+    <div class="reveal reveal-delay-4"><div class="feature-icon"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M22 44H11C9.67392 44 8.40215 43.4732 7.46447 42.5355C6.52678 41.5979 6 40.3261 6 39M6 39C6 37.6739 6.52678 36.4021 7.46447 35.4645C8.40215 34.5268 9.67392 34 11 34H20.002M6 39V9C6 7.67392 6.52678 6.40215 7.46447 5.46447C8.40215 4.52678 9.67392 4 11 4H36C36.5304 4 37.0391 4.21071 37.4142 4.58579C37.7893 4.96086 38 5.46957 38 6V22M42 44L38.242 40.244M40 36C40 39.3137 37.3137 42 34 42C30.6863 42 28 39.3137 28 36C28 32.6863 30.6863 30 34 30C37.3137 30 40 32.6863 40 36Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="feature-name">Bookmark and Search</div><p class="feature-desc">Save items, search history, pick up where you left off. Your reading list synced across devices.</p></div>
+  </div>
+</section>
+<hr class="divider"/>
+<section class="section">
+  <h2 class="sources-title reveal">Every corner of the AI stack</h2>
+  <p class="sources-sub reveal reveal-delay-1">From foundational research to funding rounds — if it matters to AI builders, NeuralCrawl tracks it.</p>
+  <div class="cat-pills reveal reveal-delay-2">
+    <div class="cat-pill"><div class="cat-dot" style="background:#22d3ee"></div>MODELS</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#4da6ff"></div>RESEARCH</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#c77dff"></div>TOOLS</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#8D8BFA"></div>REPOS</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#fbbf24"></div>FUNDING</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#f97316"></div>POLICY</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#888"></div>DISCUSS</div>
+  </div>
+  <div class="sources-label reveal reveal-delay-3">Sources</div>
+  <div class="sources-grid reveal reveal-delay-3">
+    <div class="source-pill">Hacker News</div><div class="source-pill">arXiv</div><div class="source-pill">GitHub</div><div class="source-pill">Simon Willison</div><div class="source-pill">Interconnects</div><div class="source-pill">OpenAI Blog</div><div class="source-pill">HuggingFace</div><div class="source-pill">MIT Tech Review</div><div class="source-pill">TechCrunch AI</div><div class="source-pill">The Verge AI</div><div class="source-pill">VentureBeat</div><div class="source-pill">Lobste.rs</div><div class="source-pill">Google Research</div><div class="source-pill">LangChain Blog</div><div class="source-pill">Wired AI</div><div class="source-pill">Dev.to</div><div class="source-pill">Last Week in AI</div><div class="source-pill">Import AI</div><div class="source-pill">Towards Data Science</div><div class="source-pill">DeepMind Blog</div>
+  </div>
+</section>
+<hr class="divider"/>
+<section class="section">
+  <h2 class="brief-title reveal">The brief that replaces your infinite tab switching</h2>
+  <div class="brief-layout">
+    <div class="brief-timeline reveal reveal-delay-1">
+      <div class="brief-point active"><div class="brief-point-marker"></div><p class="brief-point-text">Most developers start the day by opening Twitter, HN, and three newsletters spending 20 minutes to figure out what is worth reading. NeuralCrawl compresses that into 90 seconds.</p></div>
+      <div class="brief-point inactive"><div class="brief-point-marker"></div><p class="brief-point-text">The daily brief runs every morning across every category. Each section is an AI-generated summary of the highest-signal items from the last 24 hours.</p></div>
+      <div class="brief-point inactive"><div class="brief-point-marker"></div><p class="brief-point-text">You are not reading a curated opinion. You are reading a structured summary of what the community actually engaged with ranked by real signals.</p></div>
+    </div>
+    <div class="brief-mockup reveal reveal-delay-2" id="brief-mockup"><div class="brief-loading">LOADING LIVE BRIEF...</div></div>
+  </div>
+</section>
+<hr class="divider"/>
+<section class="section">
+  <h2 class="compare-title reveal">Why not just use Twitter?</h2>
+  <p class="compare-sub reveal reveal-delay-1">Every option has a trade-off. Here is an honest comparison.</p>
+  <div class="compare-wrap reveal reveal-delay-2">
+    <table>
+      <thead><tr><th style="width:220px">Features</th><th class="nc">NeuralCrawl</th><th>X</th><th>HN</th><th>NEWSLETTERS</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Real-time updates</td><td class="nc">30 min</td><td>Live</td><td>Live</td><td>Weekly</td></tr>
+        <tr><td class="label">Multi-source aggregation</td><td class="nc">20+ sources</td><td>One platform</td><td>One platform</td><td>Weekly</td></tr>
+        <tr><td class="label">Heat / relevance ranking</td><td class="nc">Algorithmic</td><td>Engagement bait</td><td>Votes only</td><td>One author</td></tr>
+        <tr><td class="label">AI summaries on demand</td><td class="nc">Per item</td><td>No</td><td>No</td><td>Editorial</td></tr>
+        <tr><td class="label">Daily structured brief</td><td class="nc">Every morning</td><td>No</td><td>No</td><td>Some</td></tr>
+        <tr><td class="label">GitHub and arXiv coverage</td><td class="nc">Native</td><td>Manual follows</td><td>Partial</td><td>Occasional</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<hr class="divider"/>
 <section class="section" id="faq">
   <h2 class="faq-title reveal">Common questions</h2>
   <div class="faq-list reveal reveal-delay-1">
@@ -175,9 +225,9 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 </section>
 <hr class="divider"/>
 <section class="cta-section">
-  <h2 class="cta-title reveal">Stop Switching Between &#8734; Tabs.<br/><span>Start Knowing.</span></h2>
+  <h2 class="cta-title reveal">Stop Switching Between Tabs.<br/><span>Start Knowing.</span></h2>
   <p class="cta-sub reveal reveal-delay-1">The AI space moves fast. NeuralCrawl makes sure you do too.</p>
-  <a href="/app" class="cta-btn reveal reveal-delay-2">OPEN NEURALCRAWL &#8212; IT IS FREE</a>
+  <a href="/app" class="cta-btn reveal reveal-delay-2">OPEN NEURALCRAWL — IT IS FREE</a>
 </section>
 <footer>
   <svg width="120" height="26" viewBox="0 0 183 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.6195 27.7702C11.3018 25.4498 10 22.3043 10 19.0247C10 15.7451 11.3018 12.5996 13.6195 10.2793M17.1192 24.2705C15.7295 22.8784 14.9489 20.9917 14.9489 19.0247C14.9489 17.0577 15.7295 15.171 17.1192 13.7789" stroke="#333" stroke-width="2.475" stroke-linecap="round"/><path d="M27.6311 18.496L25.7831 14.944H25.7111V27.76H23.1191V11.008H26.1431L31.6151 20.272L33.4631 23.824H33.5351V11.008H36.1271V27.76H33.1031L27.6311 18.496Z" fill="#333"/></svg>
@@ -190,70 +240,16 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
   <span class="footer-copy">BUILT FOR BUILDERS</span>
 </footer>
 <script>
-const API='https://pulse-backend-production-cd92.up.railway.app';
-const TYPE_COLORS={model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',product:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316',repo:'#8D8BFA'};
-const CAT_LABELS={model:'MODELS & RELEASES',research:'RESEARCH & PAPERS',tool:'TOOLS & LIBRARIES',product:'TOOLS & LIBRARIES',discuss:'COMMUNITY',funding:'FUNDING',policy:'POLICY',repo:'REPOS'};
-function timeAgo(ts){if(!ts)return'';const d=Math.floor((Date.now()/1000-ts)/60);if(d<60)return d+'m ago';if(d<1440)return Math.floor(d/60)+'h ago';return Math.floor(d/1440)+'d ago';}
-async function loadHeroMockup(){
-  const el=document.getElementById('hero-mockup');
-  try{
-    const res=await fetch(API+'/feed');
-    const data=await res.json();
-    const items=(data.items||[]).slice(0,12);
-    const grouped={};
-    items.forEach(i=>{const t=i.type==='product'?'tool':i.type;if(!grouped[t])grouped[t]=[];if(grouped[t].length<4)grouped[t].push(i);});
-    const cats=Object.keys(grouped).slice(0,3);
-    if(!cats.length){el.innerHTML='<div class="mockup-loading">NO DATA</div>';return;}
-    el.innerHTML=cats.map(cat=>{
-      const color=TYPE_COLORS[cat]||'#888';
-      const label=CAT_LABELS[cat]||cat.toUpperCase();
-      const catItems=grouped[cat];
-      return '<div class="mockup-section">'
-        +'<div class="mockup-cat" style="color:'+color+'">'+label+'</div>'
-        +'<div class="mockup-summary" style="border-color:'+color+'44">'
-        +'<div class="mockup-bar-line" style="width:88%"></div>'
-        +'<div class="mockup-bar-line" style="width:72%"></div>'
-        +'<div class="mockup-bar-line" style="width:60%"></div>'
-        +'</div>'
-        +catItems.map(i=>'<div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:'+(50+Math.random()*38)+'%"></div><span style="font-size:9px;color:#333;margin-left:auto;white-space:nowrap">'+timeAgo(i.time)+'</span></div>').join('')
-        +'</div>';
-    }).join('');
-  }catch(e){el.innerHTML='<div class="mockup-loading">COULD NOT LOAD FEED</div>';}
-}
-async function loadBriefMockup(){
-  const el=document.getElementById('brief-mockup');
-  try{
-    const res=await fetch(API+'/digest');
-    const data=await res.json();
-    const cats=(data.categories||[]).filter(c=>c.summary).slice(0,4);
-    if(!cats.length){el.innerHTML='<div class="brief-loading">NO BRIEF DATA</div>';return;}
-    const colorMap={model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316'};
-    el.innerHTML='<div class="brief-mockup-label">TODAY'S BRIEF</div>'
-      +cats.map(cat=>{
-        const color=colorMap[cat.id]||'#8D8BFA';
-        const heat=cat.items&&cat.items[0]?cat.items[0].heat:'';
-        return '<div class="brief-row">'
-          +'<div class="brief-row-left">'
-          +'<div class="brief-row-cat" style="color:'+color+'">'+cat.label.toUpperCase()+' &middot; '+cat.count+' ITEMS</div>'
-          +'<span class="brief-row-text">'+cat.summary+'</span>'
-          +'</div>'
-          +(heat?'<div class="brief-row-heat">'+heat+'</div>':'')
-          +'</div>';
-      }).join('');
-  }catch(e){el.innerHTML='<div class="brief-loading">COULD NOT LOAD BRIEF</div>';}
-}
-function toggleFaq(btn){
-  const answer=btn.nextElementSibling;
-  const isOpen=answer.classList.contains('open');
-  document.querySelectorAll('.faq-answer').forEach(a=>a.classList.remove('open'));
-  document.querySelectorAll('.faq-btn').forEach(b=>b.setAttribute('aria-expanded','false'));
-  if(!isOpen){answer.classList.add('open');btn.setAttribute('aria-expanded','true');}
-}
-const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+const API = 'https://pulse-backend-production-cd92.up.railway.app';
+const TYPE_COLORS = {model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',product:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316',repo:'#8D8BFA'};
+const CAT_LABELS = {model:'MODELS & RELEASES',research:'RESEARCH & PAPERS',tool:'TOOLS & LIBRARIES',product:'TOOLS & LIBRARIES',discuss:'COMMUNITY',funding:'FUNDING',policy:'POLICY',repo:'REPOS'};
+function timeAgo(ts){if(!ts)return '';const d=Math.floor((Date.now()/1000-ts)/60);if(d<60)return d+'m ago';if(d<1440)return Math.floor(d/60)+'h ago';return Math.floor(d/1440)+'d ago';}
+async function loadHeroMockup(){const el=document.getElementById('hero-mockup');try{const res=await fetch(API+'/feed');const data=await res.json();const items=(data.items||[]).slice(0,12);const grouped={};items.forEach(i=>{const t=i.type==='product'?'tool':i.type;if(!grouped[t])grouped[t]=[];if(grouped[t].length<4)grouped[t].push(i);});const cats=Object.keys(grouped).slice(0,3);if(!cats.length){el.innerHTML='<div class="mockup-loading">NO DATA</div>';return;}el.innerHTML=cats.map(cat=>{const color=TYPE_COLORS[cat]||'#888';const label=CAT_LABELS[cat]||cat.toUpperCase();const catItems=grouped[cat];return'<div class="mockup-section"><div class="mockup-cat" style="color:'+color+'">'+label+'</div><div class="mockup-summary" style="border-color:'+color+'44"><div class="mockup-bar-line" style="height:7px;width:88%"></div><div class="mockup-bar-line" style="height:7px;width:72%"></div><div class="mockup-bar-line" style="height:7px;width:60%"></div></div>'+catItems.map(i=>'<div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:'+(50+Math.random()*40)+'%"></div><span style="font-size:9px;color:#333;margin-left:auto;white-space:nowrap">'+timeAgo(i.time)+'</span></div>').join('')+'</div>';}).join('');}catch(e){el.innerHTML='<div class="mockup-loading">COULD NOT LOAD FEED</div>';}}
+async function loadBriefMockup(){const el=document.getElementById('brief-mockup');try{const res=await fetch(API+'/digest');const data=await res.json();const cats=(data.categories||[]).filter(c=>c.summary).slice(0,4);if(!cats.length){el.innerHTML='<div class="brief-loading">NO BRIEF DATA</div>';return;}const colorMap={model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316'};el.innerHTML='<div class="brief-mockup-label">TODAY\'S BRIEF</div>'+cats.map(cat=>{const color=colorMap[cat.id]||'#8D8BFA';const heat=cat.items&&cat.items[0]?cat.items[0].heat:'';return'<div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:'+color+'">'+cat.label.toUpperCase()+' · '+cat.count+' ITEMS</div><span class="brief-row-text">'+cat.summary+'</span></div>'+(heat?'<div class="brief-row-heat">'+heat+'</div>':'')+'</div>';}).join('');}catch(e){el.innerHTML='<div class="brief-loading">COULD NOT LOAD BRIEF</div>';}}
+function toggleFaq(btn){const answer=btn.nextElementSibling;const isOpen=answer.classList.contains('open');document.querySelectorAll('.faq-answer').forEach(a=>a.classList.remove('open'));document.querySelectorAll('.faq-btn').forEach(b=>b.setAttribute('aria-expanded','false'));if(!isOpen){answer.classList.add('open');btn.setAttribute('aria-expanded','true');}}
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-let briefActive=0;
-const briefPoints=document.querySelectorAll('.brief-point');
-if(briefPoints.length){setInterval(()=>{briefPoints[briefActive].classList.remove('active');briefPoints[briefActive].classList.add('inactive');briefActive=(briefActive+1)%briefPoints.length;briefPoints[briefActive].classList.remove('inactive');briefPoints[briefActive].classList.add('active');},3500);}
+let briefActive=0;const briefPoints=document.querySelectorAll('.brief-point');if(briefPoints.length){setInterval(()=>{briefPoints[briefActive].classList.remove('active');briefPoints[briefActive].classList.add('inactive');briefActive=(briefActive+1)%briefPoints.length;briefPoints[briefActive].classList.remove('inactive');briefPoints[briefActive].classList.add('active');},3500);}
 loadHeroMockup();
 loadBriefMockup();
 </script>
