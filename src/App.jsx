@@ -157,27 +157,42 @@ export default function App() {
       {/* ── Content ── */}
       <div style={{flex:1, display:"flex", overflow:"hidden", minWidth:0}}>
 
-        {/* Page */}
-        <div
-
-          onTouchStart={e=>{ touchStartX.current=e.touches[0].clientX; touchStartY.current=e.touches[0].clientY; }}
-          onTouchEnd={e=>{
-            if(!isMobile) return;
-            const dx = e.changedTouches[0].clientX - touchStartX.current;
-            const dy = Math.abs(e.changedTouches[0].clientY - touchStartY.current);
-            if(Math.abs(dx) < 50 || dy > 80) return; // not a swipe
-            const TABS = ["brief","feed","saved"];
-            const cur = TABS.indexOf(page);
-            if(dx < 0 && cur < TABS.length-1) { setSlideDir(-1); setTimeout(()=>{ setPage(TABS[cur+1]); setSlideDir(0); },180); }
-            if(dx > 0 && cur > 0) { setSlideDir(1); setTimeout(()=>{ setPage(TABS[cur-1]); setSlideDir(0); },180); }
-          }}
-        >
-          
-          {page==="brief"    && <BriefPage  {...shared} />}
-          {page==="feed"     && <FeedPage     {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>}
-          {page==="trending" && <TrendingPage {...shared}/>}
-          {page==="saved"    && <SavedPage    {...shared}/>}
-        </div>
+        {/* Page — sliding container */}
+        {(()=>{
+          const TABS = ["brief","feed","saved"];
+          const idx = Math.max(0, TABS.indexOf(page));
+          return (
+            <div style={{flex:1, overflow:"hidden", position:"relative", minWidth:0}}
+              onTouchStart={e=>{ touchStartX.current=e.touches[0].clientX; touchStartY.current=e.touches[0].clientY; }}
+              onTouchEnd={e=>{
+                if(!isMobile) return;
+                const dx = e.changedTouches[0].clientX - touchStartX.current;
+                const dy = Math.abs(e.changedTouches[0].clientY - touchStartY.current);
+                if(Math.abs(dx) < 50 || dy > 80) return;
+                const cur = TABS.indexOf(page);
+                if(dx < 0 && cur < TABS.length-1) setPage(TABS[cur+1]);
+                if(dx > 0 && cur > 0) setPage(TABS[cur-1]);
+              }}
+            >
+              <div style={{
+                display:"flex", height:"100%",
+                width:`${TABS.length * 100}%`,
+                transform:`translateX(${-(idx * 100/TABS.length)}%)`,
+                transition:"transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
+              }}>
+                <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
+                  <BriefPage {...shared}/>
+                </div>
+                <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
+                  <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>
+                </div>
+                <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
+                  <SavedPage {...shared}/>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Detail panel */}
         {detail && (
