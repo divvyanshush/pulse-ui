@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { API, FF, FS, getTM } from "../constants/theme.js";
 import { Row } from "./Row.jsx";
+import { usePullToRefresh, PullIndicator } from "./Shared.jsx";
 
 function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, readIds, detail }) {
   const [open, setOpen] = useState(false);
@@ -134,17 +135,22 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
   );
 }
 
-export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readIds, detail }) {
+export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readIds, detail, isMobile }) {
   const [digest,  setDigest]  = useState(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState(null);
 
-  useEffect(() => {
+  const loadDigest = () => {
+    setLoading(true);
     fetch(`${API}/digest`)
       .then(r => r.json())
       .then(d => { setDigest(d); setLoading(false); })
       .catch(e => { setError(e.message); setLoading(false); });
-  }, []);
+  };
+
+  useEffect(() => { loadDigest(); }, []);
+
+  const ptr = usePullToRefresh(loadDigest, isMobile);
 
   return (
     <div style={{ flex:1, display:"flex", flexDirection:"column", background:C.bg, overflow:"hidden", minWidth:0 }}>
@@ -158,19 +164,23 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
       </div>
 
       {/* Content */}
-      <div style={{ flex:1, overflowY:"auto" }}>
+      <div style={{ flex:1, overflowY:"auto" }} onTouchStart={ptr.onTouchStart} onTouchMove={ptr.onTouchMove} onTouchEnd={ptr.onTouchEnd}>
+        <PullIndicator progress={ptr.progress} pulling={ptr.pulling} C={C}/>
         {loading && (
-          <div style={{"--sk-base":isDark?"#1a1a1a":"#efefef","--sk-highlight":isDark?"#252525":"#e0e0e0"}}>
+          <div style={{"--sk-base":isDark?"#1e1e1e":"#efefef","--sk-highlight":isDark?"#2a2a2a":"#e0e0e0"}}>
             {[1,2,3,4].map(n=>(
-              <div key={n} style={{padding:"18px 16px",borderBottom:`1px solid ${C.border}`}}>
-                <div style={{display:"flex",gap:8,marginBottom:12}}>
-                  <div className="sk" style={{width:80,height:8}}/>
-                  <div className="sk" style={{width:30,height:8}}/>
+              <div key={n} style={{padding:"20px 16px",borderBottom:`1px solid ${C.border}`}}>
+                <div style={{display:"flex",gap:8,marginBottom:14}}>
+                  <div className="sk" style={{width:90,height:11,borderRadius:3}}/>
+                  <div className="sk" style={{width:32,height:11,borderRadius:3}}/>
                 </div>
-                <div className="sk" style={{width:"92%",height:10,marginBottom:6}}/>
-                <div className="sk" style={{width:"75%",height:10,marginBottom:6}}/>
-                <div className="sk" style={{width:"55%",height:10,marginBottom:14}}/>
-                <div className="sk" style={{width:80,height:22,borderRadius:2}}/>
+                <div className="sk" style={{width:"95%",height:16,marginBottom:8,borderRadius:3}}/>
+                <div className="sk" style={{width:"80%",height:16,marginBottom:8,borderRadius:3}}/>
+                <div className="sk" style={{width:"60%",height:16,marginBottom:16,borderRadius:3}}/>
+                <div className="sk" style={{width:"35%",height:13,marginBottom:10,borderRadius:3}}/>
+                <div className="sk" style={{width:"45%",height:13,marginBottom:10,borderRadius:3}}/>
+                <div className="sk" style={{width:"30%",height:13,marginBottom:16,borderRadius:3}}/>
+                <div className="sk" style={{width:90,height:26,borderRadius:3}}/>
               </div>
             ))}
           </div>

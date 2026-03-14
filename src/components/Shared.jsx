@@ -1,22 +1,23 @@
+import { useState, useRef } from "react";
 import { FS } from "../constants/theme.js";
 
 export function SkeletonRow({C, isDark}) {
-  const bg = isDark ? "#1a1a1a" : "#efefef";
-  const hi = isDark ? "#252525" : "#e0e0e0";
+  const bg = isDark ? "#1e1e1e" : "#efefef";
+  const hi = isDark ? "#2a2a2a" : "#e0e0e0";
   return(
     <div style={{
-      padding:"12px 16px",borderBottom:`1px solid ${C.border}`,
-      display:"flex",flexDirection:"column",gap:6,
+      padding:"14px 16px",borderBottom:`1px solid ${C.border}`,
+      display:"flex",flexDirection:"column",gap:8,
       "--sk-base":bg,"--sk-highlight":hi,
     }}>
-      <div style={{display:"flex",gap:6,alignItems:"center"}}>
-        <div className="sk" style={{width:42,height:7}}/>
-        <div className="sk" style={{width:58,height:7}}/>
-        <div className="sk" style={{width:26,height:7}}/>
+      <div style={{display:"flex",gap:8,alignItems:"center"}}>
+        <div className="sk" style={{width:56,height:9,borderRadius:3}}/>
+        <div className="sk" style={{width:48,height:9,borderRadius:3}}/>
+        <div className="sk" style={{width:32,height:9,borderRadius:3}}/>
       </div>
-      <div className="sk" style={{width:"72%",height:14}}/>
-      <div className="sk" style={{width:"88%",height:9}}/>
-      <div className="sk" style={{width:"55%",height:9}}/>
+      <div className="sk" style={{width:"78%",height:16,borderRadius:3}}/>
+      <div className="sk" style={{width:"92%",height:12,borderRadius:3}}/>
+      <div className="sk" style={{width:"60%",height:12,borderRadius:3}}/>
     </div>
   );
 }
@@ -108,5 +109,44 @@ export function FeedIcon({size=13, color="currentColor"}) {
       <line x1="3" y1="12" x2="3.01" y2="12"/>
       <line x1="3" y1="18" x2="3.01" y2="18"/>
     </svg>
+  );
+}
+
+export function usePullToRefresh(onRefresh, enabled=true) {
+  const startY = useRef(0);
+  const [pulling, setPulling] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const onTouchStart = e => { if(!enabled) return; startY.current = e.touches[0].clientY; };
+  const onTouchMove  = e => {
+    if(!enabled) return;
+    const dy = e.touches[0].clientY - startY.current;
+    if(dy > 0 && window.scrollY === 0) {
+      setPulling(true);
+      setProgress(Math.min(dy / 80, 1));
+    }
+  };
+  const onTouchEnd   = () => {
+    if(!enabled) return;
+    if(progress >= 1) onRefresh();
+    setPulling(false);
+    setProgress(0);
+  };
+
+  return { pulling, progress, onTouchStart, onTouchMove, onTouchEnd };
+}
+
+export function PullIndicator({ progress, pulling, C }) {
+  if(!pulling && progress === 0) return null;
+  return (
+    <div style={{
+      display:"flex", alignItems:"center", justifyContent:"center",
+      height:40, color:C.muted, fontSize:"0.72rem",
+      fontFamily:"'IBM Plex Mono', monospace",
+      opacity: progress,
+      transition:"opacity 0.1s",
+    }}>
+      {progress >= 1 ? "↓ release to refresh" : "↓ pull to refresh"}
+    </div>
   );
 }
