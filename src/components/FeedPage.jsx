@@ -69,8 +69,8 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
                 onClick={()=>{setFilter(f);setSrcFilter(null);savePreferences({filter:f});}}
                 style={{
                   padding:"4px 10px",borderRadius:3,flexShrink:0,
-                  fontSize:FS.xs,letterSpacing:"0.08em",
-                  fontFamily:FF.mono,
+                  fontSize:FS.xs,letterSpacing:"0.06em",
+                  fontFamily:FF.sans,
                   background:on?(f==="all"?C.faint:m?.a):"transparent",
                   color:on?(f==="all"?C.text:m?.t):C.muted,
                   border:"none",
@@ -107,7 +107,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
             style={{
               background:"transparent",border:`1px solid ${C.border}`,
               color:C.muted,fontSize:FS.xs,padding:"3px 6px",
-              borderRadius:3,cursor:"pointer",fontFamily:FF.mono,
+              borderRadius:3,cursor:"pointer",fontFamily:FF.sans,
               outline:"none",flexShrink:0,
             }}>
             <option value="heat">HOT</option>
@@ -124,8 +124,8 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
                       padding:"4px 8px",background:"none",
                       border:`1px solid ${on?C.text:C.border}`,
                       color:on?C.text:C.muted,
-                      fontSize:FS.xs,fontFamily:FF.mono,
-                      letterSpacing:"0.06em",cursor:"pointer",
+                      fontSize:FS.xs,fontFamily:FF.sans,
+                      letterSpacing:"0.04em",cursor:"pointer",
                       borderRadius:2,transition:"all .1s",
                     }}>
                     {t}
@@ -143,7 +143,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
           padding:"10px 20px",
           borderBottom:`1px solid ${C.border}`,
           fontSize:FS.xs,color:C.muted,
-          fontFamily:FF.mono,letterSpacing:"0.08em",
+          fontFamily:FF.sans,letterSpacing:"0.04em",
           display:"flex",alignItems:"center",justifyContent:"space-between",
         }}>
           <span>{visible.length} ITEMS{srcFilter?` · ${srcFilter}`:""}</span>
