@@ -3,7 +3,7 @@ import { BmSvg } from "./Shared.jsx";
 
 export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark, isMobile }) {
   const TML = getTM(isDark);
-  const saved = items.filter(i=>bookmarks[i.id]);
+  const saved = Object.values(bookmarks).filter(Boolean).sort((a,b)=>(b.bookmarkedAt||0)-(a.bookmarkedAt||0));
 
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden",minWidth:0}}>
