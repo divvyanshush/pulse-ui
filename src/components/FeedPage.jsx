@@ -56,13 +56,12 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
 
       {/* Topbar */}
       <div style={{
-        display:"flex",alignItems:"center",gap:8,
-        padding:"0 16px",height:50,
+        display:"flex",flexDirection:"column",
         borderBottom:`1px solid ${C.border}`,
         background:C.surface,flexShrink:0,
       }}>
-{/* Filter pills */}
-        <div style={{display:"flex",gap:4,overflowX:"auto",scrollbarWidth:"none",flex:1,minWidth:0}}>
+        {/* Row 1 — filter pills */}
+        <div style={{display:"flex",alignItems:"center",gap:4,padding:"0 12px",height:44,overflowX:"auto",scrollbarWidth:"none"}}>
           {FILTERS.filter(f=>f!=="bookmarks").map(f=>{
             const m=TML[f]; const on=filter===f;
             return (
@@ -87,40 +86,9 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
           })}
         </div>
 
-        {/* Time filter */}
-        <div style={{display:"flex",alignItems:"center",gap:2,marginLeft:"auto",flexShrink:0}}>
-          {["today","week","all"].map(t=>{
-            const on = timeFilter===t;
-            return (
-              <button key={t} onClick={()=>setTimeFilter(t)}
-                style={{
-                  padding:"4px 8px",background:"none",
-                  border:`1px solid ${on?C.text:C.border}`,
-                  color:on?C.text:C.muted,
-                  fontSize:FS.xs,fontFamily:FF.mono,
-                  letterSpacing:"0.06em",cursor:"pointer",
-                  borderRadius:2,transition:"all .1s",
-                }}>
-                {t}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Sort */}
-        <select value={sortBy} onChange={e=>{setSortBy(e.target.value);savePreferences({sort_by:e.target.value});}}
-          style={{
-            background:"transparent",border:`1px solid ${C.border}`,
-            color:C.muted,fontSize:FS.xs,padding:"3px 6px",
-            borderRadius:3,cursor:"pointer",fontFamily:FF.mono,
-            outline:"none",flexShrink:0,
-          }}>
-          <option value="heat">HOT</option>
-          <option value="time">NEW</option>
-        </select>
-
-        {/* Search */}
-        <div style={{position:"relative",flexShrink:0}}>
+        {/* Row 2 — search, sort, time */}
+        <div style={{display:"flex",alignItems:"center",gap:6,padding:"0 12px",height:40,borderTop:`1px solid ${C.border}`}}>
+          {/* Search */}
           <input
             placeholder="Search..."
             value={query}
@@ -128,10 +96,45 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
             style={{
               background:C.bg,border:`1px solid ${C.border}`,
               color:C.text,fontSize:FS.xs,padding:"5px 10px",
-              borderRadius:3,outline:"none",width:160,
+              borderRadius:3,outline:"none",
+              flex:1,minWidth:0,
               fontFamily:FF.sans,
             }}
           />
+
+          {/* Sort */}
+          <select value={sortBy} onChange={e=>{setSortBy(e.target.value);savePreferences({sort_by:e.target.value});}}
+            style={{
+              background:"transparent",border:`1px solid ${C.border}`,
+              color:C.muted,fontSize:FS.xs,padding:"3px 6px",
+              borderRadius:3,cursor:"pointer",fontFamily:FF.mono,
+              outline:"none",flexShrink:0,
+            }}>
+            <option value="heat">HOT</option>
+            <option value="time">NEW</option>
+          </select>
+
+          {/* Time filter — hidden on mobile */}
+          {!isMobile && (
+            <div style={{display:"flex",alignItems:"center",gap:2,flexShrink:0}}>
+              {["today","week","all"].map(t=>{
+                const on = timeFilter===t;
+                return (
+                  <button key={t} onClick={()=>setTimeFilter(t)}
+                    style={{
+                      padding:"4px 8px",background:"none",
+                      border:`1px solid ${on?C.text:C.border}`,
+                      color:on?C.text:C.muted,
+                      fontSize:FS.xs,fontFamily:FF.mono,
+                      letterSpacing:"0.06em",cursor:"pointer",
+                      borderRadius:2,transition:"all .1s",
+                    }}>
+                    {t}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 

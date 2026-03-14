@@ -68,6 +68,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
         letterSpacing:"-0.02em",
         fontFamily:FF.sans,
         wordBreak:"break-word",
+        overflowWrap:"anywhere",
       }}>{item.title}</div>
 
       {/* Summary */}
