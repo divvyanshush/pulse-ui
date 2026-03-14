@@ -111,8 +111,8 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
                   style={{position:"fixed",inset:0,zIndex:99}}/>
                 {/* Menu */}
                 <div style={{
-                  position:"absolute",right:0,top:"calc(100% + 8px)",
-                  width:220,
+                  position:"fixed",right:12,top:56,
+                  width:200,
                   background:C.surface,
                   border:`1px solid ${C.border}`,
                   borderRadius:6,
