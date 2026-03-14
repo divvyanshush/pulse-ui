@@ -1,9 +1,9 @@
 import { FF, FS } from "../constants/theme.js";
 
 const TABS = [
-  { id:"brief",  label:"brief"  },
-  { id:"feed",   label:"feed"   },
-  { id:"saved",  label:"saved"  },
+  { id:"brief",  label:"Brief"  },
+  { id:"feed",   label:"Feed"   },
+  { id:"saved",  label:"Saved"  },
 ];
 
 export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, toggleDark, onSignOut, isMobile }) {
@@ -54,7 +54,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
                 border:"none",
                 borderBottom:active?`2px solid ${C.text}`:"2px solid transparent",
                 color:active?C.text:C.muted,
-                fontSize:FS.xs,
+                fontSize:FS.sm,
                 fontFamily:FF.sans,
                 fontWeight:active?500:400,
                 letterSpacing:"0.06em",
@@ -65,7 +65,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
               onMouseEnter={e=>{ if(!active) e.currentTarget.style.color=C.sub; }}
               onMouseLeave={e=>{ if(!active) e.currentTarget.style.color=C.muted; }}
             >
-              {t.id==="saved" && bmCount>0 ? `saved (${bmCount})` : t.label}
+              {t.id==="saved" && bmCount>0 ? `Saved (${bmCount})` : t.label}
             </button>
           );
         })}
@@ -99,7 +99,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
               style={{
                 background:"none",border:`1px solid ${C.border}`,
                 padding:"3px 8px",cursor:"pointer",
-                color:C.muted,fontSize:FS.xs,
+                color:C.muted,fontSize:FS.sm,
                 fontFamily:FF.sans,letterSpacing:"0.04em",
                 borderRadius:2,transition:"all .1s",
               }}
