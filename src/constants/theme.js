@@ -23,9 +23,9 @@ export const FF = {
 };
 
 export const DARK = {
-  text:"#e8e8e8", sub:"#888888", muted:"#555555", faint:"#2e2e2e",
-  bg:"#0a0a0a", surface:"#111111", hover:"#161616", border:"#1e1e1e",
-  accent:"#ffffff", accentDim:"rgba(255,255,255,0.05)", accentBorder:"rgba(255,255,255,0.15)",
+  text:"#ededef", sub:"#a0a0a8", muted:"#606068", faint:"#2e2e36",
+  bg:"#111113", surface:"#1a1a1f", hover:"#1f1f26", border:"#2a2a32",
+  accent:"#ededef", accentDim:"rgba(255,255,255,0.05)", accentBorder:"rgba(255,255,255,0.12)",
   light:false,
 };
 
