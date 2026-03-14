@@ -36,6 +36,8 @@ function getSession(k,d){ try{ const v=sessionStorage.getItem(k); return v===nul
 export default function App() {
   const [isDark,    setIsDark]   = useState(()=>getStored("pulse-dark","true")==="true");
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
   const [items,     setItems]    = useState([]);
   const [loading,   setLoading]  = useState(true);
   const [detail,    setDetail]   = useState(null);
@@ -156,7 +158,20 @@ export default function App() {
       <div style={{flex:1, display:"flex", overflow:"hidden", minWidth:0}}>
 
         {/* Page */}
-        <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", minWidth:0}}>
+        <div
+          style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", minWidth:0}}
+          onTouchStart={e=>{ touchStartX.current=e.touches[0].clientX; touchStartY.current=e.touches[0].clientY; }}
+          onTouchEnd={e=>{
+            if(!isMobile) return;
+            const dx = e.changedTouches[0].clientX - touchStartX.current;
+            const dy = Math.abs(e.changedTouches[0].clientY - touchStartY.current);
+            if(Math.abs(dx) < 50 || dy > 80) return; // not a swipe
+            const TABS = ["brief","feed","saved"];
+            const cur = TABS.indexOf(page);
+            if(dx < 0 && cur < TABS.length-1) setPage(TABS[cur+1]); // swipe left → next
+            if(dx > 0 && cur > 0) setPage(TABS[cur-1]); // swipe right → prev
+          }}
+        >
           
           {page==="brief"    && <BriefPage  {...shared} />}
           {page==="feed"     && <FeedPage     {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>}
