@@ -55,7 +55,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
                 borderBottom:active?`2px solid ${C.text}`:"2px solid transparent",
                 color:active?C.text:C.muted,
                 fontSize:FS.xs,
-                fontFamily:FF.mono,
+                fontFamily:FF.sans,
                 fontWeight:active?500:400,
                 letterSpacing:"0.06em",
                 cursor:"pointer",
@@ -80,7 +80,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
             background:"none",border:`1px solid ${C.border}`,
             padding:"3px 8px",cursor:"pointer",
             color:C.muted,fontSize:FS.xs,
-            fontFamily:FF.mono,letterSpacing:"0.06em",
+            fontFamily:FF.sans,letterSpacing:"0.04em",
             borderRadius:2,transition:"border-color .1s, color .1s",
           }}
           onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
@@ -91,7 +91,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
         {user ? (
           <div style={{display:"flex",alignItems:"center",gap:8}}>
             {!isMobile && (
-              <span style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.mono}}>
+              <span style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.sans}}>
                 {user.email?.split("@")[0]}
               </span>
             )}
@@ -100,7 +100,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
                 background:"none",border:`1px solid ${C.border}`,
                 padding:"3px 8px",cursor:"pointer",
                 color:C.muted,fontSize:FS.xs,
-                fontFamily:FF.mono,letterSpacing:"0.06em",
+                fontFamily:FF.sans,letterSpacing:"0.04em",
                 borderRadius:2,transition:"all .1s",
               }}
               onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
@@ -115,7 +115,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
               padding:"4px 12px",cursor:"pointer",
               color:isDark?"#0a0a0a":"#ffffff",
               fontSize:FS.xs,
-              fontFamily:FF.mono,letterSpacing:"0.06em",
+              fontFamily:FF.sans,letterSpacing:"0.04em",
               fontWeight:600,
               borderRadius:2,transition:"opacity .1s",
             }}
