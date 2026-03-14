@@ -38,7 +38,6 @@ export default function App() {
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
-  const [slideDir, setSlideDir] = useState(0); // -1 left, 1 right, 0 none
   const [items,     setItems]    = useState([]);
   const [loading,   setLoading]  = useState(true);
   const [detail,    setDetail]   = useState(null);
