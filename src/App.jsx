@@ -139,7 +139,7 @@ export default function App() {
   return (
     <div style={{
       display:"flex", flexDirection:"column",
-      height:"100dvh", width:"100vw", overflow:"hidden",
+      height:"100dvh", width:"100vw", overflow:"hidden", paddingTop:"env(safe-area-inset-top)",
       background:C.bg, color:C.text,
       fontFamily:FF.mono,
       WebkitFontSmoothing:"antialiased",
