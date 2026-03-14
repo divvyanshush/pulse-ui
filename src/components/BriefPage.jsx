@@ -49,8 +49,8 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
               <div key={item.id}
                 onClick={(e) => { e.stopPropagation(); onItemClick(item); }}
                 style={{
-                  fontSize: FS.sm, color: C.muted,
-                  fontFamily: FF.mono,
+                  fontSize: FS.sm, color: C.sub,
+                  fontFamily: FF.sans,
                   marginTop: i === 0 ? 0 : 5,
                   overflow: "hidden", textOverflow: "ellipsis",
                   whiteSpace: "nowrap",

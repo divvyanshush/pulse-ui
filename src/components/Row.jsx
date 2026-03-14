@@ -61,10 +61,10 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       {/* Title */}
       <div style={{
         fontSize:FS.base,
-        fontWeight:500,
+        fontWeight:600,
         color:C.text,
-        lineHeight:1.4,
-        letterSpacing:"-0.01em",
+        lineHeight:1.5,
+        letterSpacing:"-0.02em",
         fontFamily:FF.sans,
         wordBreak:"break-word",
       }}>{item.title}</div>
@@ -73,9 +73,9 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       {item.sum && (
         <div style={{
           fontSize:FS.sm,
-          color:C.muted,
-          lineHeight:1.55,
-          fontFamily:FF.mono,
+          color:C.sub,
+          lineHeight:1.7,
+          fontFamily:FF.sans,
           display:"-webkit-box",
           WebkitLineClamp:2,
           WebkitBoxOrient:"vertical",

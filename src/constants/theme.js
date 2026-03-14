@@ -10,11 +10,11 @@ export const timeAgo = ts => {
 
 export const FS = {
   xs:  "0.72rem",
-  sm:  "0.82rem",
-  base:"0.92rem",
-  md:  "1.05rem",
-  lg:  "1.25rem",
-  xl:  "1.5rem",
+  sm:  "0.85rem",
+  base:"1rem",
+  md:  "1.15rem",
+  lg:  "1.35rem",
+  xl:  "1.6rem",
 };
 
 export const FF = {
