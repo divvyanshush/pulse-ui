@@ -115,8 +115,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
           </select>
 
           {/* Time filter — hidden on mobile */}
-          {!isMobile && (
-            <div style={{display:"flex",alignItems:"center",gap:2,flexShrink:0}}>
+          <div style={{display:"flex",alignItems:"center",gap:2,flexShrink:0}}>
               {["today","week","all"].map(t=>{
                 const on = timeFilter===t;
                 return (
@@ -134,7 +133,6 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
                 );
               })}
             </div>
-          )}
         </div>
       </div>
 
