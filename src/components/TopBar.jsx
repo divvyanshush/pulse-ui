@@ -1,31 +1,39 @@
+import { useState } from "react";
 import { FF, FS } from "../constants/theme.js";
 import { MoonIcon, SunIcon, SignOutIcon, BriefIcon, FeedIcon, BmSvg } from "./Shared.jsx";
 
 const TABS = [
-  { id:"brief",  label:"Brief"  },
-  { id:"feed",   label:"Feed"   },
-  { id:"saved",  label:"Saved"  },
+  { id:"brief", label:"Brief"  },
+  { id:"feed",  label:"Feed"   },
+  { id:"saved", label:"Saved"  },
 ];
 
+function UserIcon({size=16, color="currentColor"}) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display:"block",flexShrink:0}}>
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    </svg>
+  );
+}
+
 export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, toggleDark, onSignOut, isMobile }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div style={{
-      height:48,
-      minHeight:48,
-      display:"flex",
-      alignItems:"center",
+      height:48, minHeight:48,
+      display:"flex", alignItems:"center",
       borderBottom:`1px solid ${C.border}`,
       background:C.bg,
-      paddingLeft:16,
-      paddingRight:16,
-      gap:0,
-      flexShrink:0,
-      userSelect:"none",
+      paddingLeft:16, paddingRight:16,
+      gap:0, flexShrink:0, userSelect:"none",
+      position:"relative",
     }}>
 
       {/* Logo */}
-      <div style={{marginRight:24,flexShrink:0,display:"flex",alignItems:"center"}}>
-        <svg width={isMobile?"110":"140"} height={isMobile?"24":"30"} viewBox="0 0 183 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div style={{marginRight:24, flexShrink:0, display:"flex", alignItems:"center"}}>
+        <svg width="140" height="30" viewBox="0 0 183 39" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M13.6195 27.7702C11.3018 25.4498 10 22.3043 10 19.0247C10 15.7451 11.3018 12.5996 13.6195 10.2793M17.1192 24.2705C15.7295 22.8784 14.9489 20.9917 14.9489 19.0247C14.9489 17.0577 15.7295 15.171 17.1192 13.7789" stroke="#8D8BFA" strokeWidth="2.475" strokeLinecap="round"/>
           <path d="M27.6311 18.496L25.7831 14.944H25.7111V27.76H23.1191V11.008H26.1431L31.6151 20.272L33.4631 23.824H33.5351V11.008H36.1271V27.76H33.1031L27.6311 18.496Z" fill="#8D8BFA"/>
           <path d="M44.956 28.048C44.06 28.048 43.26 27.896 42.556 27.592C41.852 27.288 41.252 26.856 40.756 26.296C40.26 25.72 39.876 25.032 39.604 24.232C39.348 23.416 39.22 22.512 39.22 21.52C39.22 20.528 39.348 19.632 39.604 18.832C39.876 18.016 40.26 17.328 40.756 16.768C41.252 16.192 41.852 15.752 42.556 15.448C43.26 15.144 44.06 14.992 44.956 14.992C45.868 14.992 46.668 15.152 47.356 15.472C48.06 15.792 48.644 16.24 49.108 16.816C49.572 17.376 49.916 18.032 50.14 18.784C50.38 19.536 50.5 20.344 50.5 21.208V22.192H41.932V22.6C41.932 23.56 42.212 24.352 42.772 24.976C43.348 25.584 44.164 25.888 45.22 25.888C45.988 25.888 46.636 25.72 47.164 25.384C47.692 25.048 48.14 24.592 48.508 24.016L50.044 25.528C49.58 26.296 48.908 26.912 48.028 27.376C47.148 27.824 46.124 28.048 44.956 28.048ZM44.956 17.032C44.508 17.032 44.092 17.112 43.708 17.272C43.34 17.432 43.02 17.656 42.748 17.944C42.492 18.232 42.292 18.576 42.148 18.976C42.004 19.376 41.932 19.816 41.932 20.296V20.464H47.74V20.224C47.74 19.264 47.492 18.496 46.996 17.92C46.5 17.328 45.82 17.032 44.956 17.032Z" fill="#8D8BFA"/>
@@ -50,7 +58,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
             <button key={t.id} onClick={()=>setPage(t.id)}
               style={{
                 height:"100%",
-                padding:isMobile?"0 10px":"0 14px",
+                padding:"0 14px",
                 background:"none",
                 border:"none",
                 borderBottom:active?`2px solid ${C.text}`:"2px solid transparent",
@@ -58,7 +66,6 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
                 fontSize:FS.sm,
                 fontFamily:FF.sans,
                 fontWeight:active?500:400,
-                letterSpacing:"0.06em",
                 cursor:"pointer",
                 transition:"color .1s, border-color .1s",
                 flexShrink:0,
@@ -77,72 +84,100 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
         })}
       </div>
 
-      {/* Right side */}
+      {/* Right — account icon */}
       <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
-
-        {/* Dark toggle */}
-        <button onClick={toggleDark}
-          style={{
-            background:"none",border:`1px solid ${C.border}`,
-            padding:"3px 8px",cursor:"pointer",
-            color:C.muted,fontSize:FS.xs,
-            fontFamily:FF.sans,letterSpacing:"0.04em",
-            borderRadius:2,transition:"border-color .1s, color .1s",
-          }}
-          onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
-          onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
-        style={{display:"flex",alignItems:"center",justifyContent:"center",width:28,height:28,
-            background:"none",border:`1px solid ${C.border}`,
-            cursor:"pointer",color:C.muted,borderRadius:2,transition:"border-color .1s, color .1s",
-          }}
-          onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
-          onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
-        >{isDark ? <SunIcon size={14} color="currentColor"/> : <MoonIcon size={14} color="currentColor"/>}</button>
-
-        {/* Auth */}
         {user ? (
-          <div style={{display:"flex",alignItems:"center",gap:8}}>
-            {!isMobile && (
-              <span style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.sans}}>
-                {user.email?.split("@")[0]}
-              </span>
-            )}
-            <button onClick={onSignOut}
+          <div style={{position:"relative"}}>
+            <button onClick={()=>setMenuOpen(o=>!o)}
               style={{
-                background:"none",border:`1px solid ${C.border}`,
-                padding:"3px 8px",cursor:"pointer",
-                color:C.muted,fontSize:FS.sm,
-                fontFamily:FF.sans,letterSpacing:"0.04em",
-                borderRadius:2,transition:"all .1s",
+                display:"flex",alignItems:"center",justifyContent:"center",
+                width:32,height:32,borderRadius:"50%",
+                background:menuOpen?C.surface:C.faint,
+                border:`1px solid ${menuOpen?C.sub:C.border}`,
+                cursor:"pointer",color:C.text,
+                transition:"all .15s",flexShrink:0,
               }}
-              onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
-              onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
-            style={{display:"flex",alignItems:"center",gap:5,
-                background:"none",border:`1px solid ${C.border}`,
-                padding:"3px 8px",cursor:"pointer",
-                color:C.muted,fontSize:FS.xs,
-                fontFamily:FF.sans,letterSpacing:"0.04em",
-                borderRadius:2,transition:"all .1s",
-              }}
-              onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.color=C.text; }}
-              onMouseLeave={e=>{ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.color=C.muted; }}
-            ><SignOutIcon size={12} color="currentColor"/>{!isMobile && "sign out"}</button>
+              onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.background=C.surface; }}
+              onMouseLeave={e=>{ if(!menuOpen){ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.background=C.faint; } }}
+            >
+              <UserIcon size={15} color={C.text}/>
+            </button>
+
+            {/* Dropdown */}
+            {menuOpen && (
+              <>
+                {/* Backdrop */}
+                <div onClick={()=>setMenuOpen(false)}
+                  style={{position:"fixed",inset:0,zIndex:99}}/>
+                {/* Menu */}
+                <div style={{
+                  position:"absolute",right:0,top:"calc(100% + 8px)",
+                  width:220,
+                  background:C.surface,
+                  border:`1px solid ${C.border}`,
+                  borderRadius:6,
+                  boxShadow:`0 8px 24px rgba(0,0,0,0.3)`,
+                  zIndex:100,
+                  overflow:"hidden",
+                }}>
+                  {/* Email */}
+                  <div style={{
+                    padding:"12px 14px",
+                    borderBottom:`1px solid ${C.border}`,
+                  }}>
+                    <div style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.mono,marginBottom:2}}>signed in as</div>
+                    <div style={{fontSize:FS.sm,color:C.text,fontFamily:FF.sans,fontWeight:500,
+                      overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"
+                    }}>{user.email}</div>
+                  </div>
+
+                  {/* Dark/light toggle */}
+                  <button onClick={()=>{ toggleDark(); }}
+                    style={{
+                      width:"100%",display:"flex",alignItems:"center",gap:10,
+                      padding:"11px 14px",background:"none",border:"none",
+                      borderBottom:`1px solid ${C.border}`,
+                      color:C.text,fontSize:FS.sm,fontFamily:FF.sans,
+                      cursor:"pointer",transition:"background .1s",textAlign:"left",
+                    }}
+                    onMouseEnter={e=>e.currentTarget.style.background=C.hover}
+                    onMouseLeave={e=>e.currentTarget.style.background="none"}
+                  >
+                    {isDark ? <SunIcon size={14} color={C.muted}/> : <MoonIcon size={14} color={C.muted}/>}
+                    <span>{isDark ? "Light mode" : "Dark mode"}</span>
+                  </button>
+
+                  {/* Sign out */}
+                  <button onClick={()=>{ onSignOut(); setMenuOpen(false); }}
+                    style={{
+                      width:"100%",display:"flex",alignItems:"center",gap:10,
+                      padding:"11px 14px",background:"none",border:"none",
+                      color:C.text,fontSize:FS.sm,fontFamily:FF.sans,
+                      cursor:"pointer",transition:"background .1s",textAlign:"left",
+                    }}
+                    onMouseEnter={e=>e.currentTarget.style.background=C.hover}
+                    onMouseLeave={e=>e.currentTarget.style.background="none"}
+                  >
+                    <SignOutIcon size={14} color={C.muted}/>
+                    <span>Sign out</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         ) : (
           <button onClick={()=>setShowAuth(true)}
             style={{
-              background:C.accent,
-              border:"none",
-              padding:"4px 12px",cursor:"pointer",
+              background:C.accent,border:"none",
+              padding:"5px 14px",cursor:"pointer",
               color:isDark?"#0a0a0a":"#ffffff",
-              fontSize:FS.xs,
-              fontFamily:FF.sans,letterSpacing:"0.04em",
-              fontWeight:600,
-              borderRadius:2,transition:"opacity .1s",
+              fontSize:FS.sm,fontFamily:FF.sans,
+              fontWeight:600,borderRadius:3,
+              transition:"opacity .1s",
             }}
             onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
             onMouseLeave={e=>e.currentTarget.style.opacity="1"}
-          >sign in</button>
+          >Sign in</button>
         )}
       </div>
     </div>
