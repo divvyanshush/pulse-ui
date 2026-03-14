@@ -174,22 +174,30 @@ export default function App() {
                 if(dx > 0 && cur > 0) setPage(TABS[cur-1]);
               }}
             >
-              <div style={{
-                display:"flex", height:"100%",
-                width:`${TABS.length * 100}%`,
-                transform:`translateX(${-(idx * 100/TABS.length)}%)`,
-                transition:"transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
-              }}>
-                <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
-                  <BriefPage {...shared}/>
+              {isMobile ? (
+                <div style={{
+                  display:"flex", height:"100%",
+                  width:`${TABS.length * 100}%`,
+                  transform:`translateX(${-(idx * 100/TABS.length)}%)`,
+                  transition:"transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)",
+                }}>
+                  <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
+                    <BriefPage {...shared}/>
+                  </div>
+                  <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
+                    <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>
+                  </div>
+                  <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
+                    <SavedPage {...shared}/>
+                  </div>
                 </div>
-                <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
-                  <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>
+              ) : (
+                <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden"}}>
+                  {page==="brief" && <BriefPage {...shared}/>}
+                  {page==="feed"  && <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>}
+                  {page==="saved" && <SavedPage {...shared}/>}
                 </div>
-                <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
-                  <SavedPage {...shared}/>
-                </div>
-              </div>
+              )}
             </div>
           );
         })()}
