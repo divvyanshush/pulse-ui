@@ -27,12 +27,13 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       {/* Meta line */}
       <div style={{
         display:"flex",alignItems:"center",gap:6,
-        fontFamily:FF.mono, fontSize:FS.xs,
+        fontFamily:FF.sans, fontSize:FS.xs,
         color:C.muted,
       }}>
         <span style={{
           color:m.t, fontSize:FS.xs,
-          fontWeight:600, letterSpacing:"0.08em",
+          fontWeight:700, letterSpacing:"0.1em",
+          fontFamily:FF.mono,
           flexShrink:0,
         }}>{m.label}</span>
         <span style={{color:C.faint}}>·</span>
