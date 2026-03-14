@@ -62,9 +62,9 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       {/* Title */}
       <div style={{
         fontSize:FS.base,
-        fontWeight:600,
+        fontWeight:500,
         color:C.text,
-        lineHeight:1.5,
+        lineHeight:1.75,
         letterSpacing:"-0.02em",
         fontFamily:FF.sans,
         wordBreak:"break-word",
@@ -75,7 +75,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
         <div style={{
           fontSize:FS.sm,
           color:C.sub,
-          lineHeight:1.7,
+          lineHeight:1.75,
           fontFamily:FF.sans,
           display:"-webkit-box",
           WebkitLineClamp:2,
