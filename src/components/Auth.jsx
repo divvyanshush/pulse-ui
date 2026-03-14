@@ -24,7 +24,7 @@ export function Auth({ onAuth, C, isDark }) {
     if(!email) return;
     setLoading(true); setError(null);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin
+      redirectTo: window.location.origin + "/app"
     });
     if(error) setError(error.message);
     else setResetSent(true);
@@ -34,7 +34,7 @@ export function Auth({ onAuth, C, isDark }) {
   const handleGoogle = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: window.location.origin }
+      options: { redirectTo: window.location.origin + "/app" }
     });
   };
 
