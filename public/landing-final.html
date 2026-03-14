@@ -1,376 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script>if(window.location.hash.includes("access_token")){window.location.href="/app"+window.location.hash;}</script>
+<head>
+<script>if(window.location.hash.includes("access_token")){window.location.href="/app"+window.location.hash;}</script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Pulse — AI signals for developers</title>
+<title>NeuralCrawl — AI signals for developers</title>
 <meta name="description" content="Research papers, GitHub repos, tools and news from 20+ sources. Heat-ranked in real time. Built for AI builders."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#000000;--surface:#0a0a0a;--surface2:#111111;--border:#1a1a1a;--border2:#222222;--text:#f0f0f0;--sub:#888888;--muted:#444444;--mono:"IBM Plex Mono",monospace;--sans:"IBM Plex Sans",sans-serif;--pad:clamp(24px,8vw,120px)}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);border-bottom:1px solid var(--border);background:rgba(0,0,0,0.85);backdrop-filter:blur(12px)}
-.nav-logo{font-family:var(--mono);font-size:0.8rem;font-weight:600;letter-spacing:0.12em}
-.nav-right{display:flex;align-items:center;gap:24px}
-.nav-link{font-family:var(--mono);font-size:0.7rem;color:var(--sub);letter-spacing:0.08em;transition:color .15s}
-.nav-link:hover{color:var(--text)}
-.nav-cta{font-family:var(--mono);font-size:0.7rem;font-weight:500;letter-spacing:0.08em;border:1px solid var(--text);padding:5px 14px;color:var(--text);transition:background .15s,color .15s}
-.nav-cta:hover{background:var(--text);color:#000}
-section{padding:100px var(--pad)}
-.divider{height:1px;background:var(--border);margin:0 var(--pad)}
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:148px;padding-bottom:100px;padding-left:var(--pad);padding-right:var(--pad);position:relative;overflow:hidden}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.4;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 40%,transparent 100%)}
-.hero-tag{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.14em;color:var(--sub);border:1px solid var(--border2);display:inline-flex;align-items:center;gap:8px;padding:5px 12px;margin-bottom:32px;width:fit-content}
-.hero-tag::before{content:"";width:6px;height:6px;background:var(--text);border-radius:50%;animation:pulse-dot 2s infinite}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.3}}
-h1{font-family:var(--mono);font-size:clamp(2.2rem,6vw,5rem);font-weight:600;line-height:1.1;letter-spacing:-0.02em;max-width:800px;margin-bottom:24px}
-h1 span{color:var(--sub)}
-.hero-sub{font-family:var(--sans);font-size:clamp(0.95rem,2vw,1.15rem);color:var(--sub);max-width:520px;line-height:1.7;margin-bottom:40px;font-weight:300}
-.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.btn-primary{font-family:var(--mono);font-size:0.78rem;font-weight:500;letter-spacing:0.1em;background:var(--text);color:#000;padding:12px 28px;border:none;cursor:pointer;transition:opacity .15s;display:inline-block}
-.btn-primary:hover{opacity:0.85}
-.btn-ghost{font-family:var(--mono);font-size:0.78rem;letter-spacing:0.1em;color:var(--sub);padding:12px 0;border:none;background:none;cursor:pointer;transition:color .15s}
-.btn-ghost:hover{color:var(--text)}
-.hero-stats{display:flex;gap:40px;margin-top:64px;padding-top:40px;border-top:1px solid var(--border);flex-wrap:wrap}
-.stat{display:flex;flex-direction:column;gap:4px}
-.stat-num{font-family:var(--mono);font-size:1.6rem;font-weight:600}
-.stat-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--sub)}
-.app-preview{background:var(--surface);border:1px solid var(--border2);border-radius:2px;overflow:hidden;margin-top:80px;max-width:900px}
-.preview-topbar{height:36px;display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 16px;gap:16px;background:var(--surface2)}
-.preview-logo{font-family:var(--mono);font-size:0.7rem;font-weight:600;letter-spacing:0.1em;margin-right:8px}
-.preview-tab{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.06em;color:var(--muted);padding:0 10px;height:100%;display:flex;align-items:center;border-bottom:2px solid transparent}
-.preview-tab.active{color:var(--text);border-bottom-color:var(--text)}
-.preview-body{display:grid;grid-template-columns:280px 1fr;min-height:300px}
-.preview-left{border-right:1px solid var(--border);padding:16px}
-.preview-section-title{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;color:var(--sub);margin-bottom:12px}
-.preview-brief-item{padding:10px 0;border-bottom:1px solid var(--border)}
-.preview-brief-item:last-child{border-bottom:none}
-.preview-brief-cat{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;color:var(--sub);margin-bottom:4px}
-.preview-brief-text{font-size:0.72rem;color:var(--text);line-height:1.4}
-.preview-right{padding:16px;display:flex;flex-direction:column;gap:8px}
-.preview-feed-item{padding:10px;border:1px solid var(--border)}
-.preview-feed-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.preview-src{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.08em;color:var(--sub)}
-.preview-pill{font-family:var(--mono);font-size:0.55rem;letter-spacing:0.08em;padding:2px 6px;border-radius:1px}
-.preview-heat{font-family:var(--mono);font-size:0.58rem;color:var(--sub);margin-left:auto}
-.preview-feed-title{font-size:0.72rem;line-height:1.4;color:var(--text)}
-.section-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.14em;color:var(--sub);margin-bottom:16px}
-.section-title{font-family:var(--mono);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;line-height:1.2;margin-bottom:16px}
-.section-sub{font-size:0.95rem;color:var(--sub);max-width:480px;line-height:1.7;font-weight:300}
-.props-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);margin-top:60px}
-.prop{background:var(--surface);padding:32px}
-.prop-icon{font-family:var(--mono);font-size:1.2rem;margin-bottom:16px;color:var(--sub)}
-.prop-title{font-family:var(--mono);font-size:0.85rem;font-weight:500;letter-spacing:0.06em;margin-bottom:8px}
-.prop-text{font-size:0.82rem;color:var(--sub);line-height:1.7;font-weight:300}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:60px}
-.feature{border:1px solid var(--border);padding:28px;transition:border-color .2s}
-.feature:hover{border-color:var(--border2)}
-.feature-num{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:16px}
-.feature-title{font-family:var(--mono);font-size:0.9rem;font-weight:500;margin-bottom:10px}
-.feature-text{font-size:0.82rem;color:var(--sub);line-height:1.7;font-weight:300}
-.cats-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:48px}
-.cat{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;padding:8px 16px;border:1px solid var(--border2);display:flex;align-items:center;gap:8px;transition:border-color .15s}
-.cat:hover{border-color:var(--sub)}
-.cat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:60px;position:relative}
-.steps::before{content:"";position:absolute;top:20px;left:0;right:0;height:1px;background:var(--border)}
-.step{padding:48px 0 0;position:relative}
-.step-num{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--bg);background:var(--text);width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;position:relative;z-index:1;font-weight:600}
-.step-title{font-family:var(--mono);font-size:0.85rem;font-weight:500;margin-bottom:8px}
-.step-text{font-size:0.82rem;color:var(--sub);line-height:1.7;font-weight:300;max-width:220px}
-.comp-table{width:100%;border-collapse:collapse;margin-top:48px;font-size:0.82rem}
-.comp-table th{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--sub);padding:12px 20px;text-align:left;border-bottom:1px solid var(--border);font-weight:400}
-.comp-table th.hl{color:var(--text)}
-.comp-table td{padding:14px 20px;border-bottom:1px solid var(--border);color:var(--sub);vertical-align:middle}
-.comp-table td.fc{color:var(--text);font-weight:400}
-.comp-table td.hl{color:var(--text)}
-.comp-table tr:last-child td{border-bottom:none}
-.comp-table tr:hover td{background:var(--surface2)}
-.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:60px}
-.persona{border:1px solid var(--border);padding:28px}
-.persona-role{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;color:var(--sub);margin-bottom:12px}
-.persona-name{font-family:var(--mono);font-size:1rem;font-weight:500;margin-bottom:16px}
-.persona-need{font-size:0.82rem;color:var(--sub);line-height:1.7;margin-bottom:20px;font-weight:300}
-.persona-tags{display:flex;flex-wrap:wrap;gap:6px}
-.persona-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.08em;border:1px solid var(--border2);padding:3px 8px;color:var(--sub)}
-.faq-list{margin-top:48px;border-top:1px solid var(--border)}
-.faq-item{border-bottom:1px solid var(--border)}
-.faq-q{font-family:var(--mono);font-size:0.85rem;font-weight:400;padding:20px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;letter-spacing:0.02em}
-.faq-q::after{content:"+";font-size:1.2rem;color:var(--sub);transition:transform .2s;flex-shrink:0}
-.faq-item.open .faq-q::after{transform:rotate(45deg)}
-.faq-a{font-size:0.82rem;color:var(--sub);line-height:1.8;font-weight:300;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
-.faq-item.open .faq-a{max-height:200px;padding-bottom:20px}
-#cta{text-align:center}
-#cta h2{font-family:var(--mono);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:600;line-height:1.2;margin-bottom:16px}
-#cta p{font-size:0.95rem;color:var(--sub);margin-bottom:40px;font-weight:300}
-footer{border-top:1px solid var(--border);padding:40px var(--pad);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-.footer-logo{font-family:var(--mono);font-size:0.75rem;font-weight:600;letter-spacing:0.1em}
-.footer-links{display:flex;gap:24px;flex-wrap:wrap}
-.footer-link{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;color:var(--sub);transition:color .15s}
-.footer-link:hover{color:var(--text)}
-.footer-copy{font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.06em}
-.deepdive-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:60px;align-items:center}
-.deepdive-visual{background:var(--surface);border:1px solid var(--border2);padding:24px}
-.deepdive-text h3{font-family:var(--mono);font-size:1.4rem;font-weight:600;line-height:1.3;margin-bottom:16px}
-.deepdive-text p{font-size:0.85rem;color:var(--sub);line-height:1.8;font-weight:300;margin-bottom:12px}
-.dd-item{padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.dd-item:last-child{border-bottom:none}
-.dd-title{font-size:0.75rem;color:var(--text);line-height:1.4;flex:1;margin-right:12px}
-.dd-heat{font-family:var(--mono);font-size:0.6rem;color:var(--sub)}
-.heat-bar{height:3px;background:var(--border2);margin-top:4px;max-width:120px}
-.heat-fill{height:100%;background:var(--text)}
-.sources-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:40px}
-.source-chip{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.06em;padding:6px 12px;border:1px solid var(--border);color:var(--sub);transition:border-color .15s,color .15s}
-.source-chip:hover{border-color:var(--sub);color:var(--text)}
-@media(max-width:768px){.preview-body{grid-template-columns:1fr}.preview-left{display:none}.deepdive-grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.steps::before{display:none}.nav-link{display:none}.hero-stats{gap:24px}}
-@media(max-width:480px){.steps{grid-template-columns:1fr}.comp-table{font-size:0.72rem}.comp-table th,.comp-table td{padding:10px}}
+body{background:#0a0a0a;color:#e8e8e8;font-family:'IBM Plex Mono',monospace;-webkit-font-smoothing:antialiased}
+::selection{background:#8D8BFA33;color:#fff}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 80px;border-bottom:1px solid #1a1a1a;background:#0a0a0a;position:sticky;top:0;z-index:100}
+.nav-links{display:flex;align-items:center;gap:40px}
+.nav-link{font-size:11px;letter-spacing:0.12em;color:#666;cursor:pointer;background:none;border:none;font-family:'IBM Plex Mono',monospace;transition:color 0.2s}
+.nav-link:hover{color:#e8e8e8}
+.nav-cta{font-size:11px;letter-spacing:0.12em;color:#e8e8e8;border:1px solid #e8e8e8;padding:8px 20px;border-radius:20px;background:transparent;font-family:'IBM Plex Mono',monospace;cursor:pointer;transition:all 0.2s}
+.nav-cta:hover{background:#e8e8e8;color:#0a0a0a}
+
+/* SECTIONS */
+.section{padding:100px 80px}
+.section-sm{padding:80px 80px}
+
+/* HERO */
+.hero-title{font-family:'IBM Plex Sans',sans-serif;font-size:72px;font-weight:700;line-height:1.05;letter-spacing:-0.02em;margin-bottom:24px}
+.hero-title span{color:#8D8BFA}
+.hero-sub{font-size:14px;color:#888;line-height:1.8;max-width:560px;margin-bottom:64px}
+
+/* APP MOCKUP */
+.mockup{border:1px solid #1e1e1e;border-radius:8px;overflow:hidden;background:#111;max-width:1100px;margin-top:0}
+.mockup-bar{border-bottom:1px solid #1e1e1e;padding:14px 24px;display:flex;gap:28px;align-items:center}
+.mockup-logo{color:#8D8BFA;font-size:12px;font-weight:600;letter-spacing:0.1em}
+.mockup-tab{font-size:12px;color:#333;letter-spacing:0.06em}
+.mockup-tab.active{color:#e8e8e8;border-bottom:1px solid #e8e8e8;padding-bottom:2px}
+.mockup-body{padding:24px}
+.mockup-section{margin-bottom:28px}
+.mockup-cat{font-size:9px;letter-spacing:0.16em;margin-bottom:12px}
+.mockup-summary{border-left:2px solid currentColor;padding-left:14px;margin-bottom:12px;opacity:0.15}
+.mockup-bar-line{height:7px;background:#1e1e1e;border-radius:2px;margin-bottom:6px}
+.mockup-item{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mockup-dot{width:4px;height:4px;border-radius:50%;background:#2a2a2a;flex-shrink:0}
+.mockup-line{height:6px;background:#161616;border-radius:2px}
+
+/* FEATURES */
+.features-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px}
+.features-title span{color:#8D8BFA}
+.features-sub{font-size:13px;color:#666;margin-bottom:64px;line-height:1.7}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:80px 60px}
+.feature-icon{margin-bottom:20px;color:#e8e8e8}
+.feature-icon svg{width:36px;height:36px;stroke:#e8e8e8;fill:none;stroke-width:1.5}
+.feature-name{font-family:'IBM Plex Sans',sans-serif;font-size:18px;font-weight:600;margin-bottom:12px;color:#e8e8e8}
+.feature-desc{font-size:12px;color:#666;line-height:1.8}
+
+/* SOURCES */
+.sources-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px}
+.sources-sub{font-size:13px;color:#666;margin-bottom:40px;line-height:1.7}
+.cat-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+.cat-pill{display:flex;align-items:center;gap:8px;border:1px solid #2a2a2a;border-radius:20px;padding:8px 16px;font-size:11px;letter-spacing:0.1em;color:#e8e8e8}
+.cat-dot{width:6px;height:6px;border-radius:50%}
+.sources-label{font-size:11px;color:#444;letter-spacing:0.1em;margin-bottom:16px}
+.sources-grid{display:flex;flex-wrap:wrap;gap:10px}
+.source-pill{border:1px solid #1e1e1e;border-radius:20px;padding:8px 18px;font-size:12px;color:#888;letter-spacing:0.04em}
+
+/* BRIEF */
+.brief-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:60px}
+.brief-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:start}
+.brief-points{display:flex;flex-direction:column;gap:40px}
+.brief-point{display:flex;gap:16px}
+.brief-point-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.brief-point-dot.active{background:#8D8BFA}
+.brief-point-dot.inactive{background:#2a2a2a}
+.brief-point-text{font-size:14px;line-height:1.7}
+.brief-point-text.active{color:#e8e8e8}
+.brief-point-text.inactive{color:#333}
+.brief-mockup{background:#111;border:1px solid #1e1e1e;border-radius:8px;padding:28px}
+.brief-mockup-label{font-size:9px;letter-spacing:0.16em;color:#444;margin-bottom:24px}
+.brief-row{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid #161616}
+.brief-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.brief-row-cat{font-size:9px;letter-spacing:0.14em;margin-bottom:8px}
+.brief-row-text{font-size:12px;color:#888;line-height:1.6;margin-bottom:8px;border-bottom:1px solid #8D8BFA44;padding-bottom:6px}
+.brief-row-heat{font-size:11px;color:#333;text-align:right}
+
+/* COMPARISON */
+.compare-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+.compare-sub{font-size:13px;color:#666;margin-bottom:64px;line-height:1.7}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace}
+th{padding:16px 24px;text-align:left;font-size:11px;letter-spacing:0.1em;font-weight:500;border-bottom:1px solid #1e1e1e;color:#444}
+th.nc{color:#8D8BFA}
+td{padding:16px 24px;font-size:13px;border-bottom:1px solid #111;color:#555}
+td.label{color:#888;font-size:12px}
+td.nc{color:#8D8BFA}
+tr:last-child td{border-bottom:none}
+
+/* FAQ */
+.faq-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:60px}
+.faq-item{border-bottom:1px solid #1a1a1a}
+.faq-btn{width:100%;background:none;border:none;color:#e8e8e8;display:flex;justify-content:space-between;align-items:center;padding:24px 0;cursor:pointer;text-align:left;font-family:'IBM Plex Sans',sans-serif;font-size:16px;font-weight:400}
+.faq-btn:hover{color:#8D8BFA}
+.faq-plus{font-size:20px;color:#444;line-height:1;flex-shrink:0}
+.faq-answer{font-size:13px;color:#666;line-height:1.8;padding-bottom:24px;display:none}
+.faq-answer.open{display:block}
+
+/* CTA */
+.cta-section{text-align:center;padding:140px 80px;background:radial-gradient(ellipse at center, #0f0f1a 0%, #0a0a0a 70%)}
+.cta-title{font-family:'IBM Plex Sans',sans-serif;font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:20px}
+.cta-title span{color:#8D8BFA}
+.cta-sub{font-size:13px;color:#666;margin-bottom:48px;letter-spacing:0.02em}
+.cta-btn{border:1px solid #e8e8e8;color:#e8e8e8;background:transparent;padding:14px 32px;font-size:11px;letter-spacing:0.12em;cursor:pointer;border-radius:24px;font-family:'IBM Plex Mono',monospace;transition:all 0.2s}
+.cta-btn:hover{background:#e8e8e8;color:#0a0a0a}
+
+/* FOOTER */
+footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-content:space-between;align-items:center}
+.footer-links{display:flex;gap:32px}
+.footer-link{font-size:11px;color:#444;letter-spacing:0.08em;transition:color 0.2s}
+.footer-link:hover{color:#888}
+.footer-copy{font-size:11px;color:#2a2a2a;letter-spacing:0.08em}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid #1a1a1a;margin:0 80px}
+
+@media(max-width:768px){
+  nav{padding:16px 24px}
+  .nav-links{gap:20px}
+  .nav-link{display:none}
+  .section,.section-sm{padding:60px 24px}
+  .hero-title{font-size:40px}
+  .features-grid{grid-template-columns:1fr;gap:48px}
+  .brief-layout{grid-template-columns:1fr}
+  .cta-title{font-size:32px}
+  .cta-section{padding:80px 24px}
+  footer{padding:24px;flex-direction:column;gap:16px;text-align:center}
+  .divider{margin:0 24px}
+  table{font-size:11px}
+  th,td{padding:12px 10px}
+}
 </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav>
-  <div class="nav-logo">PULSE</div>
-  <div class="nav-right">
-    <a href="#features" class="nav-link">FEATURES</a>
-    <a href="#how" class="nav-link">HOW IT WORKS</a>
-    <a href="#faq" class="nav-link">FAQ</a>
+  <svg width="136" height="19" viewBox="0 0 136 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.512 8.496L2.664 4.944H2.592V17.76H0V1.008H3.024L8.496 10.272L10.344 13.824H10.416V1.008H13.008V17.76H9.984L4.512 8.496Z" fill="#8D8BFA"/><path d="M21.8368 18.048C20.9408 18.048 20.1408 17.896 19.4368 17.592C18.7328 17.288 18.1328 16.856 17.6368 16.296C17.1408 15.72 16.7568 15.032 16.4848 14.232C16.2288 13.416 16.1008 12.512 16.1008 11.52C16.1008 10.528 16.2288 9.632 16.4848 8.832C16.7568 8.016 17.1408 7.328 17.6368 6.768C18.1328 6.192 18.7328 5.752 19.4368 5.448C20.1408 5.144 20.9408 4.992 21.8368 4.992C22.7488 4.992 23.5488 5.152 24.2368 5.472C24.9408 5.792 25.5248 6.24 25.9888 6.816C26.4528 7.376 26.7968 8.032 27.0208 8.784C27.2608 9.536 27.3808 10.344 27.3808 11.208V12.192H18.8128V12.6C18.8128 13.56 19.0928 14.352 19.6528 14.976C20.2288 15.584 21.0448 15.888 22.1008 15.888C22.8688 15.888 23.5168 15.72 24.0448 15.384C24.5728 15.048 25.0208 14.592 25.3888 14.016L26.9248 15.528C26.4608 16.296 25.7888 16.912 24.9088 17.376C24.0288 17.824 23.0048 18.048 21.8368 18.048ZM21.8368 7.032C21.3888 7.032 20.9728 7.112 20.5888 7.272C20.2208 7.432 19.9008 7.656 19.6288 7.944C19.3728 8.232 19.1728 8.576 19.0288 8.976C18.8848 9.376 18.8128 9.816 18.8128 10.296V10.464H24.6208V10.224C24.6208 9.264 24.3728 8.496 23.8768 7.92C23.3808 7.328 22.7008 7.032 21.8368 7.032Z" fill="#8D8BFA"/><path d="M37.8368 15.696H37.7407C37.6287 16 37.4768 16.296 37.2848 16.584C37.1088 16.872 36.8767 17.128 36.5887 17.352C36.3167 17.56 35.9808 17.728 35.5807 17.856C35.1968 17.984 34.7488 18.048 34.2368 18.048C32.9408 18.048 31.9327 17.632 31.2127 16.8C30.5087 15.968 30.1567 14.776 30.1567 13.224V5.28H32.7728V12.888C32.7728 14.824 33.5728 15.792 35.1727 15.792C35.5087 15.792 35.8368 15.752 36.1567 15.672C36.4767 15.576 36.7568 15.44 36.9967 15.264C37.2528 15.088 37.4528 14.864 37.5968 14.592C37.7568 14.32 37.8368 14 37.8368 13.632V5.28H40.4528V17.76H37.8368V15.696Z" fill="#8D8BFA"/><path d="M44.1986 17.76V5.28H46.8146V7.68H46.9346C47.1106 7.04 47.4786 6.48 48.0386 6C48.5986 5.52 49.3746 5.28 50.3666 5.28H51.0626V7.8H50.0306C48.9906 7.8 48.1906 7.968 47.6306 8.304C47.0866 8.64 46.8146 9.136 46.8146 9.792V17.76H44.1986Z" fill="#8D8BFA"/><path d="M62.3426 17.76C61.6546 17.76 61.1266 17.568 60.7586 17.184C60.3906 16.784 60.1666 16.28 60.0866 15.672H59.9666C59.7266 16.456 59.2866 17.048 58.6466 17.448C58.0066 17.848 57.2306 18.048 56.3186 18.048C55.0226 18.048 54.0226 17.712 53.3186 17.04C52.6306 16.368 52.2866 15.464 52.2866 14.328C52.2866 13.08 52.7346 12.144 53.6306 11.52C54.5426 10.896 55.8706 10.584 57.6146 10.584H59.8706V9.528C59.8706 8.76 59.6626 8.168 59.2466 7.752C58.8306 7.336 58.1826 7.128 57.3026 7.128C56.5666 7.128 55.9666 7.288 55.5026 7.608C55.0386 7.928 54.6466 8.336 54.3266 8.832L52.7666 7.416C53.1826 6.712 53.7666 6.136 54.5186 5.688C55.2706 5.224 56.2546 4.992 57.4706 4.992C59.0866 4.992 60.3266 5.368 61.1906 6.12C62.0546 6.872 62.4866 7.952 62.4866 9.36V15.624H63.8066V17.76H62.3426ZM57.0626 16.056C57.8786 16.056 58.5506 15.88 59.0786 15.528C59.6066 15.16 59.8706 14.672 59.8706 14.064V12.264H57.6626C55.8546 12.264 54.9506 12.824 54.9506 13.944V14.376C54.9506 14.936 55.1346 15.36 55.5026 15.648C55.8866 15.92 56.4066 16.056 57.0626 16.056Z" fill="#8D8BFA"/><path d="M69.0345 17.76C68.1385 17.76 67.4665 17.536 67.0185 17.088C66.5865 16.624 66.3705 15.984 66.3705 15.168V0H68.9865V15.624H70.7145V17.76H69.0345Z" fill="#8D8BFA"/><path d="M81.532 18.048C79.34 18.048 77.62 17.312 76.372 15.84C75.124 14.352 74.5 12.2 74.5 9.384C74.5 7.976 74.66 6.736 74.98 5.664C75.3 4.592 75.764 3.688 76.372 2.952C76.98 2.216 77.716 1.664 78.58 1.296C79.46 0.912 80.444 0.72 81.532 0.72C82.988 0.72 84.204 1.04 85.18 1.68C86.172 2.32 86.948 3.264 87.508 4.512L85.228 5.76C84.94 4.96 84.492 4.328 83.884 3.864C83.292 3.384 82.508 3.144 81.532 3.144C80.236 3.144 79.22 3.584 78.484 4.464C77.748 5.344 77.38 6.56 77.38 8.112V10.656C77.38 12.208 77.748 13.424 78.484 14.304C79.22 15.184 80.236 15.624 81.532 15.624C82.54 15.624 83.356 15.368 83.98 14.856C84.62 14.328 85.092 13.656 85.396 12.84L87.58 14.16C87.02 15.376 86.236 16.328 85.228 17.016C84.22 17.704 82.988 18.048 81.532 18.048Z" fill="#8D8BFA"/><path d="M90.2629 17.76V5.28H92.8789V7.68H92.9989C93.1749 7.04 93.5429 6.48 94.1029 6C94.6629 5.52 95.4389 5.28 96.4309 5.28H97.1269V7.8H96.0949C95.0549 7.8 94.2549 7.968 93.6949 8.304C93.1509 8.64 92.8789 9.136 92.8789 9.792V17.76H90.2629Z" fill="#8D8BFA"/><path d="M108.407 17.76C107.719 17.76 107.191 17.568 106.823 17.184C106.455 16.784 106.231 16.28 106.151 15.672H106.031C105.791 16.456 105.351 17.048 104.711 17.448C104.071 17.848 103.295 18.048 102.383 18.048C101.087 18.048 100.087 17.712 99.3829 17.04C98.6949 16.368 98.3509 15.464 98.3509 14.328C98.3509 13.08 98.7989 12.144 99.6949 11.52C100.607 10.896 101.935 10.584 103.679 10.584H105.935V9.528C105.935 8.76 105.727 8.168 105.311 7.752C104.895 7.336 104.247 7.128 103.367 7.128C102.631 7.128 102.031 7.288 101.567 7.608C101.103 7.928 100.711 8.336 100.391 8.832L98.8309 7.416C99.2469 6.712 99.8309 6.136 100.583 5.688C101.335 5.224 102.319 4.992 103.535 4.992C105.151 4.992 106.391 5.368 107.255 6.12C108.119 6.872 108.551 7.952 108.551 9.36V15.624H109.871V17.76H108.407ZM103.127 16.056C103.943 16.056 104.615 15.88 105.143 15.528C105.671 15.16 105.935 14.672 105.935 14.064V12.264H103.727C101.919 12.264 101.015 12.824 101.015 13.944V14.376C101.015 14.936 101.199 15.36 101.567 15.648C101.951 15.92 102.471 16.056 103.127 16.056Z" fill="#8D8BFA"/><path d="M111.093 5.28H113.637L114.909 10.512L116.037 15.24H116.109L117.405 10.512L118.917 5.28H121.269L122.805 10.512L124.125 15.24H124.197L125.301 10.512L126.597 5.28H129.021L125.661 17.76H122.709L120.069 8.568H120.021L119.037 12.072L117.381 17.76H114.501L111.093 5.28Z" fill="#8D8BFA"/><path d="M134.177 17.76C133.281 17.76 132.609 17.536 132.161 17.088C131.729 16.624 131.513 15.984 131.513 15.168V0H134.129V15.624H135.857V17.76H134.177Z" fill="#8D8BFA"/></svg>
+  <div class="nav-links">
+    <button class="nav-link" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">HOW IT WORKS</button>
+    <button class="nav-link" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">FEATURES</button>
+    <button class="nav-link" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
     <a href="/app" class="nav-cta">OPEN APP</a>
   </div>
 </nav>
 
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-tag">LIVE — updating every 30 minutes</div>
-  <h1>AI signals.<br/><span>Zero noise.</span></h1>
-  <p class="hero-sub">Pulse aggregates research papers, GitHub repos, tools, and news from 20+ sources — heat-ranked in real time so you always know what actually matters in AI.</p>
-  <div class="hero-actions">
-    <a href="/app" class="btn-primary">OPEN PULSE</a>
-    <a href="#how" class="btn-ghost">SEE HOW IT WORKS</a>
-  </div>
-  <div class="hero-stats">
-    <div class="stat"><span class="stat-num">20+</span><span class="stat-label">SOURCES</span></div>
-    <div class="stat"><span class="stat-num">150+</span><span class="stat-label">ITEMS / DAY</span></div>
-    <div class="stat"><span class="stat-num">30m</span><span class="stat-label">UPDATE CYCLE</span></div>
-    <div class="stat"><span class="stat-num">6</span><span class="stat-label">CATEGORIES</span></div>
-  </div>
-  <div class="app-preview">
-    <div class="preview-topbar">
-      <span class="preview-logo">PULSE</span>
-      <span class="preview-tab active">brief</span>
-      <span class="preview-tab">feed</span>
-      <span class="preview-tab">saved</span>
+<!-- HERO -->
+<section class="section" style="padding-bottom:0">
+  <h1 class="hero-title">AI signals <span>Zero</span> noise</h1>
+  <p class="hero-sub">Pulse aggregates research papers, GitHub repositories, tools, and news from<br/>20+ sources, ranking them in real time so you instantly see what actually matters in AI.</p>
+  <div class="mockup">
+    <div class="mockup-bar">
+      <span class="mockup-logo">PULSE</span>
+      <span class="mockup-tab active">brief</span>
+      <span class="mockup-tab">feed</span>
+      <span class="mockup-tab">saved</span>
     </div>
-    <div class="preview-body">
-      <div class="preview-left">
-        <div class="preview-section-title">TODAY'S BRIEF</div>
-        <div class="preview-brief-item">
-          <div class="preview-brief-cat">MODELS</div>
-          <div class="preview-brief-text">3 new model releases — GPT-5 leads with 2.4k comments across HN</div>
+    <div class="mockup-body">
+      <div class="mockup-section">
+        <div class="mockup-cat" style="color:#00ff88">MODELS &amp; RELEASES</div>
+        <div class="mockup-summary" style="border-color:#00ff88">
+          <div class="mockup-bar-line" style="width:90%"></div>
+          <div class="mockup-bar-line" style="width:75%"></div>
+          <div class="mockup-bar-line" style="width:60%"></div>
         </div>
-        <div class="preview-brief-item">
-          <div class="preview-brief-cat">RESEARCH</div>
-          <div class="preview-brief-text">Flash attention variant achieves 3x speedup — arXiv paper trending</div>
-        </div>
-        <div class="preview-brief-item">
-          <div class="preview-brief-cat">TOOLS</div>
-          <div class="preview-brief-text">New MCP framework — 1.2k GitHub stars in first 24 hours</div>
-        </div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:72%"></div></div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:58%"></div></div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:65%"></div></div>
       </div>
-      <div class="preview-right">
-        <div class="preview-feed-item">
-          <div class="preview-feed-meta">
-            <span class="preview-src">HN</span>
-            <span class="preview-pill" style="background:rgba(34,211,238,0.1);color:#22d3ee">MODEL</span>
-            <span class="preview-heat">heat 99</span>
-          </div>
-          <div class="preview-feed-title">OpenAI releases GPT-5 — community benchmarks show 40% gains on coding</div>
+      <div class="mockup-section">
+        <div class="mockup-cat" style="color:#4da6ff">TOOLS &amp; LIBRARIES</div>
+        <div class="mockup-summary" style="border-color:#4da6ff">
+          <div class="mockup-bar-line" style="width:85%"></div>
+          <div class="mockup-bar-line" style="width:70%"></div>
+          <div class="mockup-bar-line" style="width:80%"></div>
         </div>
-        <div class="preview-feed-item">
-          <div class="preview-feed-meta">
-            <span class="preview-src">arXiv</span>
-            <span class="preview-pill" style="background:rgba(96,165,250,0.1);color:#60a5fa">RESEARCH</span>
-            <span class="preview-heat">heat 94</span>
-          </div>
-          <div class="preview-feed-title">FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision</div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:68%"></div></div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:55%"></div></div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:74%"></div></div>
+      </div>
+      <div class="mockup-section" style="margin-bottom:0">
+        <div class="mockup-cat" style="color:#c77dff">COMMUNITY</div>
+        <div class="mockup-summary" style="border-color:#c77dff">
+          <div class="mockup-bar-line" style="width:88%"></div>
+          <div class="mockup-bar-line" style="width:65%"></div>
+          <div class="mockup-bar-line" style="width:72%"></div>
         </div>
-        <div class="preview-feed-item">
-          <div class="preview-feed-meta">
-            <span class="preview-src">GitHub</span>
-            <span class="preview-pill" style="background:rgba(167,139,250,0.1);color:#a78bfa">TOOLS</span>
-            <span class="preview-heat">heat 89</span>
-          </div>
-          <div class="preview-feed-title">microsoft/AutoGen — Multi-agent conversation framework for LLM workflows</div>
-        </div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:61%"></div></div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:77%"></div></div>
+        <div class="mockup-item"><div class="mockup-dot"></div><div class="mockup-line" style="width:50%"></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider" style="margin-top:80px"/>
 
-<section id="value" style="background:var(--surface)">
-  <div class="section-tag">WHY PULSE</div>
-  <div class="section-title">Built for people<br/>who build with AI</div>
-  <p class="section-sub">Not a newsletter. Not a Twitter feed. A real-time intelligence layer that works while you do.</p>
-  <div class="props-grid">
-    <div class="prop"><div class="prop-icon">01</div><div class="prop-title">HEAT RANKING</div><div class="prop-text">Every item gets a heat score based on velocity, engagement, and cross-source signals. The top story is actually the top story.</div></div>
-    <div class="prop"><div class="prop-icon">02</div><div class="prop-title">CROSS-SOURCE CLUSTERING</div><div class="prop-text">When the same story breaks on HN, arXiv, and GitHub simultaneously, Pulse clusters them. One item, full picture.</div></div>
-    <div class="prop"><div class="prop-icon">03</div><div class="prop-title">AI DAILY BRIEF</div><div class="prop-text">Every morning, Pulse summarises what happened overnight across all categories. Start your day informed in 90 seconds.</div></div>
-    <div class="prop"><div class="prop-icon">04</div><div class="prop-title">ZERO FRICTION</div><div class="prop-text">No algorithm trying to addict you. No sponsored posts. No engagement bait. Just the signal, ranked honestly.</div></div>
-    <div class="prop"><div class="prop-icon">05</div><div class="prop-title">BOOKMARK AND SEARCH</div><div class="prop-text">Save items, search history, pick up where you left off. Your reading list synced across devices.</div></div>
-    <div class="prop"><div class="prop-icon">06</div><div class="prop-title">20+ CURATED SOURCES</div><div class="prop-text">HN, arXiv, GitHub, Simon Willison, Interconnects, OpenAI, Anthropic, HuggingFace, MIT Tech Review and more.</div></div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section id="features">
-  <div class="section-tag">FEATURES</div>
-  <div class="section-title">Everything you need.<br/>Nothing you dont.</div>
+<!-- FEATURES -->
+<section class="section" id="features">
+  <h2 class="features-title">Built for people who build with <span>AI</span></h2>
+  <p class="features-sub">Not a newsletter. Not a Twitter feed. A real-time intelligence layer that works while you do.</p>
   <div class="features-grid">
-    <div class="feature"><div class="feature-num">01</div><div class="feature-title">REAL-TIME FEED</div><div class="feature-text">170+ items refreshed every 30 minutes. Filter by type — models, research, tools, repos, policy, or discussion.</div></div>
-    <div class="feature"><div class="feature-num">02</div><div class="feature-title">AI SUMMARIES</div><div class="feature-text">Click any item for an instant AI-generated summary. No more clicking through to read a paper just to find out if it matters.</div></div>
-    <div class="feature"><div class="feature-num">03</div><div class="feature-title">DAILY BRIEF</div><div class="feature-text">Categorised digest of what moved in the last 24 hours. Know the landscape before you open a single link.</div></div>
-    <div class="feature"><div class="feature-num">04</div><div class="feature-title">TRENDING REPOS</div><div class="feature-text">GitHub repos gaining stars fast, filtered to AI/ML. Spot the next big framework early.</div></div>
-    <div class="feature"><div class="feature-num">05</div><div class="feature-title">SAVED ITEMS</div><div class="feature-text">Bookmark anything to read later. Synced to your account. Never lose a paper you meant to come back to.</div></div>
-    <div class="feature"><div class="feature-num">06</div><div class="feature-title">SOURCE FILTER</div><div class="feature-text">Filter to just HN, just arXiv, just GitHub, or any combination. Your feed, your way.</div></div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section id="categories" style="background:var(--surface)">
-  <div class="section-tag">COVERAGE</div>
-  <div class="section-title">Every corner of the AI stack</div>
-  <p class="section-sub">From foundational research to funding rounds — if it matters to AI builders, Pulse tracks it.</p>
-  <div class="cats-grid">
-    <div class="cat"><span class="cat-dot" style="background:#22d3ee"></span>MODELS</div>
-    <div class="cat"><span class="cat-dot" style="background:#60a5fa"></span>RESEARCH</div>
-    <div class="cat"><span class="cat-dot" style="background:#a78bfa"></span>TOOLS</div>
-    <div class="cat"><span class="cat-dot" style="background:#9b72e8"></span>REPOS</div>
-    <div class="cat"><span class="cat-dot" style="background:#facc15"></span>FUNDING</div>
-    <div class="cat"><span class="cat-dot" style="background:#fb923c"></span>POLICY</div>
-    <div class="cat"><span class="cat-dot" style="background:#94a3b8"></span>DISCUSS</div>
-  </div>
-  <div style="margin-top:48px">
-    <div class="section-tag">SOURCES</div>
-    <div class="sources-grid">
-      <span class="source-chip">Hacker News</span><span class="source-chip">arXiv</span><span class="source-chip">GitHub</span><span class="source-chip">Simon Willison</span><span class="source-chip">Interconnects</span><span class="source-chip">OpenAI Blog</span><span class="source-chip">Anthropic</span><span class="source-chip">HuggingFace</span><span class="source-chip">MIT Tech Review</span><span class="source-chip">TechCrunch AI</span><span class="source-chip">The Verge AI</span><span class="source-chip">VentureBeat</span><span class="source-chip">Lobste.rs</span><span class="source-chip">Dev.to</span><span class="source-chip">Google Research</span><span class="source-chip">LangChain Blog</span><span class="source-chip">Towards Data Science</span><span class="source-chip">Wired AI</span><span class="source-chip">Import AI</span><span class="source-chip">Last Week in AI</span>
+    <div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </div>
+      <div class="feature-name">Heating Ranking</div>
+      <p class="feature-desc">Every item gets a heat score based on velocity, engagement, and cross-source signals. The top story is actually the top story.</p>
+    </div>
+    <div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <div class="feature-name">Cross-Source Clustered</div>
+      <p class="feature-desc">When the same story breaks on HN, arXiv, and GitHub simultaneously, Pulse clusters them. One item, full picture.</p>
+    </div>
+    <div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      </div>
+      <div class="feature-name">AI Daily Brief</div>
+      <p class="feature-desc">Every morning, Pulse summarises what happened overnight across all categories. Start your day informed in 90 seconds.</p>
+    </div>
+    <div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+      </div>
+      <div class="feature-name">Zero Friction</div>
+      <p class="feature-desc">No algorithm trying to addict you. No sponsored posts. No engagement bait. Just the signal, ranked honestly.</p>
+    </div>
+    <div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/><line x1="12" y1="2" x2="12" y2="2"/><circle cx="12" cy="12" r="1"/></svg>
+      </div>
+      <div class="feature-name">AI Insights</div>
+      <p class="feature-desc">Click any item for an instant AI summary. No need to open a paper just to see if it's worth it.</p>
+    </div>
+    <div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="15" cy="15" r="3"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+      </div>
+      <div class="feature-name">Bookmark &amp; Search</div>
+      <p class="feature-desc">Save items, search history, pick up where you left off. Your reading list synced across devices.</p>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider"/>
 
-<section id="how">
-  <div class="section-tag">HOW IT WORKS</div>
-  <div class="section-title">Simple by design</div>
-  <div class="steps">
-    <div class="step"><div class="step-num">01</div><div class="step-title">SOURCES CRAWLED</div><div class="step-text">Every 30 minutes, Pulse pulls from 20+ sources and normalises everything into a unified format.</div></div>
-    <div class="step"><div class="step-num">02</div><div class="step-title">HEAT SCORED</div><div class="step-text">Each item gets a heat score based on engagement velocity, comment count, cross-source mentions, and time decay.</div></div>
-    <div class="step"><div class="step-num">03</div><div class="step-title">CLUSTERED</div><div class="step-text">Related items from different sources are grouped together. One story, not five separate links.</div></div>
-    <div class="step"><div class="step-num">04</div><div class="step-title">BRIEFED</div><div class="step-text">An AI model summarises the day into a structured brief — ready when you open the app each morning.</div></div>
+<!-- SOURCES -->
+<section class="section">
+  <h2 class="sources-title">Every corner of the AI stack</h2>
+  <p class="sources-sub">From foundational research to funding rounds — if it matters to AI builders, Pulse tracks it.</p>
+  <div class="cat-pills">
+    <div class="cat-pill"><div class="cat-dot" style="background:#22d3ee"></div>MODELS</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#4da6ff"></div>RESEARCH</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#c77dff"></div>TOOLS</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#8D8BFA"></div>REPOS</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#fbbf24"></div>FUNDING</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#f97316"></div>POLICY</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#888"></div>DISCUSS</div>
+  </div>
+  <div class="sources-label">Source</div>
+  <div class="sources-grid">
+    <div class="source-pill">Hacker News</div>
+    <div class="source-pill">arXiv</div>
+    <div class="source-pill">GitHub</div>
+    <div class="source-pill">Simon Willison</div>
+    <div class="source-pill">Interconnects</div>
+    <div class="source-pill">OpenAI Blog</div>
+    <div class="source-pill">HuggingFace</div>
+    <div class="source-pill">MIT Tech Review</div>
+    <div class="source-pill">TechCrunch AI</div>
+    <div class="source-pill">The Verge AI</div>
+    <div class="source-pill">VentureBeat</div>
+    <div class="source-pill">Lobste.rs</div>
+    <div class="source-pill">Google Research</div>
+    <div class="source-pill">LangChain Blog</div>
+    <div class="source-pill">Wired AI</div>
+    <div class="source-pill">Dev.to</div>
+    <div class="source-pill">Last Week in AI</div>
+    <div class="source-pill">Import AI</div>
+    <div class="source-pill">Towards Data Science</div>
+    <div class="source-pill">DeepMind Blog</div>
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider"/>
 
-<section id="deepdive" style="background:var(--surface)">
-  <div class="section-tag">DEEP DIVE</div>
-  <div class="section-title">The brief that replaces<br/>your morning scroll</div>
-  <div class="deepdive-grid">
-    <div class="deepdive-text">
-      <p>Most developers start the day by opening Twitter, HN, and three newsletters — spending 20 minutes to figure out what is worth reading. Pulse compresses that into 90 seconds.</p>
-      <p>The daily brief runs every morning across every category. Each section is an AI-generated summary of the highest-signal items from the last 24 hours.</p>
-      <p>You are not reading a curated opinion. You are reading a structured summary of what the community actually engaged with — ranked by real signals.</p>
+<!-- BRIEF -->
+<section class="section">
+  <h2 class="brief-title">The brief that replaces your &#8734; tab switching</h2>
+  <div class="brief-layout">
+    <div class="brief-points">
+      <div class="brief-point">
+        <div class="brief-point-dot active"></div>
+        <p class="brief-point-text active">Most developers start the day by opening Twitter, HN, and three newsletters spending 20 minutes to figure out what is worth reading. Pulse compresses that into 90 seconds.</p>
+      </div>
+      <div class="brief-point">
+        <div class="brief-point-dot inactive"></div>
+        <p class="brief-point-text inactive">The daily brief runs every morning across every category. Each section is an AI-generated summary of the highest-signal items from the last 24 hours.</p>
+      </div>
+      <div class="brief-point">
+        <div class="brief-point-dot inactive"></div>
+        <p class="brief-point-text inactive">You are not reading a curated opinion. You are reading a structured summary of what the community actually engaged with ranked by real signals.</p>
+      </div>
     </div>
-    <div class="deepdive-visual">
-      <div class="preview-section-title" style="margin-bottom:16px">TODAY'S BRIEF</div>
-      <div class="dd-item"><div><div class="preview-brief-cat">MODELS · 3 ITEMS</div><div class="dd-title">GPT-5 release dominates. Coding benchmark improvements confirmed by independent evaluators.</div><div class="heat-bar"><div class="heat-fill" style="width:95%"></div></div></div><div class="dd-heat">99</div></div>
-      <div class="dd-item"><div><div class="preview-brief-cat">RESEARCH · 5 ITEMS</div><div class="dd-title">Three arXiv papers on attention efficiency. LoRA variant achieving full fine-tune quality at 10% cost.</div><div class="heat-bar"><div class="heat-fill" style="width:82%"></div></div></div><div class="dd-heat">82</div></div>
-      <div class="dd-item"><div><div class="preview-brief-cat">TOOLS · 4 ITEMS</div><div class="dd-title">New MCP framework from Anthropic. LiteLLM hits 40k stars. Two agentic coding tools on HN.</div><div class="heat-bar"><div class="heat-fill" style="width:74%"></div></div></div><div class="dd-heat">74</div></div>
-      <div class="dd-item"><div><div class="preview-brief-cat">FUNDING · 2 ITEMS</div><div class="dd-title">$480M raised across two infrastructure rounds. Inference cost war accelerating.</div><div class="heat-bar"><div class="heat-fill" style="width:56%"></div></div></div><div class="dd-heat">56</div></div>
+    <div class="brief-mockup">
+      <div class="brief-mockup-label">TODAY'S BRIEF</div>
+      <div class="brief-row">
+        <div class="brief-row-cat" style="color:#22d3ee">MODELS &middot; 3 ITEMS</div>
+        <div class="brief-row-text">GPT-5 release dominates. Coding benchmark improvements confirmed by independent evaluators.</div>
+        <div class="brief-row-heat" style="text-align:right;font-size:12px;color:#444">99</div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-row-cat" style="color:#4da6ff">RESEARCH &middot; 5 ITEMS</div>
+        <div class="brief-row-text">Three arXiv papers on attention efficiency. LoRA variant achieving full fine-tune quality at 10% cost.</div>
+        <div class="brief-row-heat" style="text-align:right;font-size:12px;color:#444">82</div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-row-cat" style="color:#c77dff">TOOLS &middot; 4 ITEMS</div>
+        <div class="brief-row-text">New MCP framework from Anthropic. LiteLLM hits 40k stars. Two agentic coding tools on HN.</div>
+        <div class="brief-row-heat" style="text-align:right;font-size:12px;color:#444">74</div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-row-cat" style="color:#fbbf24">FUNDING &middot; 2 ITEMS</div>
+        <div class="brief-row-text">$480M raised across two infrastructure rounds. Inference cost war accelerating.</div>
+        <div class="brief-row-heat" style="text-align:right;font-size:12px;color:#444">56</div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider"/>
 
-<section id="comparison">
-  <div class="section-tag">VS ALTERNATIVES</div>
-  <div class="section-title">Why not just use Twitter?</div>
-  <p class="section-sub">Every option has a trade-off. Here is an honest comparison.</p>
-  <table class="comp-table">
+<!-- COMPARISON -->
+<section class="section">
+  <h2 class="compare-title">Why not just use Twitter?</h2>
+  <p class="compare-sub">Every option has a trade-off. Here is an honest comparison.</p>
+  <table>
     <thead>
-      <tr><th style="width:220px">FEATURE</th><th class="hl">PULSE</th><th>TWITTER/X</th><th>HN</th><th>NEWSLETTERS</th></tr>
+      <tr>
+        <th style="width:220px">Features</th>
+        <th class="nc">&#10216;NeuralCrawl&#10217;</th>
+        <th>&#x1D54F;</th>
+        <th>HN</th>
+        <th>NEWSLETTERS</th>
+      </tr>
     </thead>
     <tbody>
-      <tr><td class="fc">Real-time updates</td><td class="hl">30 min</td><td>Live</td><td>Live</td><td>Weekly</td></tr>
-      <tr><td class="fc">Multi-source aggregation</td><td class="hl">20+ sources</td><td>One platform</td><td>One platform</td><td>One author</td></tr>
-      <tr><td class="fc">Heat / relevance ranking</td><td class="hl">Algorithmic</td><td>Engagement bait</td><td>Votes only</td><td>Editorial</td></tr>
-      <tr><td class="fc">AI summaries on demand</td><td class="hl">Per item</td><td>No</td><td>No</td><td>No</td></tr>
-      <tr><td class="fc">Daily structured brief</td><td class="hl">Every morning</td><td>No</td><td>No</td><td>Some</td></tr>
-      <tr><td class="fc">GitHub and arXiv coverage</td><td class="hl">Native</td><td>Manual follows</td><td>Partial</td><td>Occasional</td></tr>
-      <tr><td class="fc">No ads or algorithm manipulation</td><td class="hl">Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td class="label">Real-time updates</td><td class="nc">30 min</td><td>Live</td><td>Live</td><td>Live</td></tr>
+      <tr><td class="label">Multi-source aggregation</td><td class="nc">20+ sources</td><td>One platform</td><td>One platform</td><td>Weekly</td></tr>
+      <tr><td class="label">Heat / relevance ranking</td><td class="nc">Algorithmic</td><td>Engagement bait</td><td>Votes only</td><td>One author</td></tr>
+      <tr><td class="label">AI summaries on demand</td><td class="nc">Per item</td><td>No</td><td>No</td><td>Editorial</td></tr>
+      <tr><td class="label">Daily structured brief</td><td class="nc">Every morning</td><td>No</td><td>No</td><td>Some</td></tr>
+      <tr><td class="label">GitHub and arXiv coverage</td><td class="nc">Native</td><td>Manual follows</td><td>Partial</td><td>Occasional</td></tr>
     </tbody>
   </table>
 </section>
 
-<div class="divider"></div>
+<hr class="divider"/>
 
-<section id="usecases" style="background:var(--surface)">
-  <div class="section-tag">USE CASES</div>
-  <div class="section-title">Who uses Pulse</div>
-  <div class="personas">
-    <div class="persona"><div class="persona-role">PERSONA 01</div><div class="persona-name">The AI Engineer</div><div class="persona-need">Building production systems with LLMs. Needs to know about new models, APIs, and frameworks the day they drop — not a week later when the newsletter arrives.</div><div class="persona-tags"><span class="persona-tag">MODEL RELEASES</span><span class="persona-tag">NEW TOOLING</span><span class="persona-tag">GITHUB REPOS</span></div></div>
-    <div class="persona"><div class="persona-role">PERSONA 02</div><div class="persona-name">The ML Researcher</div><div class="persona-need">Tracking what is happening in the field without drowning in arXiv. Wants to know which papers are actually being discussed, not just published.</div><div class="persona-tags"><span class="persona-tag">ARXIV PAPERS</span><span class="persona-tag">COMMUNITY SIGNAL</span><span class="persona-tag">BENCHMARKS</span></div></div>
-    <div class="persona"><div class="persona-role">PERSONA 03</div><div class="persona-name">The Technical Founder</div><div class="persona-need">Running a company in the AI space. Needs the funding news, capability jumps, and policy shifts without spending 2 hours a day on information gathering.</div><div class="persona-tags"><span class="persona-tag">FUNDING ROUNDS</span><span class="persona-tag">POLICY SHIFTS</span><span class="persona-tag">CAPABILITY JUMPS</span></div></div>
-    <div class="persona"><div class="persona-role">PERSONA 04</div><div class="persona-name">The Curious Developer</div><div class="persona-need">Not working in AI full-time but wants to stay informed. Needs a single place that surfaces what is worth knowing without requiring 5 separate subscriptions.</div><div class="persona-tags"><span class="persona-tag">DAILY BRIEF</span><span class="persona-tag">TOP STORIES</span><span class="persona-tag">LOW TIME COST</span></div></div>
+<!-- FAQ -->
+<section class="section" id="faq">
+  <h2 class="faq-title">Common questions</h2>
+  <div style="max-width:800px">
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)"><span>Is NeuralCrawl free?</span><span class="faq-plus">+</span></button>
+      <div class="faq-answer">Yes, NeuralCrawl is completely free to use. No credit card required.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)"><span>How often is the feed updated?</span><span class="faq-plus">+</span></button>
+      <div class="faq-answer">The feed refreshes every 15 minutes automatically, pulling from 20+ sources in real time.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)"><span>What is the heat score?</span><span class="faq-plus">+</span></button>
+      <div class="faq-answer">The heat score combines source credibility, engagement velocity, developer relevance keywords, and time decay. Higher score = more likely to matter to you right now.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)"><span>How are sources selected?</span><span class="faq-plus">+</span></button>
+      <div class="faq-answer">Sources are manually curated for signal quality. We prioritise sources with high technical depth and engaged communities. Quality over quantity.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)"><span>Can I suggest a source?</span><span class="faq-plus">+</span></button>
+      <div class="faq-answer">Yes — open an issue on GitHub or reach out on Twitter. We review suggestions regularly.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn" onclick="toggleFaq(this)"><span>Is there a mobile app?</span><span class="faq-plus">+</span></button>
+      <div class="faq-answer">The web app is fully responsive and works well on mobile. A native app is on the roadmap but not yet available.</div>
+    </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<hr class="divider"/>
 
-<section id="faq">
-  <div class="section-tag">FAQ</div>
-  <div class="section-title">Common questions</div>
-  <div class="faq-list">
-    <div class="faq-item"><div class="faq-q">Is Pulse free?</div><div class="faq-a">Yes. Pulse is free to use. Sign up with email or Google to unlock bookmarks, saved searches, and the daily brief. No credit card required.</div></div>
-    <div class="faq-item"><div class="faq-q">How often is the feed updated?</div><div class="faq-a">Every 30 minutes. The backend crawls all 20+ sources on a rolling schedule, scores new items, and pushes updates to the feed.</div></div>
-    <div class="faq-item"><div class="faq-q">What is the heat score?</div><div class="faq-a">Heat is a composite score based on upvotes, comment count, engagement velocity, and cross-source mentions. Items decay over time so the feed stays fresh.</div></div>
-    <div class="faq-item"><div class="faq-q">How are sources selected?</div><div class="faq-a">Sources are manually curated for signal quality. We prioritise sources with high technical depth and engaged communities. Quality over quantity.</div></div>
-    <div class="faq-item"><div class="faq-q">Can I suggest a source?</div><div class="faq-a">Yes. If a source consistently produces high-quality AI content that Pulse is not covering, reach out and we will evaluate it.</div></div>
-    <div class="faq-item"><div class="faq-q">Is there a mobile app?</div><div class="faq-a">The web app is fully responsive and works well on mobile. A native app is on the roadmap but not yet available.</div></div>
-  </div>
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-title">Stop Switching Between &#8734; Tabs.<br/><span>Start Knowing.</span></h2>
+  <p class="cta-sub">The AI space moves fast. Pulse makes sure you do too.</p>
+  <a href="/app" class="cta-btn">OPEN NEURALCRAWLER &#8212; IT IS FREE</a>
 </section>
 
-<div class="divider"></div>
-
-<section id="cta">
-  <div class="section-tag" style="display:flex;justify-content:center">GET STARTED</div>
-  <h2>Stop scrolling.<br/>Start knowing.</h2>
-  <p>The AI space moves fast. Pulse makes sure you do too.</p>
-  <a href="/app" class="btn-primary" style="font-size:0.85rem;padding:14px 36px">OPEN PULSE — IT IS FREE</a>
-</section>
-
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">PULSE</div>
+  <svg width="100" height="14" viewBox="0 0 136 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.512 8.496L2.664 4.944H2.592V17.76H0V1.008H3.024L8.496 10.272L10.344 13.824H10.416V1.008H13.008V17.76H9.984L4.512 8.496Z" fill="#444"/><path d="M21.8368 18.048C20.9408 18.048 20.1408 17.896 19.4368 17.592C18.7328 17.288 18.1328 16.856 17.6368 16.296C17.1408 15.72 16.7568 15.032 16.4848 14.232C16.2288 13.416 16.1008 12.512 16.1008 11.52C16.1008 10.528 16.2288 9.632 16.4848 8.832C16.7568 8.016 17.1408 7.328 17.6368 6.768C18.1328 6.192 18.7328 5.752 19.4368 5.448C20.1408 5.144 20.9408 4.992 21.8368 4.992C22.7488 4.992 23.5488 5.152 24.2368 5.472C24.9408 5.792 25.5248 6.24 25.9888 6.816C26.4528 7.376 26.7968 8.032 27.0208 8.784C27.2608 9.536 27.3808 10.344 27.3808 11.208V12.192H18.8128V12.6C18.8128 13.56 19.0928 14.352 19.6528 14.976C20.2288 15.584 21.0448 15.888 22.1008 15.888C22.8688 15.888 23.5168 15.72 24.0448 15.384C24.5728 15.048 25.0208 14.592 25.3888 14.016L26.9248 15.528C26.4608 16.296 25.7888 16.912 24.9088 17.376C24.0288 17.824 23.0048 18.048 21.8368 18.048Z" fill="#444"/></svg>
   <div class="footer-links">
-    <a href="/app" class="footer-link">APP</a>
-    <a href="/privacy.html" class="footer-link">PRIVACY</a>
-    <a href="/terms.html" class="footer-link">TERMS</a>
+    <a href="#" class="footer-link">TWITTER</a>
+    <a href="#" class="footer-link">GITHUB</a>
+    <a href="/privacy" class="footer-link">PRIVACY</a>
+    <a href="/terms" class="footer-link">TERMS</a>
   </div>
-  <div class="footer-copy">2026 PULSE. BUILT FOR BUILDERS.</div>
+  <span class="footer-copy">BUILT FOR BUILDERS</span>
 </footer>
 
 <script>
-document.querySelectorAll(".faq-q").forEach(q=>{
-  q.addEventListener("click",()=>q.parentElement.classList.toggle("open"));
-});
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const plus = btn.querySelector('.faq-plus');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-plus').forEach(p => p.textContent = '+');
+  if (!isOpen) { answer.classList.add('open'); plus.textContent = '-'; }
+}
 </script>
 </body>
 </html>
