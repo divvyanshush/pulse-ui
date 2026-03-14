@@ -27,11 +27,11 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       {/* Meta line */}
       <div style={{
         display:"flex",alignItems:"center",gap:6,
-        fontFamily:FF.mono, fontSize:"0.68rem",
+        fontFamily:FF.mono, fontSize:FS.xs,
         color:C.muted,
       }}>
         <span style={{
-          color:m.t, fontSize:"0.62rem",
+          color:m.t, fontSize:FS.xs,
           fontWeight:600, letterSpacing:"0.08em",
           flexShrink:0,
         }}>{m.label}</span>
@@ -60,7 +60,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
 
       {/* Title */}
       <div style={{
-        fontSize:FS.base,
+        fontSize:FS.sm,
         fontWeight:500,
         color:C.text,
         lineHeight:1.4,
@@ -72,7 +72,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       {/* Summary */}
       {item.sum && (
         <div style={{
-          fontSize:"0.78rem",
+          fontSize:FS.sm,
           color:C.muted,
           lineHeight:1.55,
           fontFamily:FF.mono,
@@ -85,14 +85,14 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
 
       {item.type==="research" && item.authors && (
         <div style={{
-          fontSize:"0.68rem",color:C.muted,fontFamily:FF.mono,
+          fontSize:FS.xs,color:C.muted,fontFamily:FF.mono,
           overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",
         }}>by {item.authors}</div>
       )}
 
       {item.relatedCount > 0 && (
         <div style={{
-          fontSize:"0.62rem", color:C.faint,
+          fontSize:FS.xs, color:C.faint,
           fontFamily:FF.mono, letterSpacing:"0.04em",
           display:"flex", alignItems:"center", gap:6,
         }}>

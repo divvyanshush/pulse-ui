@@ -70,7 +70,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
                 onClick={()=>{setFilter(f);setSrcFilter(null);savePreferences({filter:f});}}
                 style={{
                   padding:"4px 10px",borderRadius:3,flexShrink:0,
-                  fontSize:"0.65rem",letterSpacing:"0.08em",
+                  fontSize:FS.xs,letterSpacing:"0.08em",
                   fontFamily:FF.mono,
                   background:on?(f==="all"?C.faint:m?.a):"transparent",
                   color:on?(f==="all"?C.text:m?.t):C.muted,
@@ -97,7 +97,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
                   padding:"4px 8px",background:"none",
                   border:`1px solid ${on?C.text:C.border}`,
                   color:on?C.text:C.muted,
-                  fontSize:"0.62rem",fontFamily:FF.mono,
+                  fontSize:FS.xs,fontFamily:FF.mono,
                   letterSpacing:"0.06em",cursor:"pointer",
                   borderRadius:2,transition:"all .1s",
                 }}>
@@ -111,7 +111,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         <select value={sortBy} onChange={e=>{setSortBy(e.target.value);savePreferences({sort_by:e.target.value});}}
           style={{
             background:"transparent",border:`1px solid ${C.border}`,
-            color:C.muted,fontSize:"0.62rem",padding:"3px 6px",
+            color:C.muted,fontSize:FS.xs,padding:"3px 6px",
             borderRadius:3,cursor:"pointer",fontFamily:FF.mono,
             outline:"none",flexShrink:0,
           }}>
@@ -127,7 +127,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
             onChange={e=>setQuery(e.target.value)}
             style={{
               background:C.bg,border:`1px solid ${C.border}`,
-              color:C.text,fontSize:"0.72rem",padding:"5px 10px",
+              color:C.text,fontSize:FS.xs,padding:"5px 10px",
               borderRadius:3,outline:"none",width:160,
               fontFamily:FF.sans,
             }}
@@ -141,7 +141,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         <div style={{
           padding:"10px 20px",
           borderBottom:`1px solid ${C.border}`,
-          fontSize:"0.62rem",color:C.muted,
+          fontSize:FS.xs,color:C.muted,
           fontFamily:FF.mono,letterSpacing:"0.08em",
           display:"flex",alignItems:"center",justifyContent:"space-between",
         }}>

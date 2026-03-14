@@ -18,12 +18,12 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
           display: "flex", alignItems: "center", gap: 8, marginBottom: 10,
         }}>
           <span style={{
-            fontSize: "0.62rem", fontWeight: 700,
+            fontSize: FS.xs, fontWeight: 700,
             color: m.t, letterSpacing: "0.12em",
             fontFamily: FF.mono,
           }}>{cat.label.toUpperCase()}</span>
           <span style={{
-            fontSize: "0.62rem", color: C.faint,
+            fontSize: FS.xs, color: C.faint,
             fontFamily: FF.mono,
           }}>· {cat.count}</span>
         </div>
@@ -49,7 +49,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
               <div key={item.id}
                 onClick={(e) => { e.stopPropagation(); onItemClick(item); }}
                 style={{
-                  fontSize: "0.72rem", color: C.muted,
+                  fontSize: FS.sm, color: C.muted,
                   fontFamily: FF.mono,
                   marginTop: i === 0 ? 0 : 5,
                   overflow: "hidden", textOverflow: "ellipsis",
@@ -66,7 +66,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
             ))}
             {cat.count > 3 && (
               <div style={{
-                fontSize: "0.65rem", color: C.faint,
+                fontSize: FS.xs, color: C.faint,
                 fontFamily: FF.mono, marginTop: 6,
               }}>+{cat.count - 3} more</div>
             )}
@@ -82,7 +82,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
             padding: "3px 10px",
             cursor: "pointer",
             color: C.muted,
-            fontSize: "0.65rem",
+            fontSize: FS.xs,
             fontFamily: FF.mono,
             letterSpacing: "0.06em",
             borderRadius: 2,
@@ -119,7 +119,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
               style={{
                 background: "none", border: `1px solid ${C.border}`,
                 padding: "3px 10px", cursor: "pointer",
-                color: C.muted, fontSize: "0.65rem",
+                color: C.muted, fontSize: FS.xs,
                 fontFamily: FF.mono, letterSpacing: "0.06em",
                 borderRadius: 2, transition: "all .1s",
               }}
@@ -150,8 +150,8 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
 
       {/* Header */}
       <div style={{ padding:"14px 16px", borderBottom:`1px solid ${C.border}`, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <span style={{ fontSize:"0.62rem", color:C.muted, fontFamily:FF.mono, letterSpacing:"0.1em" }}>// brief</span>
-        <span style={{ fontSize:"0.62rem", color:C.faint, fontFamily:FF.mono }}>
+        <span style={{ fontSize:FS.xs, color:C.muted, fontFamily:FF.mono, letterSpacing:"0.1em" }}>// brief</span>
+        <span style={{ fontSize:FS.xs, color:C.faint, fontFamily:FF.mono }}>
           {new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}).toUpperCase()}
         </span>
       </div>
@@ -176,7 +176,7 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
         )}
 
         {error && (
-          <div style={{padding:"32px 16px",color:C.muted,fontSize:"0.75rem",fontFamily:FF.mono}}>
+          <div style={{padding:"32px 16px",color:C.muted,fontSize:FS.xs,fontFamily:FF.mono}}>
             failed to load — {error}
           </div>
         )}
