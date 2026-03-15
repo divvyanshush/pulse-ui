@@ -20,7 +20,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
         {!saved.length ? (
           <div style={{padding:"40px 16px",display:"flex",flexDirection:"column",gap:8,alignItems:"flex-start"}}>
             <div style={{fontSize:"0.75rem",color:C.muted,fontFamily:FF.sans}}>no saved items yet</div>
-            <div style={{fontSize:"0.7rem",color:C.muted,fontFamily:FF.sans,opacity:0.6}}>
+            <div style={{fontSize:"0.7rem",color:C.muted,fontFamily:FF.sans}}>
               bookmark articles to save them here
             </div>
           </div>

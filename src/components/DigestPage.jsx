@@ -38,7 +38,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
             borderLeft: `2px solid ${m.t}`,
             paddingLeft: 10,
             marginBottom: 12,
-            opacity: 0.88,
+            
           }}>{cat.summary}</div>
         )}
 

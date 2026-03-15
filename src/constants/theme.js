@@ -23,16 +23,22 @@ export const FF = {
 };
 
 export const DARK = {
-  text:"#e8e8e8", sub:"#999999", muted:"#606060", faint:"#303030",
-  bg:"#141414", surface:"#1c1c1c", hover:"#222222", border:"#2c2c2c",
-  accent:"#e8e8e8", accentDim:"rgba(255,255,255,0.05)", accentBorder:"rgba(255,255,255,0.12)",
+  text:"#ececec",   // 93% white — primary, easy on eyes
+  sub:"#a8a8a8",    // 66% white — secondary text
+  muted:"#787878",  // 47% white — tertiary, still readable
+  faint:"#333333",  // borders and dividers only
+  bg:"#141414", surface:"#1c1c1c", hover:"#242424", border:"#2e2e2e",
+  accent:"#ececec", accentDim:"rgba(255,255,255,0.05)", accentBorder:"rgba(255,255,255,0.12)",
   light:false,
 };
 
 export const LIGHT = {
-  text:"#0a0a0a", sub:"#444444", muted:"#888888", faint:"#e5e5e5",
-  bg:"#ffffff", surface:"#fafafa", hover:"#f5f5f5", border:"#e8e8e8",
-  accent:"#18181b", accentDim:"rgba(0,0,0,0.04)", accentBorder:"rgba(0,0,0,0.15)",
+  text:"#1a1a1a",   // soft black — not harsh
+  sub:"#4a4a4a",    // clear secondary
+  muted:"#717171",  // readable tertiary
+  faint:"#e2e2e2",  // borders only
+  bg:"#ffffff", surface:"#f7f7f7", hover:"#f0f0f0", border:"#e4e4e4",
+  accent:"#1a1a1a", accentDim:"rgba(0,0,0,0.04)", accentBorder:"rgba(0,0,0,0.12)",
   light:true,
 };
 
