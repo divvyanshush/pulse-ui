@@ -23,6 +23,10 @@
       "dest": "/index.html"
     },
     {
+      "src": "^/login$",
+      "dest": "/index.html"
+    },
+    {
       "src": "^/(.*)$",
       "dest": "/$1"
     }

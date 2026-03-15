@@ -35,6 +35,7 @@ function getSession(k,d){ try{ const v=sessionStorage.getItem(k); return v===nul
 
 export default function App() {
   const forceDark = new URLSearchParams(window.location.search).get("theme") === "dark";
+  const currentPath = window.location.pathname;
   const [isDark,    setIsDark]   = useState(()=>forceDark ? true : getStored("pulse-dark","true")==="true");
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
@@ -117,7 +118,7 @@ export default function App() {
 
   const handleBookmark = useCallback((item,e)=>{
     e?.stopPropagation();
-    if(!user){ setShowAuth(true); return; }
+    if(!user){ window.location.href="/login"; return; }
     toggleBookmark(item);
   },[toggleBookmark,user]);
 
@@ -131,6 +132,22 @@ export default function App() {
   },[]);
 
   if(authLoading) return <div style={{minHeight:"100vh",background:DARK.bg}}/>;
+
+  // Route: /login — show auth, redirect to /app if already signed in
+  if(currentPath === "/login") {
+    if(user) { window.location.href="/app"; return null; }
+    return <Auth onAuth={async(mode,email,password)=>{
+      const err = await handleAuth(mode,email,password);
+      if(!err) window.location.href="/app";
+      return err;
+    }} C={C} isDark={isDark}/>;
+  }
+
+  // Route: /app — redirect to /login if not signed in
+  if(currentPath === "/app" && !user) {
+    window.location.href="/login";
+    return null;
+  }
 
   const shared = {
     C, isDark, items, loading, bookmarks, readIds, user, detail,
