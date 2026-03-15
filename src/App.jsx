@@ -21,7 +21,7 @@ function Toast({toasts}){
           background:t.type==="err"?"#7f1d1d":"#1a1a1a",
           color:t.type==="err"?"#fca5a5":"#e8e8e8",
           padding:"6px 14px",borderRadius:2,
-          fontSize:"0.7rem",fontFamily:FF.mono,
+          fontSize:"0.7rem",fontFamily:FF.sans,
           border:`1px solid ${t.type==="err"?"#991b1b":"#2e2e2e"}`,
           letterSpacing:"0.04em",
         }}>{t.msg}</div>
@@ -141,7 +141,7 @@ export default function App() {
       display:"flex", flexDirection:"column",
       height:"100dvh", width:"100vw", overflow:"hidden", paddingTop:"env(safe-area-inset-top)",
       background:C.bg, color:C.text,
-      fontFamily:FF.mono,
+      fontFamily:FF.sans,
       WebkitFontSmoothing:"antialiased",
     }}>
 

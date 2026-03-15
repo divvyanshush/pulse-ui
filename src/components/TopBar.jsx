@@ -125,7 +125,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
                     padding:"12px 14px",
                     borderBottom:`1px solid ${C.border}`,
                   }}>
-                    <div style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.mono,marginBottom:2}}>signed in as</div>
+                    <div style={{fontSize:FS.xs,color:C.muted,fontFamily:FF.sans,marginBottom:2}}>signed in as</div>
                     <div style={{fontSize:FS.sm,color:C.text,fontFamily:FF.sans,fontWeight:500,
                       overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"
                     }}>{user.email}</div>

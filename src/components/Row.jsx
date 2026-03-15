@@ -33,7 +33,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
         <span style={{
           color:m.t, fontSize:FS.xs,
           fontWeight:700, letterSpacing:"0.1em",
-          fontFamily:FF.mono,
+          fontFamily:FF.sans,
           flexShrink:0,
         }}>{m.label}</span>
         <span style={{color:C.faint}}>·</span>
@@ -87,7 +87,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
 
       {item.type==="research" && item.authors && (
         <div style={{
-          fontSize:FS.xs,color:C.muted,fontFamily:FF.mono,
+          fontSize:FS.xs,color:C.muted,fontFamily:FF.sans,
           overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",
         }}>by {item.authors}</div>
       )}
@@ -95,7 +95,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
       {item.relatedCount > 0 && (
         <div style={{
           fontSize:FS.xs, color:C.faint,
-          fontFamily:FF.mono, letterSpacing:"0.04em",
+          fontFamily:FF.sans, letterSpacing:"0.04em",
           display:"flex", alignItems:"center", gap:6,
         }}>
           <span style={{color:C.muted}}>+{item.relatedCount} more covering this</span>

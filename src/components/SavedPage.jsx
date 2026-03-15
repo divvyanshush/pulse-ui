@@ -8,10 +8,10 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden",minWidth:0}}>
       <div style={{padding:"16px",borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
-        <div style={{fontSize:"0.65rem",color:C.muted,fontFamily:FF.mono,letterSpacing:"0.1em",marginBottom:4}}>
+        <div style={{fontSize:"0.65rem",color:C.muted,fontFamily:FF.sans,letterSpacing:"0.1em",marginBottom:4}}>
           // saved
         </div>
-        <div style={{fontSize:"0.75rem",color:C.muted,fontFamily:FF.mono}}>
+        <div style={{fontSize:"0.75rem",color:C.muted,fontFamily:FF.sans}}>
           {saved.length} {saved.length===1?"item":"items"}
         </div>
       </div>
@@ -19,8 +19,8 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
       <div style={{flex:1,overflowY:"auto"}}>
         {!saved.length ? (
           <div style={{padding:"40px 16px",display:"flex",flexDirection:"column",gap:8,alignItems:"flex-start"}}>
-            <div style={{fontSize:"0.75rem",color:C.muted,fontFamily:FF.mono}}>no saved items yet</div>
-            <div style={{fontSize:"0.7rem",color:C.muted,fontFamily:FF.mono,opacity:0.6}}>
+            <div style={{fontSize:"0.75rem",color:C.muted,fontFamily:FF.sans}}>no saved items yet</div>
+            <div style={{fontSize:"0.7rem",color:C.muted,fontFamily:FF.sans,opacity:0.6}}>
               bookmark articles to save them here
             </div>
           </div>
@@ -36,7 +36,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
               onMouseEnter={e=>e.currentTarget.style.background=C.hover}
               onMouseLeave={e=>e.currentTarget.style.background="transparent"}
             >
-              <div style={{display:"flex",alignItems:"center",gap:6,fontFamily:FF.mono,fontSize:"0.68rem"}}>
+              <div style={{display:"flex",alignItems:"center",gap:6,fontFamily:FF.sans,fontSize:"0.68rem"}}>
                 <span style={{color:m.t,fontWeight:600,letterSpacing:"0.08em"}}>{m.label}</span>
                 <span style={{color:C.faint}}>·</span>
                 <span style={{color:C.muted}}>{item.srcLabel||item.src}</span>
@@ -53,7 +53,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
               }}>{item.title}</div>
               {item.sum&&(
                 <div style={{fontSize:"0.78rem",color:C.muted,lineHeight:1.55,
-                  fontFamily:FF.mono,
+                  fontFamily:FF.sans,
                   display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden",
                 }}>{item.sum}</div>
               )}
