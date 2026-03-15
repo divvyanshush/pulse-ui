@@ -2,10 +2,11 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { FS, FF, FILTERS, getTM } from "../constants/theme.js";
 import { Row } from "./Row.jsx";
 import { SkeletonRow } from "./Shared.jsx";
+import { OnboardingBanner } from "./OnboardingBanner.jsx";
 
 export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, onBookmark,
   filter, setFilter, query, setQuery, srcFilter, setSrcFilter, sortBy, setSortBy,
-  savePreferences, detail, readIds, user, isMobile, onMenu }) {
+  savePreferences, detail, readIds, user, isMobile, onMenu, showOnboarding, dismissOnboarding }) {
 
   const [displayCount, setDisplayCount] = useState(30);
   const [timeFilter, setTimeFilter] = useState("all");
@@ -135,6 +136,9 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
             </div>
         </div>
       </div>
+
+      {/* Onboarding */}
+      {showOnboarding && <OnboardingBanner C={C} isDark={isDark} onDismiss={dismissOnboarding}/>}
 
       {/* Feed */}
       <div style={{flex:1,overflowY:"auto"}}>

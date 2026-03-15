@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { API, timeAgo, FF, DARK, LIGHT } from "./constants/theme.js";
 import { useAuth } from "./hooks/useAuth.js";
 import { Auth } from "./components/Auth.jsx";
+import { OnboardingBanner } from "./components/OnboardingBanner.jsx";
 import { Detail } from "./components/Detail.jsx";
 import { useBookmarks } from "./hooks/useBookmarks.js";
 import { usePreferences } from "./hooks/usePreferences.js";
@@ -50,6 +51,7 @@ export default function App() {
   const [sortBy,    setSortBy]   = useState("heat");
   const [toasts,    setToasts]   = useState([]);
   const [showAuth,  setShowAuth] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(()=>{ try{ return !localStorage.getItem("cobun-onboarded"); }catch(e){ return true; } });
   const [winW,      setWinW]     = useState(()=>typeof window!=="undefined"?window.innerWidth:1200);
 
   useEffect(()=>{
@@ -107,6 +109,8 @@ export default function App() {
 
   useEffect(()=>{ const id=setInterval(()=>loadFeed(true),90000); return()=>clearInterval(id); },[loadFeed]);
   useEffect(()=>{ const id=setInterval(()=>setItems(p=>p.map(i=>({...i,timeLabel:timeAgo(i.time)}))),30000); return()=>clearInterval(id); },[]);
+
+  const dismissOnboarding = useCallback(()=>{ try{ localStorage.setItem("cobun-onboarded","1"); }catch(e){} setShowOnboarding(false); },[]);
 
   const toggleDark = useCallback(()=>{
     if(isIframe) return;
