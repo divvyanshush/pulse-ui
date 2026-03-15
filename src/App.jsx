@@ -154,6 +154,7 @@ export default function App() {
   const shared = {
     C, isDark, items, loading, bookmarks, readIds, user, detail,
     onItemClick:handleItemClick, onBookmark:handleBookmark, isMobile,
+    showOnboarding, dismissOnboarding,
   };
 
   return (
