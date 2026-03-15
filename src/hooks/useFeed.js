@@ -23,13 +23,13 @@ export function useFeed({ showToast, pushNotif }) {
           setPending(p=>[...novel,...p]);
           const top=novel.sort((a,b)=>(b.heat||0)-(a.heat||0))[0];
           showToast(`${novel.length} new item${novel.length>1?"s":""}`,top.title,"new",top);
-          pushNotif(`PULSE · ${novel.length} new`,top.title);
+          pushNotif(`Cobun AI · ${novel.length} new`,top.title);
         }
         const trending=enriched.filter(i=>!prevIds.current.has(i.id)&&(i.heat||0)>=75);
         if(trending.length){
           const t=trending[0];
           showToast("Trending now",t.title,"hot",t);
-          pushNotif("PULSE · Trending",t.title);
+          pushNotif("Cobun AI · Trending",t.title);
         }
       }else{
         setItems(enriched);
