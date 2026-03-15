@@ -192,7 +192,7 @@ export default function App() {
                   </div>
                 </div>
               ) : (
-                <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden"}}>
+                <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", height:"100%"}}>
                   {page==="brief" && <BriefPage {...shared}/>}
                   {page==="feed"  && <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>}
                   {page==="saved" && <SavedPage {...shared}/>}
