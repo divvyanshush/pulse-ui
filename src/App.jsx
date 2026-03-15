@@ -34,7 +34,8 @@ function getStored(k,d){ try{ const v=localStorage.getItem(k); return v===null?d
 function getSession(k,d){ try{ const v=sessionStorage.getItem(k); return v===null?d:v; }catch(e){ return d; } }
 
 export default function App() {
-  const [isDark,    setIsDark]   = useState(()=>getStored("pulse-dark","true")==="true");
+  const forceDark = new URLSearchParams(window.location.search).get("theme") === "dark";
+  const [isDark,    setIsDark]   = useState(()=>forceDark ? true : getStored("pulse-dark","true")==="true");
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
