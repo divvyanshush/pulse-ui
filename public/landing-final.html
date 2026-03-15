@@ -13,8 +13,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:#0a0a0a;color:#e8e8e8;font-family:'IBM Plex Mono',monospace;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-::selection{background:#8D8BFA33;color:#fff}
+body{background:#0a0a0a;color:#e8e8e8;font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(255,255,255,0.1);color:#fff}
 a{text-decoration:none;color:inherit}
 img{max-width:100%}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -28,24 +28,24 @@ img{max-width:100%}
 .reveal-delay-4{transition-delay:0.4s}
 nav{display:flex;align-items:center;justify-content:space-between;padding:20px 80px;border-bottom:1px solid #1a1a1a;background:#0a0a0a;position:sticky;top:0;z-index:100;animation:fadeIn 0.4s ease}
 .nav-links{display:flex;align-items:center;gap:40px}
-.nav-link{font-size:16px;letter-spacing:0.06em;color:#666;cursor:pointer;background:none;border:none;font-family:'IBM Plex Mono',monospace;transition:color 0.2s}
+.nav-link{font-size:16px;letter-spacing:0.06em;color:#666;cursor:pointer;background:none;border:none;font-family:'IBM Plex Sans',sans-serif;transition:color 0.2s}
 .nav-link:hover{color:#e8e8e8}
-.nav-cta{font-size:16px;letter-spacing:0.06em;color:#e8e8e8;border:1px solid #e8e8e8;padding:8px 22px;border-radius:20px;background:transparent;font-family:'IBM Plex Mono',monospace;cursor:pointer;transition:all 0.2s;display:inline-block}
+.nav-cta{font-size:16px;letter-spacing:0.06em;color:#e8e8e8;border:1px solid #e8e8e8;padding:8px 22px;border-radius:20px;background:transparent;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;transition:all 0.2s;display:inline-block}
 .nav-cta:hover{background:#e8e8e8;color:#0a0a0a}
 .section{padding:100px 80px}
 .divider{border:none;border-top:1px solid #1a1a1a;margin:0 80px}
 .hero{padding:80px 80px 0}
 .hero-title{font-family:'IBM Plex Sans',sans-serif;font-size:64px;font-weight:700;line-height:1.05;letter-spacing:-0.02em;margin-bottom:20px;animation:fadeUp 0.6s ease 0.1s both}
-.hero-title span{color:#8D8BFA}
+.hero-title span{color:#ffffff}
 .hero-sub{font-size:16px;color:#888;line-height:1.6;max-width:640px;margin-bottom:56px;animation:fadeUp 0.6s ease 0.2s both}
 .mockup{border:1px solid #1e1e1e;border-radius:8px;overflow:hidden;background:#0d0d0d;animation:fadeUp 0.7s ease 0.35s both}
 .mockup-bar{border-bottom:1px solid #1e1e1e;padding:14px 24px;display:flex;gap:28px;align-items:center;background:#0d0d0d}
-.mockup-logo{color:#8D8BFA;font-size:12px;font-weight:600;letter-spacing:0.1em}
+.mockup-logo{color:#ffffff;font-size:12px;font-weight:600;letter-spacing:0.1em}
 .mockup-tab{font-size:12px;color:#333;letter-spacing:0.06em;cursor:default}
 .mockup-tab.active{color:#e8e8e8;border-bottom:1px solid #e8e8e8;padding-bottom:2px}
 .mockup-body{padding:20px 24px;min-height:320px}
 .mockup-section{margin-bottom:24px}
-.mockup-cat{font-size:9px;letter-spacing:0.16em;margin-bottom:10px;font-family:'IBM Plex Mono',monospace}
+.mockup-cat{font-size:9px;letter-spacing:0.16em;margin-bottom:10px;font-family:'IBM Plex Sans',sans-serif}
 .mockup-summary{border-left:2px solid currentColor;padding-left:12px;margin-bottom:10px}
 .mockup-bar-line{border-radius:2px;margin-bottom:5px;background:#1a1a1a}
 .mockup-item{display:flex;align-items:center;gap:8px;margin-bottom:7px}
@@ -55,7 +55,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:20px 8
 .live-badge{font-size:9px;color:#00ff88;letter-spacing:0.14em;display:flex;align-items:center;gap:5px;margin-left:auto}
 .live-dot{width:5px;height:5px;border-radius:50%;background:#00ff88;animation:pulse 2s ease infinite}
 .features-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px}
-.features-title span{color:#8D8BFA}
+.features-title span{color:#ffffff}
 .features-sub{font-size:16px;color:#666;margin-bottom:64px;line-height:1.7}
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:72px 60px}
 .feature-icon{margin-bottom:20px}
@@ -75,11 +75,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:20px 8
 .brief-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:60px}
 .brief-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:start}
 .brief-timeline{display:flex;flex-direction:column;position:relative;padding-left:24px}
-.brief-timeline::before{content:'';position:absolute;left:4px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,#8D8BFA,#2a2a2a)}
+.brief-timeline::before{content:'';position:absolute;left:4px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,#ffffff,#2a2a2a)}
 .brief-point{position:relative;margin-bottom:40px;cursor:default}
 .brief-point:last-child{margin-bottom:0}
-.brief-point-marker{position:absolute;left:-24px;top:6px;width:9px;height:9px;border-radius:50%;border:2px solid #8D8BFA;background:#0a0a0a;transition:background 0.3s}
-.brief-point.active .brief-point-marker{background:#8D8BFA}
+.brief-point-marker{position:absolute;left:-24px;top:6px;width:9px;height:9px;border-radius:50%;border:2px solid #ffffff;background:#0a0a0a;transition:background 0.3s}
+.brief-point.active .brief-point-marker{background:#ffffff}
 .brief-point-text{font-size:16px;line-height:1.7;transition:color 0.3s}
 .brief-point.active .brief-point-text{color:#e8e8e8}
 .brief-point.inactive .brief-point-text{color:#333}
@@ -88,34 +88,34 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:20px 8
 .brief-row{padding:18px 0;border-bottom:1px solid #141414;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
 .brief-row:last-child{border-bottom:none;padding-bottom:0}
 .brief-row-cat{font-size:9px;letter-spacing:0.16em;margin-bottom:8px}
-.brief-row-text{font-size:13px;color:#888;line-height:1.6;border-bottom:1px solid #8D8BFA33;padding-bottom:6px;display:inline}
+.brief-row-text{font-size:13px;color:#888;line-height:1.6;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:6px;display:inline}
 .brief-row-heat{font-size:12px;color:#333;padding-top:20px}
 .brief-loading{display:flex;align-items:center;justify-content:center;min-height:200px;color:#333;font-size:11px;letter-spacing:0.1em}
 .compare-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
 .compare-sub{font-size:16px;color:#666;margin-bottom:64px;line-height:1.7}
 .compare-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;min-width:600px}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Sans',sans-serif;min-width:600px}
 th{padding:16px 24px;text-align:left;font-size:13px;letter-spacing:0.08em;font-weight:500;border-bottom:1px solid #1e1e1e;color:#444}
-th.nc{color:#8D8BFA;font-family:'IBM Plex Sans',sans-serif}
+th.nc{color:#ffffff;font-family:'IBM Plex Sans',sans-serif}
 td{padding:16px 24px;font-size:14px;border-bottom:1px solid #111;color:#555}
 td.label{color:#888;font-size:14px;font-family:'IBM Plex Sans',sans-serif}
-td.nc{color:#8D8BFA}
+td.nc{color:#ffffff}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#0d0d0d}
 .faq-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;margin-bottom:60px}
 .faq-list{max-width:100%}
 .faq-item{border-bottom:1px solid #1a1a1a}
 .faq-btn{width:100%;background:none;border:none;color:#e8e8e8;display:flex;justify-content:space-between;align-items:center;padding:24px 0;cursor:pointer;text-align:left;font-family:'IBM Plex Sans',sans-serif;font-size:16px;font-weight:400;gap:16px;transition:color 0.2s}
-.faq-btn:hover{color:#8D8BFA}
+.faq-btn:hover{color:#ffffff}
 .faq-plus{font-size:22px;color:#444;line-height:1;flex-shrink:0;transition:transform 0.2s,color 0.2s}
-.faq-btn[aria-expanded="true"] .faq-plus{transform:rotate(45deg);color:#8D8BFA}
+.faq-btn[aria-expanded="true"] .faq-plus{transform:rotate(45deg);color:#ffffff}
 .faq-answer{font-size:16px;color:#555;line-height:1.8;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease}
 .faq-answer.open{max-height:200px;padding-bottom:24px}
 .cta-section{text-align:center;padding:140px 80px;background:radial-gradient(ellipse at center,#0f0f1a 0%,#0a0a0a 70%)}
 .cta-title{font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:20px}
-.cta-title span{color:#8D8BFA}
+.cta-title span{color:#ffffff}
 .cta-sub{font-size:16px;color:#555;margin-bottom:48px}
-.cta-btn{border:1px solid #e8e8e8;color:#e8e8e8;background:transparent;padding:14px 36px;font-size:13px;letter-spacing:0.1em;cursor:pointer;border-radius:24px;font-family:'IBM Plex Mono',monospace;transition:all 0.2s;display:inline-block}
+.cta-btn{border:1px solid #e8e8e8;color:#e8e8e8;background:transparent;padding:14px 36px;font-size:13px;letter-spacing:0.1em;cursor:pointer;border-radius:24px;font-family:'IBM Plex Sans',sans-serif;transition:all 0.2s;display:inline-block}
 .cta-btn:hover{background:#e8e8e8;color:#0a0a0a}
 footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-content:space-between;align-items:center}
 .footer-links{display:flex;gap:32px}
@@ -167,7 +167,7 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
     <div class="cat-pill"><div class="cat-dot" style="background:#22d3ee"></div>MODELS</div>
     <div class="cat-pill"><div class="cat-dot" style="background:#4da6ff"></div>RESEARCH</div>
     <div class="cat-pill"><div class="cat-dot" style="background:#c77dff"></div>TOOLS</div>
-    <div class="cat-pill"><div class="cat-dot" style="background:#8D8BFA"></div>REPOS</div>
+    <div class="cat-pill"><div class="cat-dot" style="background:#ffffff"></div>REPOS</div>
     <div class="cat-pill"><div class="cat-dot" style="background:#fbbf24"></div>FUNDING</div>
     <div class="cat-pill"><div class="cat-dot" style="background:#f97316"></div>POLICY</div>
     <div class="cat-pill"><div class="cat-dot" style="background:#888"></div>DISCUSS</div>
@@ -246,11 +246,11 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 </footer>
 <script>
 const API = 'https://pulse-backend-production-cd92.up.railway.app';
-const TYPE_COLORS = {model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',product:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316',repo:'#8D8BFA'};
+const TYPE_COLORS = {model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',product:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316',repo:'#ffffff'};
 const CAT_LABELS = {model:'MODELS & RELEASES',research:'RESEARCH & PAPERS',tool:'TOOLS & LIBRARIES',product:'TOOLS & LIBRARIES',discuss:'COMMUNITY',funding:'FUNDING',policy:'POLICY',repo:'REPOS'};
 function timeAgo(ts){if(!ts)return '';const d=Math.floor((Date.now()/1000-ts)/60);if(d<60)return d+'m ago';if(d<1440)return Math.floor(d/60)+'h ago';return Math.floor(d/1440)+'d ago';}
-async function loadHeroMockup(){const el=document.getElementById('hero-mockup');try{const res=await fetch(API+'/feed');const data=await res.json();const items=(data.items||[]).slice(0,16);const grouped={};items.forEach(i=>{const t=i.type==='product'?'tool':i.type;if(!grouped[t])grouped[t]=[];if(grouped[t].length<4)grouped[t].push(i);});const cats=Object.keys(grouped).slice(0,3);if(!cats.length){el.innerHTML='<div class="mockup-loading">NO DATA</div>';return;}el.innerHTML=cats.map(cat=>{const color=TYPE_COLORS[cat]||'#888';const label=CAT_LABELS[cat]||cat.toUpperCase();const catItems=grouped[cat];const topSum=catItems[0]&&catItems[0].sum?catItems[0].sum.replace(/<[^>]+>/g,'').slice(0,120)+'...':'';return'<div class="mockup-section"><div class="mockup-cat" style="color:'+color+'">'+label+'</div>'+(topSum?'<div class="mockup-summary" style="border-color:'+color+'55;color:#555;font-size:10px;line-height:1.6;font-family:IBM Plex Sans,sans-serif;padding-left:12px">'+topSum+'</div>':'')+catItems.map(i=>{const t=i.title||'';const clean=t.replace(/<[^>]+>/g,'').slice(0,72);return'<div class="mockup-item"><div class="mockup-dot" style="background:'+color+'66;flex-shrink:0"></div><span style="font-size:10px;color:#999;line-height:1.4;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+clean+'</span><span style="font-size:9px;color:#444;margin-left:8px;white-space:nowrap;flex-shrink:0">'+timeAgo(i.time)+'</span></div>';}).join('')+'</div>';}).join('');}catch(e){el.innerHTML='<div class="mockup-section"><div class="mockup-cat" style="color:#8D8BFA">REPOS</div><div class="mockup-item"><div class="mockup-dot" style="background:#8D8BFA66"></div><span style="font-size:10px;color:#999;flex:1">unslothai/unsloth — Fine-tuning for LLMs, 2x faster</span><span style="font-size:9px;color:#444;margin-left:8px">2m ago</span></div><div class="mockup-item"><div class="mockup-dot" style="background:#8D8BFA66"></div><span style="font-size:10px;color:#999;flex:1">ollama/ollama — Run DeepSeek, Qwen, Gemma locally</span><span style="font-size:9px;color:#444;margin-left:8px">5m ago</span></div></div><div class="mockup-section"><div class="mockup-cat" style="color:#22d3ee">MODEL RELEASES</div><div class="mockup-item"><div class="mockup-dot" style="background:#22d3ee66"></div><span style="font-size:10px;color:#999;flex:1">1M context now available for Opus 4.6 and Sonnet 4.6</span><span style="font-size:9px;color:#444;margin-left:8px">14m ago</span></div><div class="mockup-item"><div class="mockup-dot" style="background:#22d3ee66"></div><span style="font-size:10px;color:#999;flex:1">GPT-5.4 launches with Pro and Thinking versions</span><span style="font-size:9px;color:#444;margin-left:8px">1h ago</span></div></div><div class="mockup-section"><div class="mockup-cat" style="color:#4da6ff">RESEARCH</div><div class="mockup-item"><div class="mockup-dot" style="background:#4da6ff66"></div><span style="font-size:10px;color:#999;flex:1">Autonomous research agents reach professional-level output</span><span style="font-size:9px;color:#444;margin-left:8px">2h ago</span></div></div>';}}
-async function loadBriefMockup(){const el=document.getElementById('brief-mockup');try{const res=await fetch(API+'/digest');const data=await res.json();const cats=(data.categories||[]).filter(c=>c.summary).slice(0,4);if(!cats.length){el.innerHTML='<div class="brief-loading">NO BRIEF DATA</div>';return;}const colorMap={model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316'};el.innerHTML='<div class="brief-mockup-label">TODAY\'S BRIEF</div>'+cats.map(cat=>{const color=colorMap[cat.id]||'#8D8BFA';const heat=cat.items&&cat.items[0]?cat.items[0].heat:'';return'<div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:'+color+'">'+cat.label.toUpperCase()+' · '+cat.count+' ITEMS</div><span class="brief-row-text">'+cat.summary+'</span></div>'+(heat?'<div class="brief-row-heat">'+heat+'</div>':'')+'</div>';}).join('');}catch(e){el.innerHTML='<div class="brief-mockup-label">TODAY\'S BRIEF</div><div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:#22d3ee">MODELS &amp; RELEASES · 12 ITEMS</div><span class="brief-row-text">Claude Opus and Sonnet now support 1M context windows at standard pricing. Several new open-weight models released with strong coding benchmarks.</span></div></div><div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:#4da6ff">RESEARCH &amp; PAPERS · 8 ITEMS</div><span class="brief-row-text">New findings on chain-of-thought reasoning efficiency. DeepMind publishes results on autonomous research agents reaching professional-level output.</span></div></div><div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:#c77dff">TOOLS &amp; LIBRARIES · 15 ITEMS</div><span class="brief-row-text">Context compression proxies gaining traction. Prompt caching patterns emerge as key cost optimization for production LLM apps.</span></div></div>';}}
+async function loadHeroMockup(){const el=document.getElementById('hero-mockup');try{const res=await fetch(API+'/feed');const data=await res.json();const items=(data.items||[]).slice(0,16);const grouped={};items.forEach(i=>{const t=i.type==='product'?'tool':i.type;if(!grouped[t])grouped[t]=[];if(grouped[t].length<4)grouped[t].push(i);});const cats=Object.keys(grouped).slice(0,3);if(!cats.length){el.innerHTML='<div class="mockup-loading">NO DATA</div>';return;}el.innerHTML=cats.map(cat=>{const color=TYPE_COLORS[cat]||'#888';const label=CAT_LABELS[cat]||cat.toUpperCase();const catItems=grouped[cat];const topSum=catItems[0]&&catItems[0].sum?catItems[0].sum.replace(/<[^>]+>/g,'').slice(0,120)+'...':'';return'<div class="mockup-section"><div class="mockup-cat" style="color:'+color+'">'+label+'</div>'+(topSum?'<div class="mockup-summary" style="border-color:'+color+'55;color:#555;font-size:10px;line-height:1.6;font-family:IBM Plex Sans,sans-serif;padding-left:12px">'+topSum+'</div>':'')+catItems.map(i=>{const t=i.title||'';const clean=t.replace(/<[^>]+>/g,'').slice(0,72);return'<div class="mockup-item"><div class="mockup-dot" style="background:'+color+'66;flex-shrink:0"></div><span style="font-size:10px;color:#999;line-height:1.4;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+clean+'</span><span style="font-size:9px;color:#444;margin-left:8px;white-space:nowrap;flex-shrink:0">'+timeAgo(i.time)+'</span></div>';}).join('')+'</div>';}).join('');}catch(e){el.innerHTML='<div class="mockup-section"><div class="mockup-cat" style="color:#ffffff">REPOS</div><div class="mockup-item"><div class="mockup-dot" style="background:rgba(255,255,255,0.3)"></div><span style="font-size:10px;color:#999;flex:1">unslothai/unsloth — Fine-tuning for LLMs, 2x faster</span><span style="font-size:9px;color:#444;margin-left:8px">2m ago</span></div><div class="mockup-item"><div class="mockup-dot" style="background:rgba(255,255,255,0.3)"></div><span style="font-size:10px;color:#999;flex:1">ollama/ollama — Run DeepSeek, Qwen, Gemma locally</span><span style="font-size:9px;color:#444;margin-left:8px">5m ago</span></div></div><div class="mockup-section"><div class="mockup-cat" style="color:#22d3ee">MODEL RELEASES</div><div class="mockup-item"><div class="mockup-dot" style="background:#22d3ee66"></div><span style="font-size:10px;color:#999;flex:1">1M context now available for Opus 4.6 and Sonnet 4.6</span><span style="font-size:9px;color:#444;margin-left:8px">14m ago</span></div><div class="mockup-item"><div class="mockup-dot" style="background:#22d3ee66"></div><span style="font-size:10px;color:#999;flex:1">GPT-5.4 launches with Pro and Thinking versions</span><span style="font-size:9px;color:#444;margin-left:8px">1h ago</span></div></div><div class="mockup-section"><div class="mockup-cat" style="color:#4da6ff">RESEARCH</div><div class="mockup-item"><div class="mockup-dot" style="background:#4da6ff66"></div><span style="font-size:10px;color:#999;flex:1">Autonomous research agents reach professional-level output</span><span style="font-size:9px;color:#444;margin-left:8px">2h ago</span></div></div>';}}
+async function loadBriefMockup(){const el=document.getElementById('brief-mockup');try{const res=await fetch(API+'/digest');const data=await res.json();const cats=(data.categories||[]).filter(c=>c.summary).slice(0,4);if(!cats.length){el.innerHTML='<div class="brief-loading">NO BRIEF DATA</div>';return;}const colorMap={model:'#22d3ee',research:'#4da6ff',tool:'#c77dff',discuss:'#888',funding:'#fbbf24',policy:'#f97316'};el.innerHTML='<div class="brief-mockup-label">TODAY\'S BRIEF</div>'+cats.map(cat=>{const color=colorMap[cat.id]||'#ffffff';const heat=cat.items&&cat.items[0]?cat.items[0].heat:'';return'<div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:'+color+'">'+cat.label.toUpperCase()+' · '+cat.count+' ITEMS</div><span class="brief-row-text">'+cat.summary+'</span></div>'+(heat?'<div class="brief-row-heat">'+heat+'</div>':'')+'</div>';}).join('');}catch(e){el.innerHTML='<div class="brief-mockup-label">TODAY\'S BRIEF</div><div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:#22d3ee">MODELS &amp; RELEASES · 12 ITEMS</div><span class="brief-row-text">Claude Opus and Sonnet now support 1M context windows at standard pricing. Several new open-weight models released with strong coding benchmarks.</span></div></div><div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:#4da6ff">RESEARCH &amp; PAPERS · 8 ITEMS</div><span class="brief-row-text">New findings on chain-of-thought reasoning efficiency. DeepMind publishes results on autonomous research agents reaching professional-level output.</span></div></div><div class="brief-row"><div class="brief-row-left"><div class="brief-row-cat" style="color:#c77dff">TOOLS &amp; LIBRARIES · 15 ITEMS</div><span class="brief-row-text">Context compression proxies gaining traction. Prompt caching patterns emerge as key cost optimization for production LLM apps.</span></div></div>';}}
 function toggleFaq(btn){const answer=btn.nextElementSibling;const isOpen=answer.classList.contains('open');document.querySelectorAll('.faq-answer').forEach(a=>a.classList.remove('open'));document.querySelectorAll('.faq-btn').forEach(b=>b.setAttribute('aria-expanded','false'));if(!isOpen){answer.classList.add('open');btn.setAttribute('aria-expanded','true');}}
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
