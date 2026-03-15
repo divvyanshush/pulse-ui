@@ -118,7 +118,7 @@ export default function App() {
 
   const handleBookmark = useCallback((item,e)=>{
     e?.stopPropagation();
-    if(!user){ window.location.href="/login"; return; }
+    if(!user){ setShowAuth(true); return; }
     toggleBookmark(item);
   },[toggleBookmark,user]);
 
@@ -143,11 +143,7 @@ export default function App() {
     }} C={C} isDark={isDark}/>;
   }
 
-  // Route: /app — redirect to /login if not signed in
-  if(currentPath === "/app" && !user) {
-    window.location.href="/login";
-    return null;
-  }
+
 
   const shared = {
     C, isDark, items, loading, bookmarks, readIds, user, detail,

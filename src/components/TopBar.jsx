@@ -158,7 +158,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
             )}
           </div>
         ) : (
-          <button onClick={()=>setShowAuth(true)}
+          <button onClick={()=>window.location.href="/login"}
             style={{
               background:C.accent,border:"none",
               padding:"5px 14px",cursor:"pointer",
