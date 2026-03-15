@@ -26,5 +26,18 @@
       "src": "^/(.*)$",
       "dest": "/$1"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.cobunai.com"
+        }
+      ],
+      "destination": "https://cobunai.com/$1",
+      "permanent": true
+    }
   ]
 }
