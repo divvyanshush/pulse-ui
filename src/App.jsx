@@ -109,8 +109,9 @@ export default function App() {
   useEffect(()=>{ const id=setInterval(()=>setItems(p=>p.map(i=>({...i,timeLabel:timeAgo(i.time)}))),30000); return()=>clearInterval(id); },[]);
 
   const toggleDark = useCallback(()=>{
+    if(isIframe) return;
     setIsDark(d=>{ const n=!d; try{localStorage.setItem("pulse-dark",String(n));}catch(e){} savePreferences({dark_mode:n}); return n; });
-  },[savePreferences]);
+  },[savePreferences, isIframe]);
 
   const handleAuth = useCallback(async(mode,email,password)=>{
     const {error}=await (mode==="signup"?signUp:signIn)(email,password);
