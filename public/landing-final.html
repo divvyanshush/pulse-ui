@@ -1,7 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>if(window.location.hash.includes("access_token")){window.location.href="/app"+window.location.hash;}</script>
+<script>
+if(window.location.hash.includes("access_token")){
+  window.location.href="/app"+window.location.hash;
+} else {
+  try {
+    const keys = Object.keys(localStorage);
+    const sbKey = keys.find(k => k.startsWith('sb-') && k.endsWith('-auth-token'));
+    if(sbKey) {
+      const session = JSON.parse(localStorage.getItem(sbKey));
+      if(session && session.access_token && session.expires_at * 1000 > Date.now()) {
+        window.location.href = "/app";
+      }
+    }
+  } catch(e) {}
+}
+</script>
 <meta charset="UTF-8"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
