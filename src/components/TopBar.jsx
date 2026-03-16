@@ -32,7 +32,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
     }}>
 
       {/* Logo */}
-      <a href={user ? undefined : "/"} onClick={user ? (e=>e.preventDefault()) : undefined} style={{marginRight:24, flexShrink:0, display:"flex", alignItems:"center", textDecoration:"none", cursor:user?"default":"pointer"}}>
+      <a href={undefined} onClick={e=>{e.preventDefault(); setPage("brief");}} style={{marginRight:24, flexShrink:0, display:"flex", alignItems:"center", textDecoration:"none", cursor:"pointer"}}>
         {isMobile ? (
           <svg width="28" height="26" viewBox="0 0 29 26" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.3636 8.1815C18.627 9.44704 19.3366 11.1622 19.3366 12.9504C19.3366 14.7386 18.627 16.4537 17.3636 17.7193M20.5451 5C22.6521 7.10941 23.8356 9.96893 23.8356 12.9504C23.8356 15.9318 22.6521 18.7913 20.5451 20.9007M8.29047 20.983C6.18349 18.8736 5 16.014 5 13.0325C5 10.0511 6.18349 7.19158 8.29047 5.08217M11.472 17.8015C10.2086 16.5359 9.49904 14.8207 9.49904 13.0325C9.49904 11.2443 10.2086 9.5292 11.472 8.26366" stroke={C.text} strokeWidth="2.25" strokeLinecap="round"/>
