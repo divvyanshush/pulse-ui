@@ -121,24 +121,24 @@ export function Detail({item, onClose, C, isDark, isBookmarked, onBookmark, item
           <span style={{fontSize:FS.xs,color:C.muted,flexShrink:0}}>{item.heat||0}/100</span>
         </div>
 
-        <div style={{marginTop:24,display:"flex",flexDirection:"column",gap:8}}>
+        <div style={{marginTop:24,display:"flex",gap:8}}>
           <a href={item.link} target="_blank" rel="noreferrer" className="open-link"
-            style={{display:"flex",alignItems:"center",justifyContent:"space-between",
-              padding:"12px 16px",
-              background:C.bg,border:`1px solid ${C.border}`,borderRadius:4,
-              fontSize:FS.sm,color:C.sub,letterSpacing:"0.08em"}}>
+            style={{display:"flex",alignItems:"center",gap:6,
+              padding:"7px 12px",
+              background:C.bg,border:`1px solid ${C.border}`,borderRadius:3,
+              fontSize:FS.xs,color:C.sub,letterSpacing:"0.08em",textDecoration:"none",flexShrink:0}}>
             <span>READ ON {(item.srcLabel||item.src).toUpperCase()}</span>
-            <span style={{fontSize:FS.lg}}>↗</span>
+            <span style={{fontSize:FS.xs}}>↗</span>
           </a>
           <button className="fbtn open-link" onClick={()=>{
               navigator.clipboard.writeText(item.link);
               const el=document.getElementById("copy-confirm");
               if(el){el.style.opacity=1;setTimeout(()=>el.style.opacity=0,1500);}
             }}
-            style={{display:"flex",alignItems:"center",justifyContent:"space-between",
-              padding:"12px 16px",width:"100%",
-              background:C.bg,border:`1px solid ${C.border}`,borderRadius:4,
-              fontSize:FS.sm,color:C.sub,letterSpacing:"0.08em",cursor:"pointer"}}>
+            style={{display:"flex",alignItems:"center",gap:6,
+              padding:"7px 12px",
+              background:C.bg,border:`1px solid ${C.border}`,borderRadius:3,
+              fontSize:FS.xs,color:C.sub,letterSpacing:"0.08em",cursor:"pointer"}}>
             <span>COPY LINK</span>
             <span id="copy-confirm" style={{fontSize:FS.xs,color:C.accent,opacity:0,transition:"opacity .3s"}}>COPIED ✓</span>
           </button>
