@@ -37,8 +37,7 @@ export default function App() {
   const isIframe = window.self !== window.top;
   const forceDark = isIframe || new URLSearchParams(window.location.search).get("theme") === "dark";
   const currentPath = window.location.pathname;
-  // Clean hash from URL after OAuth redirect
-  if(window.location.hash && window.location.pathname === "/app") { window.history.replaceState(null,"","/app"); }
+
   const [isDark,    setIsDark]   = useState(()=>forceDark ? true : getStored("pulse-dark","true")==="true");
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
