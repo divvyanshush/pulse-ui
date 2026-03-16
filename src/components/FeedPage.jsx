@@ -27,6 +27,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
     const q=query.toLowerCase();
     return (item.title||"").toLowerCase().includes(q)||
            (item.src||"").toLowerCase().includes(q)||
+           (item.srcLabel||"").toLowerCase().includes(q)||
            (item.sum||"").toLowerCase().includes(q);
   });
 
