@@ -37,6 +37,8 @@ export default function App() {
   const isIframe = window.self !== window.top;
   const forceDark = isIframe || new URLSearchParams(window.location.search).get("theme") === "dark";
   const currentPath = window.location.pathname;
+  // Clean hash from URL after OAuth redirect
+  if(window.location.hash && window.location.pathname === "/app") { window.history.replaceState(null,"","/app"); }
   const [isDark,    setIsDark]   = useState(()=>forceDark ? true : getStored("pulse-dark","true")==="true");
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
@@ -140,7 +142,7 @@ export default function App() {
 
   // Route: /login — show auth, redirect to /app if already signed in
   if(currentPath === "/login") {
-    if(user) { window.location.href="/app"; return null; }
+    if(user) { window.location.replace("/app"); return null; }
     return <Auth onAuth={async(mode,email,password)=>{
       const err = await handleAuth(mode,email,password);
       if(!err) window.location.href="/app";
