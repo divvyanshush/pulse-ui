@@ -68,6 +68,7 @@ export const getTM = (isDark) => isDark ? TM_DARK : TM_LIGHT;
 
 export const SRC_COLORS = {
   Reddit:"#ff4500",
+  ProductHunt:"#da552f",
   HN:"#ff6314", arXiv:"#e05555", "Dev.to":"#5b6df8",
   GitHub:"#9b72e8", "Lobste.rs":"#d44040", OpenAI:"#19c37d",
   Anthropic:"#d4845a", HuggingFace:"#ffb020", VentureBeat:"#3d8fe0",
