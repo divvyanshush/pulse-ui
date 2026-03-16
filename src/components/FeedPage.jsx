@@ -63,7 +63,6 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
       }}>
         {/* Row 0 — header */}
         <div style={{padding:"10px 16px 0", display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-          <span style={{fontSize:FS.xs, color:C.muted, fontFamily:FF.sans, letterSpacing:"0.1em"}}>// feed</span>
           {srcFilter && (
             <div style={{display:"flex",alignItems:"center",gap:6}}>
               <span style={{fontSize:FS.xs,color:C.sub,fontFamily:FF.sans}}>source: {srcFilter}</span>
