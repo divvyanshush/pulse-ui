@@ -139,12 +139,13 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
   const [digest,  setDigest]  = useState(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState(null);
+  const [fetchedAt, setFetchedAt] = useState(null);
 
   const loadDigest = () => {
     setLoading(true);
     fetch(`${API}/digest`)
       .then(r => r.json())
-      .then(d => { setDigest(d); setLoading(false); })
+      .then(d => { setDigest(d); setFetchedAt(Date.now()); setLoading(false); })
       .catch(e => { setError(e.message); setLoading(false); });
   };
 
@@ -152,12 +153,26 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
 
   const ptr = usePullToRefresh(loadDigest, isMobile);
 
+  const freshness = fetchedAt ? (() => {
+    const m = Math.floor((Date.now() - fetchedAt) / 60000);
+    if(m < 1) return "just now";
+    if(m < 60) return `${m}m ago`;
+    return `${Math.floor(m/60)}h ago`;
+  })() : null;
+
   return (
     <div style={{ flex:1, display:"flex", flexDirection:"column", background:C.bg, overflow:"hidden", minWidth:0 }}>
 
       {/* Header */}
       <div style={{ padding:"14px 16px", borderBottom:`1px solid ${C.border}`, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <span style={{ fontSize:FS.xs, color:C.muted, fontFamily:FF.sans, letterSpacing:"0.1em" }}>// brief</span>
+        <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+          <span style={{ fontSize:FS.xs, color:C.muted, fontFamily:FF.sans, letterSpacing:"0.1em" }}>// brief</span>
+          {freshness && !loading && (
+            <span style={{ fontSize:FS.xs, color:C.faint, fontFamily:FF.sans, letterSpacing:"0.06em" }}>
+              updated {freshness}
+            </span>
+          )}
+        </div>
         <span style={{ fontSize:FS.xs, color:C.faint, fontFamily:FF.sans }}>
           {new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}).toUpperCase()}
         </span>
@@ -189,6 +204,13 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
         {error && (
           <div style={{padding:"32px 16px",color:C.muted,fontSize:FS.xs,fontFamily:FF.sans}}>
             failed to load — {error}
+          </div>
+        )}
+
+        {!loading && !error && (!digest?.categories?.length) && (
+          <div style={{padding:"48px 16px", textAlign:"center"}}>
+            <div style={{fontSize:FS.sm, color:C.muted, fontFamily:FF.sans, marginBottom:8}}>no brief available</div>
+            <div style={{fontSize:FS.xs, color:C.faint, fontFamily:FF.sans}}>check back soon — content is still loading</div>
           </div>
         )}
 
