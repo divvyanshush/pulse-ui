@@ -42,6 +42,7 @@ export default function App() {
   const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
+  const searchRef = useRef(null);
   const [items,     setItems]    = useState([]);
   const [loading,   setLoading]  = useState(true);
   const [detail,    setDetail]   = useState(null);
@@ -81,6 +82,18 @@ export default function App() {
     const id=Date.now();
     setToasts(t=>[...t,{id,msg,type}]);
     setTimeout(()=>setToasts(t=>t.filter(x=>x.id!==id)),3000);
+  },[]);
+
+  useEffect(()=>{
+    const handler=(e)=>{
+      if((e.metaKey||e.ctrlKey)&&e.key==="k"){
+        e.preventDefault();
+        setPage("feed");
+        setTimeout(()=>{ if(searchRef.current) searchRef.current.focus(); },80);
+      }
+    };
+    window.addEventListener("keydown",handler);
+    return()=>window.removeEventListener("keydown",handler);
   },[]);
 
   const loadFeed = useCallback(async(silent=false)=>{
@@ -206,7 +219,7 @@ export default function App() {
                     <BriefPage {...shared}/>
                   </div>
                   <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
-                    <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>
+                    <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences} searchRef={searchRef}/>
                   </div>
                   <div style={{width:`${100/TABS.length}%`, height:"100%", display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0}}>
                     <SavedPage {...shared}/>
@@ -215,7 +228,7 @@ export default function App() {
               ) : (
                 <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", height:"100%"}}>
                   {page==="brief" && <BriefPage {...shared}/>}
-                  {page==="feed"  && <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences}/>}
+                  {page==="feed"  && <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences} searchRef={searchRef}/>}
                   {page==="saved" && <SavedPage {...shared}/>}
                 </div>
               )}

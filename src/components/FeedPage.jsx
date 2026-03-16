@@ -6,7 +6,7 @@ import { OnboardingBanner } from "./OnboardingBanner.jsx";
 
 export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, onBookmark,
   filter, setFilter, query, setQuery, srcFilter, setSrcFilter, sortBy, setSortBy,
-  savePreferences, detail, readIds, user, isMobile, showOnboarding, dismissOnboarding }) {
+  savePreferences, detail, readIds, user, isMobile, showOnboarding, dismissOnboarding, searchRef }) {
 
   const [displayCount, setDisplayCount] = useState(30);
   const [timeFilter, setTimeFilter] = useState("all");
@@ -145,6 +145,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
           {/* Search */}
           <div style={{position:"relative",flex:1,minWidth:0,display:"flex",alignItems:"center"}}>
             <input
+              ref={searchRef}
               placeholder="Search..."
               value={query}
               onChange={e=>setQuery(e.target.value)}
