@@ -173,7 +173,7 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
             </span>
           )}
         </div>
-        <span style={{ fontSize:FS.xs, color:C.faint, fontFamily:FF.sans }}>
+        <span style={{ fontSize:FS.xs, color:C.muted, fontFamily:FF.sans }}>
           {new Date().toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}).toUpperCase()}
         </span>
       </div>
