@@ -12,6 +12,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   const [timeFilter, setTimeFilter] = useState("all");
   const loaderRef = useRef(null);
   const scrollRef = useRef(null);
+  const displayedRef = useRef([]);
   const TML = getTM(isDark);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -25,21 +26,21 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
       if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA") return;
       if(e.key==="j"||e.key==="ArrowDown"){
         e.preventDefault();
-        setSelectedIndex(i=>Math.min(i+1, displayed.length-1));
+        setSelectedIndex(i=>Math.min(i+1, displayedRef.current.length-1));
       } else if(e.key==="k"||e.key==="ArrowUp"){
         e.preventDefault();
         setSelectedIndex(i=>Math.max(i-1, 0));
       } else if(e.key==="o"||e.key==="Enter"){
-        if(selectedIndex>=0 && displayed[selectedIndex]) onItemClick(displayed[selectedIndex]);
+        if(selectedIndex>=0 && displayedRef.current[selectedIndex]) onItemClick(displayedRef.current[selectedIndex]);
       } else if(e.key==="b"){
-        if(selectedIndex>=0 && displayed[selectedIndex]) onBookmark(displayed[selectedIndex]);
+        if(selectedIndex>=0 && displayedRef.current[selectedIndex]) onBookmark(displayedRef.current[selectedIndex]);
       } else if(e.key==="Escape"){
         setSelectedIndex(-1);
       }
     };
     window.addEventListener("keydown", handler);
     return()=>window.removeEventListener("keydown", handler);
-  },[displayed, selectedIndex, onItemClick, onBookmark]);
+  },[selectedIndex, onItemClick, onBookmark]);
 
   // Auto-scroll selected item into view
   useEffect(()=>{
@@ -72,6 +73,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   });
 
   const displayed = sorted.slice(0,displayCount);
+  displayedRef.current = displayed;
 
   // Reset on filter change
   useEffect(()=>setDisplayCount(30),[filter,query,srcFilter,sortBy,timeFilter]);
