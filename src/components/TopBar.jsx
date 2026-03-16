@@ -84,13 +84,13 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
               style={{
                 display:"flex",alignItems:"center",justifyContent:"center",
                 width:32,height:32,borderRadius:"50%",
-                background:menuOpen?C.surface:C.faint,
+                background:menuOpen?C.surface:"none",
                 border:`1px solid ${menuOpen?C.sub:C.border}`,
                 cursor:"pointer",color:C.text,
                 transition:"all .15s",flexShrink:0,
               }}
               onMouseEnter={e=>{ e.currentTarget.style.borderColor=C.sub; e.currentTarget.style.background=C.surface; }}
-              onMouseLeave={e=>{ if(!menuOpen){ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.background=C.faint; } }}
+              onMouseLeave={e=>{ if(!menuOpen){ e.currentTarget.style.borderColor=C.border; e.currentTarget.style.background="none"; } }}
             >
               <UserIcon size={15} color={C.text}/>
             </button>
