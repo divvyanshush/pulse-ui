@@ -214,6 +214,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         }}>
           <span>{visible.length} ITEMS{srcFilter?` · ${srcFilter}`:""}</span>
           {query && <span>"{query}"</span>}
+          {!isMobile && <span style={{color:C.faint,letterSpacing:"0.04em"}}>j/k · o · b</span>}
         </div>
 
         {loading && displayed.length===0 && (
