@@ -6,7 +6,7 @@ import { OnboardingBanner } from "./OnboardingBanner.jsx";
 
 export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, onBookmark,
   filter, setFilter, query, setQuery, srcFilter, setSrcFilter, sortBy, setSortBy,
-  savePreferences, detail, readIds, user, isMobile, onMenu, showOnboarding, dismissOnboarding }) {
+  savePreferences, detail, readIds, user, isMobile, showOnboarding, dismissOnboarding }) {
 
   const [displayCount, setDisplayCount] = useState(30);
   const [timeFilter, setTimeFilter] = useState("all");
@@ -61,6 +61,22 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         borderBottom:`1px solid ${C.border}`,
         background:C.surface,flexShrink:0,
       }}>
+        {/* Row 0 — header */}
+        <div style={{padding:"10px 16px 0", display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+          <span style={{fontSize:FS.xs, color:C.muted, fontFamily:FF.sans, letterSpacing:"0.1em"}}>// feed</span>
+          {srcFilter && (
+            <div style={{display:"flex",alignItems:"center",gap:6}}>
+              <span style={{fontSize:FS.xs,color:C.sub,fontFamily:FF.sans}}>source: {srcFilter}</span>
+              <button onClick={()=>setSrcFilter(null)}
+                style={{background:"none",border:"none",color:C.muted,cursor:"pointer",
+                  fontSize:"0.9rem",padding:"0 2px",lineHeight:1,
+                  display:"flex",alignItems:"center"}}
+                onMouseEnter={e=>e.currentTarget.style.color=C.text}
+                onMouseLeave={e=>e.currentTarget.style.color=C.muted}
+              >×</button>
+            </div>
+          )}
+        </div>
         {/* Row 1 — filter pills */}
         <div style={{display:"flex",alignItems:"center",gap:4,padding:"0 12px",height:44,overflowX:"auto",scrollbarWidth:"none"}}>
           {FILTERS.filter(f=>f!=="bookmarks").map(f=>{
@@ -90,24 +106,40 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         {/* Row 2 — search, sort, time */}
         <div style={{display:"flex",alignItems:"center",gap:6,padding:"0 12px",height:40,borderTop:`1px solid ${C.border}`}}>
           {/* Search */}
-          <input
-            placeholder="Search..."
-            value={query}
-            onChange={e=>setQuery(e.target.value)}
-            style={{
-              background:C.bg,border:`1px solid ${C.border}`,
-              color:C.text,fontSize:FS.xs,padding:"5px 10px",
-              borderRadius:3,outline:"none",
-              flex:1,minWidth:0,
-              fontFamily:FF.sans,
-            }}
-          />
+          <div style={{position:"relative",flex:1,minWidth:0,display:"flex",alignItems:"center"}}>
+            <input
+              placeholder="Search..."
+              value={query}
+              onChange={e=>setQuery(e.target.value)}
+              style={{
+                background:C.bg,border:`1px solid ${C.border}`,
+                color:C.text,fontSize:FS.xs,padding:"5px 10px",
+                paddingRight: query ? 28 : 10,
+                borderRadius:3,outline:"none",
+                width:"100%",
+                fontFamily:FF.sans,
+              }}
+            />
+            {query && (
+              <button onClick={()=>setQuery("")}
+                style={{
+                  position:"absolute",right:6,
+                  background:"none",border:"none",
+                  color:C.muted,cursor:"pointer",
+                  fontSize:"0.9rem",lineHeight:1,padding:"0 2px",
+                  display:"flex",alignItems:"center",justifyContent:"center",
+                }}
+                onMouseEnter={e=>e.currentTarget.style.color=C.text}
+                onMouseLeave={e=>e.currentTarget.style.color=C.muted}
+              >×</button>
+            )}
+          </div>
 
           {/* Sort */}
           <select value={sortBy} onChange={e=>{setSortBy(e.target.value);savePreferences({sort_by:e.target.value});}}
             style={{
-              background:"transparent",border:`1px solid ${C.border}`,
-              color:C.muted,fontSize:FS.xs,padding:"3px 6px",
+              background:C.surface,border:`1px solid ${C.border}`,
+              color:C.text,fontSize:FS.xs,padding:"3px 6px",
               borderRadius:3,cursor:"pointer",fontFamily:FF.sans,
               outline:"none",flexShrink:0,
             }}>
@@ -115,25 +147,18 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
             <option value="time">NEW</option>
           </select>
 
-          {/* Time filter — hidden on mobile */}
-          <div style={{display:"flex",alignItems:"center",gap:2,flexShrink:0}}>
-              {["today","week","all"].map(t=>{
-                const on = timeFilter===t;
-                return (
-                  <button key={t} onClick={()=>setTimeFilter(t)}
-                    style={{
-                      padding:"4px 8px",background:"none",
-                      border:`1px solid ${on?C.text:C.border}`,
-                      color:on?C.text:C.muted,
-                      fontSize:FS.xs,fontFamily:FF.sans,
-                      letterSpacing:"0.04em",cursor:"pointer",
-                      borderRadius:2,transition:"all .1s",
-                    }}>
-                    {t}
-                  </button>
-                );
-              })}
-            </div>
+          {/* Time filter */}
+          <select value={timeFilter} onChange={e=>setTimeFilter(e.target.value)}
+            style={{
+              background:C.surface,border:`1px solid ${C.border}`,
+              color:C.text,fontSize:FS.xs,padding:"3px 6px",
+              borderRadius:3,cursor:"pointer",fontFamily:FF.sans,
+              outline:"none",flexShrink:0,
+            }}>
+            <option value="all">ALL TIME</option>
+            <option value="today">TODAY</option>
+            <option value="week">THIS WEEK</option>
+          </select>
         </div>
       </div>
 
