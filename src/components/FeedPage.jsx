@@ -11,7 +11,42 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   const [displayCount, setDisplayCount] = useState(30);
   const [timeFilter, setTimeFilter] = useState("all");
   const loaderRef = useRef(null);
+  const scrollRef = useRef(null);
   const TML = getTM(isDark);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  // Reset selection when filter/sort changes
+  useEffect(()=>setSelectedIndex(-1),[filter,query,srcFilter,sortBy,timeFilter]);
+
+  // Keyboard navigation
+  useEffect(()=>{
+    const handler = (e) => {
+      // Don't fire when typing in input
+      if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA") return;
+      if(e.key==="j"||e.key==="ArrowDown"){
+        e.preventDefault();
+        setSelectedIndex(i=>Math.min(i+1, displayed.length-1));
+      } else if(e.key==="k"||e.key==="ArrowUp"){
+        e.preventDefault();
+        setSelectedIndex(i=>Math.max(i-1, 0));
+      } else if(e.key==="o"||e.key==="Enter"){
+        if(selectedIndex>=0 && displayed[selectedIndex]) onItemClick(displayed[selectedIndex]);
+      } else if(e.key==="b"){
+        if(selectedIndex>=0 && displayed[selectedIndex]) onBookmark(displayed[selectedIndex]);
+      } else if(e.key==="Escape"){
+        setSelectedIndex(-1);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return()=>window.removeEventListener("keydown", handler);
+  },[displayed, selectedIndex, onItemClick, onBookmark]);
+
+  // Auto-scroll selected item into view
+  useEffect(()=>{
+    if(selectedIndex<0||!scrollRef.current) return;
+    const rows = scrollRef.current.querySelectorAll("[data-row]");
+    if(rows[selectedIndex]) rows[selectedIndex].scrollIntoView({block:"nearest",behavior:"smooth"});
+  },[selectedIndex]);
 
   // Filter + sort
   const now = Math.floor(Date.now()/1000);
@@ -39,7 +74,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
   const displayed = sorted.slice(0,displayCount);
 
   // Reset on filter change
-  useEffect(()=>setDisplayCount(30),[filter,query,srcFilter,sortBy]);
+  useEffect(()=>setDisplayCount(30),[filter,query,srcFilter,sortBy,timeFilter]);
 
   // Infinite scroll
   useEffect(()=>{
@@ -166,7 +201,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
       {showOnboarding && <OnboardingBanner C={C} isDark={isDark} onDismiss={dismissOnboarding}/>}
 
       {/* Feed */}
-      <div style={{flex:1,overflowY:"auto"}}>
+      <div ref={scrollRef} style={{flex:1,overflowY:"auto"}}>
 {/* Items count */}
         <div style={{
           padding:"10px 20px",
@@ -184,13 +219,15 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         )}
 
         {displayed.map((item,i)=>(
-          <Row key={item.id} item={item} i={i} C={C} isDark={isDark}
-            onClick={()=>onItemClick(item)}
+          <div key={item.id} data-row={String(i)}>
+          <Row item={item} i={i} C={C} isDark={isDark}
+            onClick={()=>{ setSelectedIndex(i); onItemClick(item); }}
             isBookmarked={!!bookmarks[item.id]}
             onBookmark={onBookmark}
-            selected={detail?.id===item.id}
+            selected={detail?.id===item.id || selectedIndex===i}
             isRead={readIds.has(item.id)}
           />
+          </div>
         ))}
 
         {/* Infinite scroll loader */}
