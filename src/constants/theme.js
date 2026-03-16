@@ -53,13 +53,13 @@ export const TM_DARK = {
 };
 
 export const TM_LIGHT = {
-  model:    {label:"MODELS",    a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#166534"},
-  research: {label:"RESEARCH", a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#1e40af"},
-  funding:  {label:"FUNDING",  a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#854d0e"},
-  product:  {label:"TOOLS",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
-  policy:   {label:"POLICY",   a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#9a3412"},
-  repo:     {label:"REPO",     a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#5b21b6"},
-  discuss:  {label:"DISCUSS",  a:"rgba(0,0,0,0.04)", b:"rgba(0,0,0,0.1)", t:"#475569"},
+  model:    {label:"MODELS",    a:"rgba(34,211,238,0.12)",  b:"rgba(34,211,238,0.22)",  t:"#0e7490"},
+  research: {label:"RESEARCH", a:"rgba(96,165,250,0.12)",  b:"rgba(96,165,250,0.22)",  t:"#1d4ed8"},
+  funding:  {label:"FUNDING",  a:"rgba(250,204,21,0.15)",  b:"rgba(250,204,21,0.25)",  t:"#92400e"},
+  product:  {label:"TOOLS",    a:"rgba(167,139,250,0.12)", b:"rgba(167,139,250,0.22)", t:"#6d28d9"},
+  policy:   {label:"POLICY",   a:"rgba(251,146,60,0.12)",  b:"rgba(251,146,60,0.22)",  t:"#c2410c"},
+  repo:     {label:"REPO",     a:"rgba(155,114,232,0.12)", b:"rgba(155,114,232,0.22)", t:"#5b21b6"},
+  discuss:  {label:"DISCUSS",  a:"rgba(100,116,139,0.12)", b:"rgba(100,116,139,0.22)", t:"#334155"},
 };
 
 export const getTM = (isDark) => isDark ? TM_DARK : TM_LIGHT;
