@@ -145,7 +145,7 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
     setLoading(true);
     fetch(`${API}/digest`)
       .then(r => r.json())
-      .then(d => { setDigest(d); setFetchedAt(Date.now()); setLoading(false); })
+      .then(d => { setDigest(d); setFetchedAt(d.generatedAt ? new Date(d.generatedAt).getTime() : Date.now()); setLoading(false); })
       .catch(e => { setError(e.message); setLoading(false); });
   };
 
