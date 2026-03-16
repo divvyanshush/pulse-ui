@@ -168,7 +168,7 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
         <div style={{ display:"flex", alignItems:"center", gap:10 }}>
           <span style={{ fontSize:FS.xs, color:C.muted, fontFamily:FF.sans, letterSpacing:"0.1em" }}>// brief</span>
           {freshness && !loading && (
-            <span style={{ fontSize:FS.xs, color:C.faint, fontFamily:FF.sans, letterSpacing:"0.06em" }}>
+            <span style={{ fontSize:FS.xs, color:C.muted, fontFamily:FF.sans, letterSpacing:"0.06em" }}>
               updated {freshness}
             </span>
           )}
