@@ -225,7 +225,15 @@ export default function App() {
 
         {/* Detail panel */}
         {detail && (
-          <div style={{
+          <div
+            onTouchStart={e=>{ touchStartX.current=e.touches[0].clientX; touchStartY.current=e.touches[0].clientY; }}
+            onTouchEnd={e=>{
+              if(!isMobile) return;
+              const dx = e.changedTouches[0].clientX - touchStartX.current;
+              const dy = Math.abs(e.changedTouches[0].clientY - touchStartY.current);
+              if(dx > 60 && dy < 80) setDetail(null);
+            }}
+            style={{
             width: isMobile?"100%":380,
             minWidth: isMobile?"100%":380,
             position: isMobile?"absolute":"relative",
