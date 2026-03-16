@@ -63,7 +63,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         background:C.surface,flexShrink:0,
       }}>
         {/* Row 0 — header */}
-        <div style={{padding:"10px 16px 0", display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+        <div style={{padding:"0 16px", display:"flex", alignItems:"center", justifyContent:"space-between", minHeight: srcFilter ? 32 : 0}}>
           {srcFilter && (
             <div style={{display:"flex",alignItems:"center",gap:6}}>
               <span style={{fontSize:FS.xs,color:C.sub,fontFamily:FF.sans}}>source: {srcFilter}</span>
@@ -78,7 +78,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
           )}
         </div>
         {/* Row 1 — filter pills */}
-        <div style={{display:"flex",alignItems:"center",gap:4,padding:"0 12px",height:44,overflowX:"auto",scrollbarWidth:"none"}}>
+        <div style={{display:"flex",alignItems:"center",gap:4,padding:"0 12px",height:40,overflowX:"auto",scrollbarWidth:"none"}}>
           {FILTERS.filter(f=>f!=="bookmarks").map(f=>{
             const m=TML[f]; const on=filter===f;
             return (
