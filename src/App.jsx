@@ -9,7 +9,6 @@ import { usePreferences } from "./hooks/usePreferences.js";
 import { TopBar } from "./components/TopBar.jsx";
 
 import { FeedPage } from "./components/FeedPage.jsx";
-import { TrendingPage } from "./components/TrendingPage.jsx";
 import { SavedPage } from "./components/SavedPage.jsx";
 import { BriefPage } from "./components/BriefPage.jsx";
 
