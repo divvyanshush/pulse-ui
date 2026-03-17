@@ -33,14 +33,19 @@
   ],
   "redirects": [
     {
-      "source": "/((?!.*\\.).*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "www.cobunai.com"
+        },
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "text/html.*"
         }
       ],
-      "destination": "https://cobunai.com/$1",
+      "destination": "https://cobunai.com/:path*",
       "permanent": true
     }
   ]
