@@ -30,23 +30,5 @@
       "src": "^/(.*)$",
       "dest": "/$1"
     }
-  ],
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.cobunai.com"
-        },
-        {
-          "type": "header",
-          "key": "accept",
-          "value": "text/html.*"
-        }
-      ],
-      "destination": "https://cobunai.com/:path*",
-      "permanent": true
-    }
   ]
 }
