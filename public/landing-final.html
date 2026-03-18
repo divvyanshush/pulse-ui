@@ -134,8 +134,8 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 .footer-link:hover{color:#888}
 .footer-copy{font-size:11px;color:#2a2a2a;letter-spacing:0.1em}
 @media(max-width:1024px){.features-grid{grid-template-columns:repeat(2,1fr)}.brief-layout{grid-template-columns:1fr}}
-@media(max-width:768px){nav{padding:16px 24px}.nav-links .nav-link{display:none}.hero,.section{padding:60px 24px}.hero{padding-bottom:0}.hero-title{font-size:40px}.features-grid{grid-template-columns:1fr;gap:48px}.features-title,.sources-title,.brief-title,.compare-title,.faq-title{font-size:36px}.cta-title{font-size:32px}.cta-section{padding:80px 24px}footer{padding:24px;flex-direction:column;gap:16px;text-align:center}.divider{margin:0 24px}th,td{padding:12px 14px;font-size:12px}.faq-btn{font-size:15px}.source-pill{width:auto;padding:0 16px}}
-@media(max-width:480px){.hero-title{font-size:32px}.nav-cta{padding:7px 16px;font-size:13px}.faq-btn{font-size:14px;padding:18px 0}.faq-answer{font-size:14px}.faq-title{font-size:28px}.compare-wrap{margin:0 -24px;padding:0 24px}}
+@media(max-width:768px){nav{padding:16px 24px}.nav-links .nav-link{display:none}.hero,.section{padding:60px 24px}.hero{padding-bottom:0}.hero-title{font-size:32px}.features-grid{grid-template-columns:1fr;gap:40px}.features-title,.sources-title,.brief-title,.compare-title,.faq-title{font-size:28px}.feature-name{font-size:17px!important}.faq-btn{font-size:15px}.source-pill{width:auto;padding:0 16px}footer{padding:24px;flex-direction:column;gap:16px;text-align:center}.divider{margin:0 24px}th,td{padding:12px 14px;font-size:13px}}
+@media(max-width:480px){.hero-title{font-size:28px}.nav-cta{padding:7px 16px;font-size:13px}.faq-btn{font-size:14px;padding:18px 0}.faq-answer{font-size:14px!important}.compare-wrap{margin:0 -24px;padding:0 24px}}
 .feed-section-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:100px;align-items:center}
 @media(max-width:1024px){.feed-section-grid{grid-template-columns:1fr;gap:48px}}
 </style>
@@ -193,7 +193,7 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 <section class="section">
   <div class="feed-section-grid">
     <div class="reveal">
-      <h2 style="font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;color:#ffffff;line-height:1.05;margin-bottom:20px">When 90 seconds<br/>isn't enough.</h2>
+      <h2 style="font-family:'IBM Plex Sans',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:700;letter-spacing:-0.02em;color:#ffffff;line-height:1.05;margin-bottom:20px">When 90 seconds<br/>isn't enough.</h2>
       <p style="font-size:16px;color:rgba(255,255,255,0.45);line-height:1.7">The brief tells you what matters. The feed is there when you need to go deeper. A real-time ranked stream of everything Cobun AI is tracking, filterable by exactly what you care about.</p>
     </div>
     <div class="reveal reveal-delay-1" style="border:1px solid rgba(255,255,255,0.1);border-radius:8px;overflow:hidden;background:#111110">
@@ -268,7 +268,7 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 
 
 <section class="section">
-  <h2 class="reveal" style="font-family:'IBM Plex Sans',sans-serif;font-size:40px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;color:#ffffff;line-height:1.1">Every option has a trade-off. Here's ours.</h2>
+  <h2 class="reveal" style="font-family:'IBM Plex Sans',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;color:#ffffff;line-height:1.1">Every option has a trade-off. Here's ours.</h2>
   <p class="reveal reveal-delay-1" style="font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:64px;line-height:1.7">We're not the right tool for everyone. But if you're a developer or researcher who follows AI seriously and you're still doing this manually, the trade-off is pretty clear.</p>
   <div class="compare-wrap reveal reveal-delay-2">
     <table>
@@ -337,7 +337,7 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 </section>
 
 <section class="section" id="faq">
-  <h2 class="reveal" style="font-family:'IBM Plex Sans',sans-serif;font-size:40px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;color:#ffffff;line-height:1.1">Things worth knowing before you try it.</h2>
+  <h2 class="reveal" style="font-family:'IBM Plex Sans',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;color:#ffffff;line-height:1.1">Things worth knowing before you try it.</h2>
   <p class="reveal reveal-delay-1" style="font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:64px;line-height:1.7">We're not the right tool for everyone. But if you're a developer or researcher who follows AI seriously and you're still doing this manually, the trade-off is pretty clear.</p>
   <div class="faq-list reveal reveal-delay-2">
     <div class="faq-item"><button class="faq-btn" style="font-size:16px" aria-expanded="false" onclick="toggleFaq(this)"><span>Is Cobun free?</span><span class="faq-plus">+</span></button><div class="faq-answer" style="font-size:16px">Yes, completely. No credit card, no trial period, no freemium wall. Free to use.</div></div>
@@ -351,8 +351,8 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
   </div>
 </section>
 
-<section class="reveal" style="text-align:center;padding:140px 80px;background:#141413">
-  <h2 style="font-family:'IBM Plex Sans',sans-serif;font-size:40px;font-weight:700;letter-spacing:-0.02em;color:#ffffff;line-height:1.1;margin-bottom:20px">Your manual morning AI research ends here.</h2>
+<section class="reveal" style="text-align:center;padding:clamp(80px,10vw,140px) clamp(24px,6vw,80px);background:#141413">
+  <h2 style="font-family:'IBM Plex Sans',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-0.02em;color:#ffffff;line-height:1.1;margin-bottom:20px">Your manual morning AI research ends here.</h2>
   <p style="font-size:16px;color:rgba(255,255,255,0.45);margin-bottom:48px;line-height:1.7">25+ sources. One brief. 90 seconds. Everything that matters to builders, ranked by signal, not engagement.<br/>Free. No credit card. Ready right now.</p>
   <a href="/app" style="display:inline-block;border:1px solid #e8e8e8;color:#e8e8e8;background:transparent;padding:12px 28px;font-size:16px;letter-spacing:0.02em;cursor:pointer;border-radius:6px;font-family:'IBM Plex Sans',sans-serif;transition:all 0.2s;text-decoration:none" onmouseover="this.style.background='#e8e8e8';this.style.color='#0a0a0a'" onmouseout="this.style.background='transparent';this.style.color='#e8e8e8'">See What's Moving In AI Right Now →</a>
 </section>
