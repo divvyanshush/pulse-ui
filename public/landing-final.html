@@ -141,6 +141,8 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 @media(max-width:1024px){.features-grid{grid-template-columns:repeat(2,1fr)}.brief-layout{grid-template-columns:1fr}}
 @media(max-width:768px){nav{padding:16px 24px}.nav-links .nav-link{display:none}.hero,.section{padding:60px 24px}.hero{padding-bottom:0}.hero-title{font-size:40px}.features-grid{grid-template-columns:1fr;gap:48px}.features-title,.sources-title,.brief-title,.compare-title,.faq-title{font-size:36px}.cta-title{font-size:32px}.cta-section{padding:80px 24px}footer{padding:24px;flex-direction:column;gap:16px;text-align:center}.divider{margin:0 24px}th,td{padding:12px 14px;font-size:12px}.faq-btn{font-size:15px}}
 @media(max-width:480px){.hero-title{font-size:32px}.nav-cta{padding:7px 16px;font-size:13px}.faq-btn{font-size:14px;padding:18px 0}.faq-answer{font-size:14px}.faq-title{font-size:28px}.compare-wrap{margin:0 -24px;padding:0 24px}}
+.feed-section-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:100px;align-items:center}
+@media(max-width:1024px){.feed-section-grid{grid-template-columns:1fr;gap:48px}}
 </style>
 
     <!-- Open Graph -->
@@ -194,7 +196,7 @@ footer{border-top:1px solid #1a1a1a;padding:28px 80px;display:flex;justify-conte
 </section>
 
 <section class="section">
-  <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:100px;align-items:center">
+  <div class="feed-section-grid">
     <div class="reveal">
       <h2 style="font-family:'IBM Plex Sans',sans-serif;font-size:48px;font-weight:700;letter-spacing:-0.02em;color:#ffffff;line-height:1.05;margin-bottom:20px">When 90 seconds<br/>isn't enough.</h2>
       <p style="font-size:16px;color:rgba(255,255,255,0.45);line-height:1.7">The brief tells you what matters. The feed is there when you need to go deeper. A real-time ranked stream of everything Cobun AI is tracking, filterable by exactly what you care about.</p>
