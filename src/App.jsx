@@ -39,7 +39,7 @@ export default function App() {
   const currentPath = window.location.pathname;
 
   const [isDark,    setIsDark]   = useState(()=>forceDark ? true : getStored("pulse-dark","true")==="true");
-  const [page,      setPageRaw]  = useState(()=>getSession("pulse-page","brief"));
+  const [page,      setPageRaw]  = useState(()=>new URLSearchParams(window.location.search).get("tab") || getSession("pulse-page","brief"));
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
   const searchRef = useRef(null);
