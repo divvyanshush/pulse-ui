@@ -116,6 +116,7 @@ export default function App() {
         if(prefs.dark_mode!==null) setIsDark(prefs.dark_mode);
         if(prefs.filter) setFilter(prefs.filter);
         if(prefs.sort_by) setSortBy(prefs.sort_by);
+        if(prefs.email_digest!==null && prefs.email_digest!==undefined) setEmailDigest(prefs.email_digest);
       });
     }
   },[user]);
@@ -124,6 +125,13 @@ export default function App() {
   useEffect(()=>{ const id=setInterval(()=>setItems(p=>p.map(i=>({...i,timeLabel:timeAgo(i.time)}))),30000); return()=>clearInterval(id); },[]);
 
   const dismissOnboarding = useCallback(()=>{ try{ localStorage.setItem("cobun-onboarded","1"); }catch(e){} setShowOnboarding(false); },[]);
+
+  const [emailDigest, setEmailDigest] = useState(false);
+
+  const toggleEmailDigest = useCallback(()=>{
+    if(!user) return;
+    setEmailDigest(d=>{ const n=!d; savePreferences({email_digest:n}); return n; });
+  },[savePreferences, user]);
 
   const toggleDark = useCallback(()=>{
     if(isIframe) return;
@@ -184,7 +192,7 @@ export default function App() {
         C={C} isDark={isDark} page={page} setPage={setPage}
         user={user} setShowAuth={setShowAuth}
         bmCount={Object.keys(bookmarks).length}
-        toggleDark={toggleDark} onSignOut={signOut}
+        toggleDark={toggleDark} emailDigest={emailDigest} toggleEmailDigest={toggleEmailDigest} onSignOut={signOut}
         isMobile={isMobile}
       />
 
@@ -228,8 +236,8 @@ export default function App() {
               ) : (
                 <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", height:"100%"}}>
                   {page==="brief" && <BriefPage {...shared}/>}
-                  {page==="feed"  && <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences} searchRef={searchRef}/>}
-                  {page==="saved" && <SavedPage {...shared}/>}
+                  {page==="feed"  && (user ? <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences} searchRef={searchRef}/> : <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16}}><div style={{fontSize:14,color:C.muted}}>Sign in to access the full feed</div><button onClick={()=>setShowAuth(true)} style={{padding:"8px 24px",background:C.text,color:C.bg,border:"none",cursor:"pointer",fontSize:13,fontWeight:600,fontFamily:"inherit"}}>Sign In</button></div>)}
+                  {page==="saved" && (user ? <SavedPage {...shared}/> : <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16}}><div style={{fontSize:14,color:C.muted}}>Sign in to view saved items</div><button onClick={()=>setShowAuth(true)} style={{padding:"8px 24px",background:C.text,color:C.bg,border:"none",cursor:"pointer",fontSize:13,fontWeight:600,fontFamily:"inherit"}}>Sign In</button></div>)}
                 </div>
               )}
             </div>
