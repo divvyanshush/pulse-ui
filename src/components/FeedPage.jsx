@@ -180,7 +180,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
               borderRadius:3,cursor:"pointer",fontFamily:FF.sans,
               outline:"none",flexShrink:0,
             }}>
-            <option value="heat">HOT</option>
+            <option value="heat">SIGNAL</option>
             <option value="time">NEW</option>
           </select>
 

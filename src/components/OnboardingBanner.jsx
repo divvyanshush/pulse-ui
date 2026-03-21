@@ -9,7 +9,7 @@ export function OnboardingBanner({ C, isDark, onDismiss }) {
           <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
         </svg>
       ),
-      title: "Heat ranked",
+      title: "Signal ranked",
       desc: "Every item is scored by source credibility, engagement velocity, and how relevant it is to builders — not clicks.",
     },
     {
