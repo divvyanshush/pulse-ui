@@ -96,8 +96,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
       {/* Topbar */}
       <div style={{
         display:"flex",flexDirection:"column",
-        borderBottom:`1px solid ${C.border}`,
-        background:C.surface,flexShrink:0,
+        background:C.bg,flexShrink:0,
       }}>
         {/* Row 0 — header */}
         <div style={{padding:"0 16px", display:"flex", alignItems:"center", justifyContent:"space-between", minHeight: srcFilter ? 32 : 0}}>
