@@ -207,6 +207,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
 {/* Items count */}
         <div style={{
           padding:"10px 20px",
+          borderTop:`1px solid ${C.border}`,
           borderBottom:`1px solid ${C.border}`,
           fontSize:FS.xs,color:C.muted,
           fontFamily:FF.sans,letterSpacing:"0.04em",
