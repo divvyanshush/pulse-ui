@@ -24,7 +24,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
     <div style={{
       height:48, minHeight:48,
       display:"flex", alignItems:"center",
-      borderBottom:'none',
+      borderBottom:`1px solid ${C.border}`,
       background:C.bg,
       paddingLeft:16, paddingRight:16,
       gap:0, flexShrink:0, userSelect:"none",
