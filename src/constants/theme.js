@@ -77,4 +77,4 @@ export const SRC_COLORS = {
   GoogleResearch:"#4285f4", MetaAI:"#0668E1", TDS:"#1a8c6b", MarkTechPost:"#7b2ff7",
 };
 
-export const FILTERS = ["all","model","research","tool","repo","discuss"];
+export const FILTERS = ["all","discuss","tool","research","repo","model"];
