@@ -141,7 +141,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
         </div>
 
         {/* Row 2 — search, sort, time */}
-        <div style={{display:"flex",alignItems:"center",gap:6,padding:"0 12px",height:40,borderTop:`1px solid ${C.border}`}}>
+        <div style={{display:"flex",alignItems:"center",gap:6,padding:"0 12px",height:40,borderTop:'none'}}>
           {/* Search */}
           <div style={{position:"relative",flex:1,minWidth:0,display:"flex",alignItems:"center"}}>
             <input
