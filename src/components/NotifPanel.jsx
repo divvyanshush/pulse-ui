@@ -52,7 +52,7 @@ export function NotifPanel({C, isDark, alertLog, setAlertLog, notifPerm, request
             <div style={{fontSize:"1.6rem",marginBottom:12,opacity:.2}}>🔔</div>
             <div style={{fontSize:FS.sm,color:C.muted,letterSpacing:"0.08em"}}>NO ALERTS YET</div>
             <div style={{fontSize:FS.xs,color:C.muted,marginTop:6,opacity:.6,lineHeight:1.6}}>
-              Alerts appear here when new or trending items arrive during the 90s refresh cycle
+              Alerts appear here when new or trending items arrive in real time
             </div>
           </div>
         ) : alertLog.map((a,i)=>(
