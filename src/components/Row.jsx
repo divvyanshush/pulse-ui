@@ -92,6 +92,25 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
         }}>by {item.authors}</div>
       )}
 
+      {/* Signal reason */}
+      {(() => {
+        const reasons = [];
+        if (item.src === "arXiv") reasons.push("academic source");
+        if (item.src === "GitHub") reasons.push("trending repo");
+        if (item.src === "HN" && item.score > 100) reasons.push("high HN traction");
+        if (item.src === "HN" && item.score > 30 && item.score <= 100) reasons.push("gaining HN traction");
+        if (item.relatedCount > 0) reasons.push(`${item.relatedCount + 1} sources covering this`);
+        if (reasons.length === 0) return null;
+        return (
+          <div style={{
+            fontSize: FS.xs, color: C.faint,
+            fontFamily: FF.sans, letterSpacing: "0.04em",
+          }}>
+            signal · {reasons.slice(0, 2).join(" · ")}
+          </div>
+        );
+      })()}
+
       {item.relatedCount > 0 && (
         <div style={{
           fontSize:FS.xs, color:C.faint,
