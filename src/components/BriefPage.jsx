@@ -214,22 +214,6 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
           </div>
         )}
 
-        {!loading && !error && digest?.intro && (
-          <div style={{
-            margin: "16px 16px 0",
-            padding: "12px 16px",
-            borderLeft: `2px solid ${C.text}`,
-            fontSize: "14px",
-            lineHeight: 1.75,
-            color: C.text,
-            fontFamily: "var(--ff-sans)",
-            opacity: 0.75,
-            fontStyle: "italic",
-          }}>
-            {digest.intro}
-          </div>
-        )}
-
         {!loading && !error && digest?.categories?.map(cat => (
           <DigestSection
             key={cat.id} cat={cat}
