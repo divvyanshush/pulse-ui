@@ -103,8 +103,9 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
         if (reasons.length === 0) return null;
         return (
           <div style={{
-            fontSize: FS.xs, color: C.faint,
-            fontFamily: FF.sans, letterSpacing: "0.04em",
+            fontSize: FS.xs, color: C.muted,
+            fontFamily: FF.sans, letterSpacing: "0.06em",
+            fontWeight: 500,
           }}>
             signal · {reasons.slice(0, 2).join(" · ")}
           </div>
