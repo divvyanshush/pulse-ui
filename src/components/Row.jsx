@@ -46,6 +46,10 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
           <span style={{color:C.faint}}>·</span>
           <span style={{color:C.muted}}>↑{item.score}</span>
         </>}
+        {item.relatedCount>0&&<>
+          <span style={{color:C.faint}}>·</span>
+          <span style={{color:C.muted,flexShrink:0}}>{item.relatedCount+1} sources</span>
+        </>}
         <button onClick={e=>onBookmark(item,e)}
           style={{
             marginLeft:"auto",background:"none",border:"none",
@@ -91,26 +95,6 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
           overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",
         }}>by {item.authors}</div>
       )}
-
-      {/* Signal reason */}
-      {(() => {
-        const reasons = [];
-        if (item.src === "arXiv") reasons.push("academic source");
-        if (item.src === "GitHub") reasons.push("trending repo");
-        if (item.src === "HN" && item.score > 100) reasons.push("high HN traction");
-        if (item.src === "HN" && item.score > 30 && item.score <= 100) reasons.push("gaining HN traction");
-        if (item.relatedCount > 0) reasons.push(`${item.relatedCount + 1} sources covering this`);
-        if (reasons.length === 0) return null;
-        return (
-          <div style={{
-            fontSize: FS.xs, color: C.muted,
-            fontFamily: FF.sans, letterSpacing: "0.06em",
-            fontWeight: 500,
-          }}>
-            signal · {reasons.slice(0, 2).join(" · ")}
-          </div>
-        );
-      })()}
 
       {item.relatedCount > 0 && (
         <div style={{
