@@ -39,37 +39,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
           }}>{cat.summary}</div>
         )}
 
-        {/* Preview titles — collapsed */}
-        {!open && (
-          <div style={{ marginBottom: 10 }}>
-            {cat.items.slice(0, 5).map((item, i) => (
-              <div key={item.id}
-                onClick={(e) => { e.stopPropagation(); onItemClick(item); }}
-                style={{
-                  fontSize: FS.sm, color: C.sub,
-                  fontFamily: FF.sans,
-                  fontWeight: 400,
-                  marginTop: i === 0 ? 0 : 5,
-                  overflow: "hidden", textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  cursor: "pointer",
-                  padding: "2px 0",
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = C.text}
-                onMouseLeave={e => e.currentTarget.style.color = C.muted}
-              >
-                <span style={{ color: C.faint, marginRight: 8, fontFamily: FF.sans }}>›</span>
-                {item.title}
-              </div>
-            ))}
-            {cat.count > 5 && (
-              <div style={{
-                fontSize: FS.xs, color: C.faint,
-                fontFamily: FF.sans, marginTop: 6,
-              }}>+{cat.count - 5} more</div>
-            )}
-          </div>
-        )}
+
 
         {/* Toggle button */}
         <button
