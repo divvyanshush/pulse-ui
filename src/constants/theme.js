@@ -49,7 +49,7 @@ export const TM_DARK = {
   product:  {label:"TOOLS",     a:"rgba(167,139,250,0.08)", b:"rgba(167,139,250,0.15)", t:"#a78bfa"},
   tool:     {label:"TOOLS",     a:"rgba(167,139,250,0.08)", b:"rgba(167,139,250,0.15)", t:"#a78bfa"},
   policy:   {label:"POLICY",   a:"rgba(251,146,60,0.08)",  b:"rgba(251,146,60,0.15)",  t:"#fb923c"},
-  repo:     {label:"REPO",     a:"rgba(155,114,232,0.08)",  b:"rgba(155,114,232,0.15)",  t:"#9b72e8"},
+  repo:     {label:"REPO",     a:"rgba(52,211,153,0.08)",   b:"rgba(52,211,153,0.15)",   t:"#34d399"},
   discuss:  {label:"DISCUSS",  a:"rgba(100,116,139,0.08)",  b:"rgba(100,116,139,0.15)",  t:"#94a3b8"},
 };
 
@@ -60,7 +60,7 @@ export const TM_LIGHT = {
   product:  {label:"TOOLS",    a:"rgba(167,139,250,0.12)", b:"rgba(167,139,250,0.22)", t:"#6d28d9"},
   tool:     {label:"TOOLS",    a:"rgba(167,139,250,0.12)", b:"rgba(167,139,250,0.22)", t:"#6d28d9"},
   policy:   {label:"POLICY",   a:"rgba(251,146,60,0.12)",  b:"rgba(251,146,60,0.22)",  t:"#c2410c"},
-  repo:     {label:"REPO",     a:"rgba(155,114,232,0.12)", b:"rgba(155,114,232,0.22)", t:"#5b21b6"},
+  repo:     {label:"REPO",     a:"rgba(5,150,105,0.12)",   b:"rgba(5,150,105,0.22)",   t:"#047857"},
   discuss:  {label:"DISCUSS",  a:"rgba(100,116,139,0.12)", b:"rgba(100,116,139,0.22)", t:"#334155"},
 };
 
