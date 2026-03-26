@@ -42,7 +42,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
         {/* Preview titles — collapsed */}
         {!open && (
           <div style={{ marginBottom: 10 }}>
-            {cat.items.slice(0, 3).map((item, i) => (
+            {cat.items.slice(0, 5).map((item, i) => (
               <div key={item.id}
                 onClick={(e) => { e.stopPropagation(); onItemClick(item); }}
                 style={{
@@ -62,11 +62,11 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
                 {item.title}
               </div>
             ))}
-            {cat.count > 3 && (
+            {cat.count > 5 && (
               <div style={{
                 fontSize: FS.xs, color: C.faint,
                 fontFamily: FF.sans, marginTop: 6,
-              }}>+{cat.count - 3} more</div>
+              }}>+{cat.count - 5} more</div>
             )}
           </div>
         )}
