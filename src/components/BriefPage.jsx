@@ -23,10 +23,6 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
             color: m.t, letterSpacing: "0.12em",
             fontFamily: FF.sans,
           }}>{cat.label.toUpperCase()}</span>
-          <span style={{
-            fontSize: FS.sm, color: C.faint,
-            fontFamily: FF.sans,
-          }}>· {cat.count}</span>
         </div>
 
         {/* AI summary */}
@@ -213,6 +209,37 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
             <div style={{fontSize:FS.xs, color:C.faint, fontFamily:FF.sans}}>check back soon — content is still loading</div>
           </div>
         )}
+
+        {!loading && !error && digest?.categories && (() => {
+          const top3 = digest.categories
+            .flatMap(c => c.items || [])
+            .sort((a, b) => (b.heat || 0) - (a.heat || 0))
+            .slice(0, 3);
+          if (!top3.length) return null;
+          return (
+            <div style={{ borderBottom: `1px solid ${C.border}`, padding: "18px 16px 16px" }}>
+              <div style={{ fontSize: FS.sm, fontWeight: 700, color: C.muted, letterSpacing: "0.12em", fontFamily: FF.sans, marginBottom: 12 }}>TODAY'S SIGNAL</div>
+              {top3.map((item, i) => (
+                <div key={item.id}
+                  onClick={() => onItemClick(item)}
+                  style={{
+                    display: "flex", alignItems: "flex-start", gap: 10,
+                    marginBottom: i < 2 ? 10 : 0, cursor: "pointer",
+                    padding: "6px 0",
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = 0.7}
+                  onMouseLeave={e => e.currentTarget.style.opacity = 1}
+                >
+                  <span style={{ fontSize: FS.xs, color: C.faint, fontFamily: FF.sans, minWidth: 16, paddingTop: 2 }}>{i + 1}</span>
+                  <div>
+                    <div style={{ fontSize: FS.base, color: C.text, fontFamily: FF.sans, fontWeight: 500, lineHeight: 1.5 }}>{item.title}</div>
+                    <div style={{ fontSize: FS.xs, color: C.muted, fontFamily: FF.sans, marginTop: 2 }}>{item.srcLabel || item.src} · {item.timeLabel}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
 
         {!loading && !error && digest?.categories?.map(cat => (
           <DigestSection
