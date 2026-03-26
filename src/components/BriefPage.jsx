@@ -144,6 +144,13 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
         </span>
       </div>
 
+      {/* Tagline */}
+      <div style={{ padding:"10px 16px", borderBottom:`1px solid ${C.border}`, flexShrink:0 }}>
+        <span style={{ fontSize:FS.xs, color:C.faint, fontFamily:FF.sans, letterSpacing:"0.06em" }}>
+          deduplicated from 25+ sources · ranked by signal, not recency
+        </span>
+      </div>
+
       {/* Content */}
       <div style={{ flex:1, overflowY:"auto" }} onTouchStart={ptr.onTouchStart} onTouchMove={ptr.onTouchMove} onTouchEnd={ptr.onTouchEnd}>
         <PullIndicator progress={ptr.progress} pulling={ptr.pulling} C={C}/>
