@@ -44,7 +44,7 @@ export function TopBar({ C, isDark, page, setPage, user, setShowAuth, bmCount, t
 
       {/* Tabs */}
       <div style={{display:"flex",alignItems:"stretch",height:"100%",flex:1,gap:0}}>
-        {TABS.map(t=>{
+        {TABS.filter(t => t.id !== "saved" || user).map(t=>{
           const active = page===t.id;
           return (
             <button key={t.id} onClick={()=>setPage(t.id)}
