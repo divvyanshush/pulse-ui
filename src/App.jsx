@@ -236,7 +236,7 @@ export default function App() {
               ) : (
                 <div style={{flex:1, display:"flex", flexDirection:"column", overflow:"hidden", height:"100%"}}>
                   {page==="brief" && <BriefPage {...shared}/>}
-                  {page==="feed"  && (user ? <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences} searchRef={searchRef}/> : <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16}}><div style={{fontSize:14,color:C.muted}}>Sign in to access the full feed</div><button onClick={()=>setShowAuth(true)} style={{padding:"8px 24px",background:C.text,color:C.bg,border:"none",cursor:"pointer",fontSize:13,fontWeight:600,fontFamily:"inherit"}}>Sign In</button></div>)}
+                  {page==="feed" && <FeedPage {...shared} filter={filter} setFilter={setFilter} query={query} setQuery={setQuery} srcFilter={srcFilter} setSrcFilter={setSrcFilter} sortBy={sortBy} setSortBy={setSortBy} savePreferences={savePreferences} searchRef={searchRef}/>}
                   {page==="saved" && (user ? <SavedPage {...shared}/> : <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16}}><div style={{fontSize:14,color:C.muted}}>Sign in to view saved items</div><button onClick={()=>setShowAuth(true)} style={{padding:"8px 24px",background:C.text,color:C.bg,border:"none",cursor:"pointer",fontSize:13,fontWeight:600,fontFamily:"inherit"}}>Sign In</button></div>)}
                 </div>
               )}
