@@ -59,7 +59,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
           onMouseEnter={e => { e.currentTarget.style.borderColor = C.sub; e.currentTarget.style.color = C.text; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.muted; }}
         >
-          {open ? "↑ collapse" : `↓ show all ${cat.count}`}
+          {open ? "↑ collapse" : `↓ ${cat.count} items`}
         </button>
       </div>
 
