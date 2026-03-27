@@ -32,7 +32,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
               onMouseEnter={e=>e.currentTarget.style.background=C.hover}
               onMouseLeave={e=>e.currentTarget.style.background="transparent"}
             >
-              <div style={{display:"flex",alignItems:"center",gap:6,fontFamily:FF.sans,fontSize:"0.68rem"}}>
+              <div style={{display:"flex",alignItems:"center",gap:6,fontFamily:FF.sans,fontSize:FS.xs}}>
                 <span style={{color:m.t,fontWeight:600,letterSpacing:"0.08em"}}>{m.label}</span>
                 <span style={{color:C.faint}}>·</span>
                 <span style={{color:C.muted}}>{item.srcLabel||item.src}</span>
@@ -48,7 +48,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
                 lineHeight:1.4,letterSpacing:"-0.01em",fontFamily:FF.sans,
               }}>{item.title}</div>
               {item.sum&&(
-                <div style={{fontSize:"0.78rem",color:C.muted,lineHeight:1.55,
+                <div style={{fontSize:FS.sm,color:C.muted,lineHeight:1.75,
                   fontFamily:FF.sans,
                   display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden",
                 }}>{item.sum}</div>
