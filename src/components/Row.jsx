@@ -18,7 +18,7 @@ export function Row({item, i, onClick, C, isDark, isBookmarked, onBookmark, sele
         filter:isRead?(isDark?"brightness(0.28)":"opacity(0.3)"):"none",
         transition:"background .08s",
         cursor:"pointer",
-        borderBottom:`1px solid ${C.border}`,
+        borderBottom:'none',
         display:"flex",
         flexDirection:"column",
         gap:5,
