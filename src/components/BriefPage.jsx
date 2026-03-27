@@ -150,7 +150,7 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
         {loading && (
           <div style={{"--sk-base":isDark?"#1e1e1e":"#efefef","--sk-highlight":isDark?"#2a2a2a":"#e0e0e0"}}>
             {[1,2,3,4].map(n=>(
-              <div key={n} style={{padding:"20px 16px",borderBottom:`1px solid ${C.border}`}}>
+              <div key={n} style={{padding:"20px 16px",borderBottom:"none"}}>
                 <div style={{display:"flex",gap:8,marginBottom:14}}>
                   <div className="sk" style={{width:90,height:11,borderRadius:3}}/>
                   <div className="sk" style={{width:32,height:11,borderRadius:3}}/>
