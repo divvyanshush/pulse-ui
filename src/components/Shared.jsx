@@ -6,7 +6,7 @@ export function SkeletonRow({C, isDark}) {
   const hi = isDark ? "#2a2a2a" : "#e0e0e0";
   return(
     <div style={{
-      padding:"14px 16px",borderBottom:`1px solid ${C.border}`,
+      padding:"14px 16px",borderBottom:"none",
       display:"flex",flexDirection:"column",gap:8,
       "--sk-base":bg,"--sk-highlight":hi,
     }}>
@@ -36,7 +36,7 @@ export function BmSvg({filled, size=13}) {
 export function DL({children, C}) {
   return(
     <div style={{fontSize:FS.xs,letterSpacing:"0.12em",color:C.muted,textTransform:"uppercase",
-      margin:"20px 0 10px",paddingTop:16,borderTop:`1px solid ${C.border}`,
+      margin:"20px 0 10px",paddingTop:16,borderTop:"none",
       display:"flex",alignItems:"center",gap:6}}>
       {children}
     </div>
@@ -45,7 +45,7 @@ export function DL({children, C}) {
 
 export function SB({label, children, C}) {
   return(
-    <div style={{padding:"14px",borderBottom:`1px solid ${C.border}`}}>
+    <div style={{padding:"14px",borderBottom:"none"}}>
       <div style={{fontSize:FS.xs,letterSpacing:"0.14em",color:C.muted,
         textTransform:"uppercase",marginBottom:12,fontWeight:500}}>{label}</div>
       {children}
