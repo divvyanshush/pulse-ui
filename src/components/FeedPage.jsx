@@ -114,7 +114,7 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
           )}
         </div>
         {/* Row 1 — filter pills */}
-        <div style={{display:"flex",alignItems:"center",gap:4,padding:"0 12px",height:40,overflowX:"auto",scrollbarWidth:"none",borderTop:`1px solid ${C.border}`}}>
+        <div style={{display:"flex",alignItems:"center",gap:4,padding:"0 12px",height:40,overflowX:"auto",scrollbarWidth:"none",borderTop:'none'}}>
           {FILTERS.filter(f=>f!=="bookmarks").map(f=>{
             const m=TML[f]; const on=filter===f;
             return (
@@ -207,8 +207,8 @@ export function FeedPage({ C, isDark, items, loading, bookmarks, onItemClick, on
 {/* Items count */}
         <div style={{
           padding:"10px 20px",
-          borderTop:`1px solid ${C.border}`,
-          borderBottom:`1px solid ${C.border}`,
+          borderTop:'none',
+          borderBottom:'none',
           fontSize:FS.xs,color:C.muted,
           fontFamily:FF.sans,letterSpacing:"0.04em",
           display:"flex",alignItems:"center",justifyContent:"space-between",
