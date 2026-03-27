@@ -7,13 +7,9 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
 
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",background:C.bg,overflow:"hidden",minWidth:0}}>
-      <div style={{padding:"16px",borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
-        <div style={{fontSize:"0.65rem",color:C.muted,fontFamily:FF.sans,letterSpacing:"0.1em",marginBottom:4}}>
-          // saved
-        </div>
-        <div style={{fontSize:"0.75rem",color:C.muted,fontFamily:FF.sans}}>
-          {saved.length} {saved.length===1?"item":"items"}
-        </div>
+      <div style={{padding:"14px 16px",borderBottom:"none",flexShrink:0,display:"flex",alignItems:"center",gap:10}}>
+        <span style={{fontSize:"0.65rem",color:C.muted,fontFamily:FF.sans,letterSpacing:"0.1em"}}>// saved</span>
+        <span style={{fontSize:"0.65rem",color:C.muted,fontFamily:FF.sans}}>· {saved.length} {saved.length===1?"item":"items"}</span>
       </div>
 
       <div style={{flex:1,overflowY:"auto"}}>
@@ -29,7 +25,7 @@ export function SavedPage({ C, isDark, items, bookmarks, onItemClick, onBookmark
           return (
             <div key={item.id} onClick={()=>onItemClick(item)}
               style={{
-                padding:"12px 16px",borderBottom:`1px solid ${C.border}`,
+                padding:"12px 16px",borderBottom:"none",
                 cursor:"pointer",transition:"background .08s",
                 display:"flex",flexDirection:"column",gap:5,
               }}
