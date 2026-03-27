@@ -9,7 +9,7 @@ function DigestSection({ cat, C, isDark, onItemClick, onBookmark, bookmarks, rea
   const m = TML[cat.id] || TML.product;
 
   return (
-    <div style={{ borderBottom: `1px solid ${C.border}` }}>
+    <div style={{ borderBottom: "none" }}>
 
       {/* Header — always visible */}
       <div style={{ padding: "18px 16px 16px" }}>
@@ -130,7 +130,7 @@ export function BriefPage({ C, isDark, onItemClick, onBookmark, bookmarks, readI
     <div style={{ flex:1, display:"flex", flexDirection:"column", background:C.bg, overflow:"hidden", minWidth:0 }}>
 
       {/* Header */}
-      <div style={{ padding:"14px 16px", borderBottom:`1px solid ${C.border}`, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+      <div style={{ padding:"14px 16px", borderBottom:"none", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", alignItems:"center", gap:10 }}>
           <span style={{ fontSize:FS.xs, color:C.muted, fontFamily:FF.sans, letterSpacing:"0.1em" }}>// brief</span>
           {freshness && !loading && (
