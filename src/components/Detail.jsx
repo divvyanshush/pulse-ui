@@ -29,7 +29,7 @@ export function Detail({item, onClose, C, isDark, isBookmarked, onBookmark, item
 
   return(
     <div style={{width:"100%",minWidth:0}}>
-      <div style={{padding:"14px 16px",borderBottom:`1px solid ${C.border}`,
+      <div style={{padding:"14px 16px",borderBottom:"none",
         position:"sticky",top:0,background:C.surface,zIndex:5}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
           <button className="ibtn" onClick={onClose}
@@ -159,7 +159,7 @@ export function Detail({item, onClose, C, isDark, isBookmarked, onBookmark, item
                 const m=getTM(isDark)[r.type]||getTM(isDark).product;
                 return(
                   <div key={r.id} onClick={()=>onItemClick&&onItemClick(r)}
-                    style={{padding:"10px 0",borderBottom:`1px solid ${C.border}`,cursor:"pointer"}}>
+                    style={{padding:"10px 0",borderBottom:"none",cursor:"pointer"}}>
                     <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:5}}>
                       <span style={{fontSize:"0.6rem",padding:"2px 5px",borderRadius:2,
                         background:m.a,color:m.t,letterSpacing:"0.06em"}}>{m.label}</span>
