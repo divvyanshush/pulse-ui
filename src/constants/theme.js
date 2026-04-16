@@ -1,4 +1,4 @@
-export const API = "https://pulse-backend-production-cd92.up.railway.app";
+export const API = "https://pulse-backend-8jc6.onrender.com";
 
 export const timeAgo = ts => {
   const s = Math.floor(Date.now()/1000 - ts);
